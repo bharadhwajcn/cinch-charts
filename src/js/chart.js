@@ -19,7 +19,12 @@ Chart.prototype.setValues = function(element, data, options, metaData) {
   if (typeof element === 'object') {
     _this.element   = element;
   } else {
-    _this.element = document.querySelector(element);
+    if (element[0] === '#' || element[0] === '.') {
+      _this.element = document.querySelector(element);
+    }
+    else {
+      console.error('Error: Wrong Element format.');
+    }
   }
 
   _this.elementClass = _this.element.className;
