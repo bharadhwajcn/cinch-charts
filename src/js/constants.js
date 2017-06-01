@@ -1,4 +1,8 @@
 const CONSTANTS = {
+  DEFAULT_DIMENSIONS : {
+    HEIGHT : '80%',
+    WIDTH : '100%'
+  },
   DEFAULT_COLORS : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
   ANIMATION_DURATION : 1000,
   ANIMATION_DELAY : {
@@ -41,7 +45,8 @@ const CONSTANTS = {
   FIRST_CHILD: 1,
   BAR: {
     curve: false,
-    color: '#4682b4'
+    opacity : 1,
+    color: '#4682B4'
   },
   AXIS_CONFIG: {
     X_AXIS: {

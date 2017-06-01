@@ -8,7 +8,7 @@ var Chart = function() { };
   * @param {String} element - Name of the element to which graph is to be drawn
   * @param {Object} data    - Data for which graph is to be drawn
   * @param {Object} options - Config options that can be added to the graph.
-  * @param {Array} stack    - List of keys which is to be made as stack.
+  * @param {Array} metaData - Meta data about the other graphs.
   */
 Chart.prototype.setValues = function(element, data, options, metaData) {
 
@@ -17,7 +17,7 @@ Chart.prototype.setValues = function(element, data, options, metaData) {
 
   // To check whether it is the DOM element or classname or id of the DOM element
   if (typeof element === 'object') {
-    _this.element   = element;
+    _this.element = element;
   } else {
     if (element[0] === '#' || element[0] === '.') {
       _this.element = document.querySelector(element);
@@ -58,7 +58,6 @@ Chart.prototype.setValues = function(element, data, options, metaData) {
     bottom : (margin && margin.bottom) ? margin.bottom : 0
   };
 
-  // var excessHeight = _this.margin.bottom ;
   var axis   = _this.options.axis;
   var legend = _this.options.legend;
   if (axis && axis.xAxis && axis.xAxis.orientation) {
@@ -94,11 +93,12 @@ Chart.prototype.drawChart = function() {
       _this.height -= _this.legendHeight;
       _this.elementHeight -= _this.legendHeight;
     } else {
-      _this.legendHeight = '45';
+      _this.legendHeight = 45;
       _this.height -= _this.legendHeight;
       _this.elementHeight -= _this.legendHeight;
     }
   }
+
   _this.createCanvas();
   _this.xScales();
   _this.yScales();
@@ -106,10 +106,6 @@ Chart.prototype.drawChart = function() {
 
   if (_this.options.grids) {
     _this.addGridLines(_this.options.grids);
-  }
-
-  if (axis && axis.yAxis && axis.yAxis.ticks && axis.yAxis.ticks.values) {
-    _this.addHorizontalGridLines();
   }
 
 };
@@ -127,14 +123,12 @@ Chart.prototype.createCanvas = function() {
     .selectAll('svg')
     .remove();
 
-  var svg = d3.select(_this.element)
-              .append('svg')
-              .attr('width', '100%')
-              .attr('height', _this.elementHeight)
-              .attr('class', 'qd-graph-area');
-
   // All elements like axis, lines, bars are to be attached to this object.
-  _this.plot = svg;
+  _this.plot = d3.select(_this.element)
+                 .append('svg')
+                 .attr('width', '100%')
+                 .attr('height', _this.elementHeight)
+                 .attr('class', 'qd-graph-area');
 
 };
 
@@ -145,9 +139,13 @@ Chart.prototype.xScales = function() {
 
   var _this   = this,
       axis    = _this.options.axis,
+      bar     = _this.options.bar,
       margin  = _this.margin,
       width   = _this.width,
-      xExtent = _this.xExtent;
+      xExtent = _this.xExtent,
+      padding = (bar && bar.padding)
+                     ? parseFloat(bar.padding)
+                     : .1;
 
   // To set the extend at every possible orientation
   if (axis && axis.yAxis && axis.yAxis.orientation) {
@@ -164,7 +162,7 @@ Chart.prototype.xScales = function() {
   }
 
   _this.xScale = d3.scaleBand()
-                   .padding(.1)
+                   .padding(padding)
                    .range([_this.xMin, _this.xMax])
                    .domain(xExtent);
 };
@@ -680,7 +678,6 @@ Chart.prototype.addVerticalGridLines = function(config) {
 Chart.prototype.addHorizontalGridLines = function(config) {
 
   var _this = this;
-  config = config || { };
 
   _this.plot.append('g')
             .attr('id', 'horizontal-grid')

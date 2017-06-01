@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width,  initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+  <script type="text/javascript" src="../bower_components/d3/d3.js"/></script>
+  <script src="../src/js/constants.js"></script>
+  <script src="../src/js/chart.js"></script>
+  <script src="../src/js/barChart.js"></script>
+  <link rel="stylesheet" href="../src/styles/fu-bar-charts.css" type="text/css">
+  <!-- <link rel="stylesheet" href="./css/style.css" type="text/css"> -->
+  <style>
+    .chart-container{
+    	height: 80%;
+    	width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="chart-container" height="500"></div>
+
+  <script>
+
+    var element = document.querySelector('.chart-container');
+
+    var data = [
+                  ['Jan', 10],
+                  ['Feb', 70],
+                  ['Mar', 30],
+                  ['Apr', 10],
+                  ['May', 60],
+                  ['Jun', 45],
+                  ['Jul', 76],
+                  ['Aug', 40],
+                  ['Sep', 40],
+                  ['Oct', 60],
+                  ['Nov', 40],
+                  ['Dec', 80]
+              ];
+
+    var chart = new BarChart(element, data);
+
+  </script>
+
+</body>
+</html>

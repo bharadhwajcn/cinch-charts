@@ -75,7 +75,7 @@ BarChart.prototype.drawBarChart = function(type) {
 
   // Calls the base class function to draw canvas.
   _this.drawChart();
-
+  console.log('HEIGHT', _this.height);
   // Display svg only in the graph area.
   _this.plot.append('clipPath')
             .attr('id', 'bar-clip')
