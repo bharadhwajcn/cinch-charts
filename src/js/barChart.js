@@ -23,7 +23,9 @@ var BarChart = function(element, data, options) {
   var _this = this;
 
   // Set all the parameter values to global scope
-  _this.setValues(element, data, options);
+  _this.setValues(element, data, options, {
+    type : 'bar'
+  });
 
   // Range of x and y axis values.
   _this.xExtent = _this.xExtentCalculate(_this.data);
@@ -44,9 +46,11 @@ BarChart.prototype = Object.create(Chart.prototype);
 
 BarChart.prototype.redrawGraph = function(element, data, options) {
   var _this = this;
-  _this.setValues(element, data, options);
+  _this.setValues(element, data, options, {
+    type : 'bar'
+  });
   _this.drawBarChart('bar');
-}
+};
 
 /**
   * Function which finds the X Axis ticks from the data provided.
@@ -75,7 +79,7 @@ BarChart.prototype.drawBarChart = function(type) {
 
   // Calls the base class function to draw canvas.
   _this.drawChart();
-  console.log('HEIGHT', _this.height);
+
   // Display svg only in the graph area.
   _this.plot.append('clipPath')
             .attr('id', 'bar-clip')
@@ -98,20 +102,22 @@ BarChart.prototype.drawBarChart = function(type) {
   */
 BarChart.prototype.createBars = function(type, data) {
 
-  var _this = this,
-      bar   = _this.options.bar ? _this.options.bar : CONSTANTS.BAR;
+  var _this  = this,
+      margin = _this.margin,
+      bar    = _this.options.bar ? _this.options.bar : CONSTANTS.BAR;
 
   switch (type) {
     case 'bar':
       var barPlot = _this.plot.append('g')
-                              .attr('class', 'bars');
+                              .attr('class', 'fc-bar')
+                              .attr('transform', 'translate(' + margin.left + ', 0)');
 
       _this.bar = barPlot.selectAll('bar')
                           .data(data)
                           .enter()
                           .append('path')
                           .attr('class', 'bar')
-                          .attr('fill', bar.color);
+                          .attr('fill', _this.color);
       break;
     case 'stack':
       _this.groups = _this.plot.selectAll('g.stack')
@@ -165,14 +171,12 @@ BarChart.prototype.calculateBarwidth = function() {
       bar   = _this.options.bar;
 
   var barWidth = (bar && bar.width)
-                      ? _this.options.bar.width
+                      ? bar.width
                       : _this.xScale.bandwidth();
 
-  if (bar && !(bar.override)) {
-    barWidth = (barWidth > _this.xScale.bandwidth())
-                        ? _this.xScale.bandwidth()
-                        : barWidth;
-  }
+  barWidth = (barWidth > _this.xScale.bandwidth())
+                      ? _this.xScale.bandwidth()
+                      : barWidth;
 
   return barWidth;
 };
@@ -197,8 +201,9 @@ BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay) {
           .delay(function(d, i) { return i*animationDelay; })
           .duration(CONSTANTS.ANIMATION_DURATION)
           .attr('d', function(d) {
-            return _this.drawBar(d, xShift, barWidth);
-          });
+            return _this.drawBar(d, xShift, barWidth)
+          })
+          .attr('opacity', _this.options.bar.opacity);
 
 };
 
@@ -210,14 +215,19 @@ BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay) {
 BarChart.prototype.drawBarsWithoutAnimation = function(barWidth) {
 
   var _this   = this,
+      bar     = _this.options.bar,
       radius  = barWidth/2,
-      xShift = _this.barCentering(barWidth, _this.xScale.bandwidth())
+      opacity = (bar && bar.opacity)
+                      ? bar.opacity
+                      : CONSTANTS.BAR.opacity,
+      xShift  = _this.barCentering(barWidth, _this.xScale.bandwidth())
                   + _this.defaultMargin() - _this.xMin;
 
   _this.bar.attr('d', function(d) {
               return _this.drawBar(d, xShift, barWidth);
             })
-            .attr('clip-path', 'url(#bar-clip)');
+            .attr('clip-path', 'url(#bar-clip)')
+            .attr('opacity', opacity);
 
 };
 

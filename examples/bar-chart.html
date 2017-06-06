@@ -2,8 +2,6 @@
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width,  initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
   <script type="text/javascript" src="../bower_components/d3/d3.js"/></script>
   <script src="../src/js/constants.js"></script>
   <script src="../src/js/chart.js"></script>
@@ -11,10 +9,10 @@
   <link rel="stylesheet" href="../src/styles/fu-bar-charts.css" type="text/css">
   <!-- <link rel="stylesheet" href="./css/style.css" type="text/css"> -->
   <style>
-    .chart-container{
-    	height: 80%;
-    	width: 100%;
-    }
+  .chart-container{
+    height: 80%;
+    width: 100%;
+  }
   </style>
 </head>
 
@@ -40,7 +38,48 @@
                   ['Dec', 80]
               ];
 
-    var chart = new BarChart(element, data);
+    var chart = new BarChart(element, data, {
+      bar : {
+        color : '#6DB245',
+        width : 20,
+        curve : true,
+        opacity : 0.8,
+        padding : .01,
+      },
+      margin : {
+        left : 20,
+        right : 0,
+        top : 0,
+        bottom : 0
+      },
+      grids : {
+        vertical : {
+          show : true,
+          color : '#999',
+          opacity : .5,
+        },
+        horizontal : {
+          show : true,
+          color : '#999',
+          opacity : .5,
+          skipFirst : false,
+          skipLast : true
+        }
+      },
+      axis : {
+        xAxis : {
+          showAxisLine : false
+        },
+        yAxis : {
+          showAxisLine : false,
+          firstLabel : true,
+          ticks : {
+            x : 0,
+            y : 0
+          }
+        }
+      }
+    });
 
   </script>
 

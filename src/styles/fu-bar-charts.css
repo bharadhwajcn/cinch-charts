@@ -1,29 +1,58 @@
-html{
-  font-size: 16px;
-  font-family: sans-serif;
-}
-
-body{
+body {
   margin: 0;
 }
 
+/*============================================================================*/
+/* Axis properties */
 
-.tick line {
+.fc-graph-area {
+  display: block;
+}
+
+/*============================================================================*/
+/* Axis properties */
+
+/* Proporties of the the X and Y axis line*/
+.fc-axis path {
   fill: none;
   shape-rendering: crispEdges;
-  stroke: #888;
-  stroke-width: 1px;
+  stroke: #999;
+  stroke-width: 1.5px;
 }
 
-.grid line {
-  stroke: lightgrey;
+/* Proporties of the the X and Y axis tick line at each point*/
+.fc-axis line {
+  fill: none;
+  shape-rendering: crispEdges;
+  stroke: #999;
+  stroke-width: 1.5px;
+}
+
+/* Proporties of the the X and Y axis ticks text at each point*/
+.fc-axis text {
+  fill: #999;
+  shape-rendering: crispEdges;
+  font-family: sans-serif;
+}
+
+/*============================================================================*/
+/* Grid Line properties */
+
+/* Properties of the grid lines */
+.fc-grid line {
+  fill: none;
+  stroke: #999;
   stroke-opacity: 0.7;
+  stroke-width: 1px;
   shape-rendering: crispEdges;
 }
 
-.grid path {
+/* To make line invisible through the border */
+.fc-grid path {
   stroke-width: 0;
 }
+
+/*============================================================================*/
 
 .qd-goalLine-line line {
   stroke: grey;
@@ -37,9 +66,7 @@ body{
   display: none;
 }
 
-.qd-graph-area {
-  display: block;
-}
+
 
 /**Line Graph**/
 

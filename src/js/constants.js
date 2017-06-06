@@ -1,7 +1,15 @@
 const CONSTANTS = {
-  DEFAULT_DIMENSIONS : {
-    HEIGHT : '80%',
-    WIDTH : '100%'
+  DEFAULT_MARGIN: {
+    LEFT: 27,
+    BOTTOM: 30,
+    RIGHT: 27,
+    TOP: 30
+  }, 
+  BAR: {
+    color: '#4682B4',
+    curve: false,
+    opacity : 1,
+    padding : .05
   },
   DEFAULT_COLORS : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
   ANIMATION_DURATION : 1000,
@@ -15,12 +23,7 @@ const CONSTANTS = {
     DEFAULT_WIDTH : 10,
     DEFAULT_HEIGHT: 10
   },
-  DEFAULT_MARGIN: {
-    LEFT: 27,
-    BOTTOM: 30,
-    RIGHT: 27,
-    TOP: 30
-  },
+
   DEFAULT_BAR_RADIUS: 0,
   BAR_CHART : {
     type : 'bar',
@@ -43,11 +46,6 @@ const CONSTANTS = {
     class: 'points'
   },
   FIRST_CHILD: 1,
-  BAR: {
-    curve: false,
-    opacity : 1,
-    color: '#4682B4'
-  },
   AXIS_CONFIG: {
     X_AXIS: {
       orientation: 'bottom',
