@@ -4,7 +4,7 @@ const CONSTANTS = {
     BOTTOM: 30,
     RIGHT: 27,
     TOP: 30
-  }, 
+  },
   BAR: {
     color: '#4682B4',
     curve: false,
@@ -18,7 +18,7 @@ const CONSTANTS = {
     ONEBYONE : 250
   },
   LABEL_WIDTH: 35,
-  LABEL_LINE_HEIGHT: 1.1,
+  LABEL_LINE_HEIGHT: .3,
   ICON: {
     DEFAULT_WIDTH : 10,
     DEFAULT_HEIGHT: 10

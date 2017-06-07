@@ -333,22 +333,22 @@ Chart.prototype.checkXAxisLabels = function(axis, config) {
   if (config.ticks && config.ticks.values) {
     var tick = config.ticks.values;
     if (typeof tick[0] === 'object') {
-      var key    = [ ],
+      var values = [ ],
           labels = [ ];
       tick.forEach(function(d) {
-        key.push(d.key);
+        values.push(d.value);
         labels.push(d.label)
       });
     } else {
-      var key    = tick,
+      var values = tick,
           labels = tick;
     }
   } else {
-    var key    = _this.xExtent,
+    var values = _this.xExtent,
         labels = _this.xExtent;
   }
 
-  axis.tickValues(key)
+  axis.tickValues(values)
       .tickFormat(function(d, i) {
         if (config && config.ticks && config.ticks.formatter)
           return config.ticks.formatter(d);
@@ -368,7 +368,6 @@ Chart.prototype.addYAxis = function(config) {
   var _this          = this,
       scale          = _this.yScale,
       ticksConfig    = config.ticks ? config.ticks : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks,
-      unit           = ticksConfig.unit ? ticksConfig.unit : '',
       padding        = ticksConfig.padding
                           ? ticksConfig.padding
                           : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks.padding,
@@ -386,14 +385,14 @@ Chart.prototype.addYAxis = function(config) {
     case 'right':
         var yAxis = d3.axisRight(scale)
                       .tickPadding(padding);
-        yAxis = _this.checkYAxisLabels(yAxis, config, unit);
+        yAxis = _this.checkYAxisLabels(yAxis, config);
         _this.drawYAxis(config, yAxis, _this.xMax);
         break;
 
     default:
         var yAxis = d3.axisLeft(scale)
                       .tickPadding(padding);
-        yAxis = _this.checkYAxisLabels(yAxis, config, unit);
+        yAxis = _this.checkYAxisLabels(yAxis, config);
         _this.drawYAxis(config, yAxis, _this.xMin);
         break;
   }
@@ -425,7 +424,7 @@ Chart.prototype.addYAxis = function(config) {
  * @param {object} axis   - Y Axis variable
  * @param {object} config - Axis configuration options
  */
-Chart.prototype.checkYAxisLabels = function(axis, config, unit) {
+Chart.prototype.checkYAxisLabels = function(axis, config) {
 
   var _this      = this;
 
@@ -436,30 +435,30 @@ Chart.prototype.checkYAxisLabels = function(axis, config, unit) {
   if (config.ticks && config.ticks.values) {
     var tick = config.ticks.values;
     if (typeof tick[0] === 'object') {
-      var key    = [ ],
+      var values = [ ],
           labels = [ ];
       tick.forEach(function(d) {
-        key.push(d.key);
+        values.push(d.value);
         labels.push(d.label)
       });
     } else {
-      var key    = tick,
+      var values = tick,
           labels = tick;
     }
-    if (key.indexOf(_this.yExtent[0]) < 0) {
+    if (values.indexOf(_this.yExtent[0]) < 0) {
       if (firstLabel) {
-        key.unshift(_this.yExtent[0]);
+        values.unshift(_this.yExtent[0]);
       } else {
-        key.unshift('');
+        values.unshift('');
       }
       labels.unshift('');
     }
-    axis.tickValues(key)
+    axis.tickValues(values)
         .tickFormat(function(d, i) {
           if (config && config.ticks && config.ticks.formatter)
-            return config.ticks.formatter(d) + ' ' + unit;
+            return config.ticks.formatter(d);
           else
-            return labels[i] + ' ' + unit;
+            return labels[i];
         });
   } else {
     axis.tickFormat(function(d) {
@@ -510,8 +509,8 @@ Chart.prototype.checkYAxisLabels = function(axis, config, unit) {
  */
 Chart.prototype.checkAxisLabelRotation = function(config) {
 
-  var _this = this,
-      ticks = config.ticks;
+  var _this  = this,
+      ticks  = config.ticks;
   if (ticks && ticks.rotate && ticks.rotate.angle) {
     var angle  = ticks.rotate.angle;
     var xShift = ticks.rotate.x,
@@ -529,6 +528,7 @@ Chart.prototype.checkAxisLabelRotation = function(config) {
  */
 Chart.prototype.drawYAxis = function(config, yAxis, leftMargin) {
   var _this     = this,
+      margin    = _this.margin,
       alignment = (config.ticks && config.ticks.alignment)
                                 ? config.ticks.alignment
                                 : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks.alignment,
@@ -700,7 +700,6 @@ Chart.prototype.addHorizontalGridLines = function(config) {
                             ? CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
                             : 0;
 
-  console.log('HRELLO',axis.yAxis.showAxisLine !== undefined)
   _this.plot.append('g')
             .attr('id', 'horizontal-grid')
             .attr('class', 'fc-grid horizontal-grid')
@@ -1010,18 +1009,15 @@ Chart.prototype.tooltipBody = function(config) {
 Chart.prototype.verticalGridLines = function() {
 
   var _this  = this,
-      axis   = _this.options.axis,
-      xAxis  = (axis && axis.xAxis)
-                    ? axis.xAxis
-                    : CONSTANTS.AXIS_CONFIG.X_AXIS,
+      grids  = _this.options.grids,
       height = _this.yMin - _this.yMax;
 
   var xTick = d3.axisBottom(_this.xScale)
                 .tickSize(-height)
                 .tickFormat('');
 
-  if (xAxis.ticks && xAxis.ticks.values) {
-    var tick = xAxis.ticks.values;
+  if (grids && grids.vertical && grids.vertical.values) {
+    var tick = grids.vertical.values;
     if (typeof tick[0] === 'object') {
       var key = [ ];
       tick.forEach(function(d) {
@@ -1042,9 +1038,7 @@ Chart.prototype.horizontalGridLines = function() {
 
   var _this = this,
       axis  = _this.options.axis,
-      yAxis = axis && axis.yAxis
-                    ? _this.options.axis.yAxis
-                    : CONSTANTS.AXIS_CONFIG.Y_AXIS,
+      grids = _this.options.grids,
       width = (axis && axis.xAxis && axis.yAxis.showAxisLine)
                     ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + _this.margin.left)
                     : _this.width;
@@ -1053,20 +1047,12 @@ Chart.prototype.horizontalGridLines = function() {
                 .tickSize(-width)
                 .tickFormat('');
 
-  if (yAxis.ticks && yAxis.ticks.values) {
-    var tick = yAxis.ticks.values;
-    if (typeof tick[0] === 'object') {
-      var key = [ ];
-      tick.forEach(function(d) {
-        key.push(d.key);
-      });
-    } else {
-      var key = tick;
+  if (grids && grids.horizontal && grids.horizontal.values) {
+    var tick = grids.horizontal.values;
+    if (tick.indexOf(_this.yExtent[0]) < 0) {
+      tick.unshift(_this.yExtent[0]);
     }
-    if (key.indexOf(_this.yExtent[0]) < 0) {
-      key.unshift(_this.yExtent[0]);
-    }
-    yTick.tickValues(key);
+    yTick.tickValues(tick);
   }
   return yTick;
 };
