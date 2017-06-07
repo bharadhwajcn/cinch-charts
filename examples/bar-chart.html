@@ -40,42 +40,62 @@
 
     var chart = new BarChart(element, data, {
       bar : {
-        color : '#6DB245',
-        width : 20,
-        curve : true,
-        opacity : 0.8,
-        padding : .01,
+        color : '#6DB245', // color of the bar
+        width : 20,        // width of the bar
+        curve : true,      // whether the curve at the top of bar is needed or not
+        opacity : 0.8,     // opacity of each bar
+        padding : .01,     // space between 2 adjacent bar
       },
-      margin : {
-        left : 20,
+      margin : {           // margin within the svg container
+        left : 0,
         right : 0,
         top : 0,
         bottom : 0
       },
       grids : {
         vertical : {
-          show : true,
-          color : '#999',
-          opacity : .5,
+          show : true,     // whether the vertical grids needs to be shown
+          color : '#999',  // color of the vertical grids
+          opacity : .5,    // opacity of the vertical grids
+          values : [ 'Jan', 'Feb', 'Mar']
+                           // the values to which the grid needs to be drawn.
+                           // values should be same as that given in the data
         },
         horizontal : {
-          show : true,
-          color : '#999',
-          opacity : .5,
-          skipFirst : false,
-          skipLast : true
+          show : true,       // whether the horizontal grids needs to be shown
+          color : '#999',    // color of the horizontal grids
+          opacity : .5,      // opacity of the horizontal grids
+          skipFirst : false, // whether to skip drawing first grid line as sometimes
+                             //  they aren't required
+          skipLast : false,  // similarly whether to skip the last grid line
+          values : [10, 30, 40, 50]
+                             // the values for which the grid lines needs to be drawn
         }
       },
       axis : {
         xAxis : {
-          showAxisLine : false
-        },
-        yAxis : {
           showAxisLine : false,
           firstLabel : true,
           ticks : {
-            x : 0,
-            y : 0
+            values: ['Jan', 'Mar', 'Jun', 'Aug', 'Oct', 'Dec'],
+            padding : 10,
+          }
+        },
+        yAxis : {
+          showAxisLine : false,
+          firstLabel : false,
+          ticks : {
+            values: [ { value : 10, label : '10 m unit' },
+                      { value : 30, label : '30 m unit' },
+                      { value : 40, label : '40 m unit' },
+                      { value : 50, label : '50 m unit' },
+                    ],
+            x : 30,
+            y : 10,
+            font_size : '12px',
+            formatter : function(value) {
+              return String(value) + 'k units';
+            },
           }
         }
       }
