@@ -166,11 +166,12 @@ Chart.prototype.xScales = function() {
   // To set the extend at every possible orientation
   if (axis && axis.yAxis && axis.yAxis.orientation) {
     if (axis.yAxis.orientation === 'left') {
-      _this.xMin = margin.left;
+      _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT;
       _this.xMax = width - margin.right;
     } else {
+      console.log('THIS', _this)
       _this.xMin = margin.left;
-      _this.xMax = width - margin.right;
+      _this.xMax = width - (margin.right + CONSTANTS.DEFAULT_MARGIN.RIGHT);
     }
   } else {
     _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT;
@@ -368,15 +369,17 @@ Chart.prototype.addYAxis = function(config) {
   var _this          = this,
       scale          = _this.yScale,
       ticksConfig    = config.ticks ? config.ticks : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks,
-      padding        = ticksConfig.padding
-                          ? ticksConfig.padding
-                          : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks.padding,
       firstLabel     = (config && config.firstLabel !== undefined)
                           ? config.firstLabel
                           : CONSTANTS.AXIS_CONFIG.Y_AXIS.firstLabel,
       orientation    = (config && config.orientation)
                           ? config.orientation
                           : CONSTANTS.AXIS_CONFIG.Y_AXIS.orientation,
+      padding        = ticksConfig.padding
+                          ? ticksConfig.padding
+                          : (orientation === 'left')
+                                ? 5
+                                : 20,
       showAxisLine   = (config && config.showAxisLine !== undefined)
                           ? config.showAxisLine
                           : CONSTANTS.AXIS_CONFIG.Y_AXIS.showAxisLine;
@@ -463,9 +466,9 @@ Chart.prototype.checkYAxisLabels = function(axis, config) {
   } else {
     axis.tickFormat(function(d) {
           if (config && config.ticks && config.ticks.formatter)
-            return config.ticks.formatter(d) + ' ' + unit;
+            return config.ticks.formatter(d);
           else
-            return d + ' ' + unit;
+            return d;
         });
   }
   return axis;
@@ -695,9 +698,14 @@ Chart.prototype.addHorizontalGridLines = function(config) {
       axis          = _this.options.axis,
       showAxisLine  = (axis && axis.yAxis && axis.yAxis.showAxisLine !== undefined)
                             ? axis.yAxis.showAxisLine
-                            : CONSTANTS.AXIS_CONFIG.Y_AXIS.showAxisLine;
-      xShift        =  showAxisLine
-                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
+                            : CONSTANTS.AXIS_CONFIG.Y_AXIS.showAxisLine,
+      orientation   = (axis && axis.yAxis && axis.yAxis.orientation)
+                            ? axis.yAxis.orientation
+                            : CONSTANTS.AXIS_CONFIG.Y_AXIS.orientation,
+      xShift        =  (showAxisLine)
+                            ? (orientation === 'left')
+                                    ? CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
+                                    : 0
                             : 0;
 
   _this.plot.append('g')
@@ -733,18 +741,32 @@ Chart.prototype.addGoalLines = function() {
 
   var _this        = this,
       goalLine     = _this.options.goalLine,
+      margin       = _this.options.margin,
+      axis         = _this.options.axis,
+      showAxisLine = (axis && axis.yAxis && axis.yAxis.showAxisLine !== undefined)
+                            ? axis.yAxis.showAxisLine
+                            : CONSTANTS.AXIS_CONFIG.Y_AXIS.showAxisLine,
+      orientation  = (axis && axis.yAxis && axis.yAxis.orientation)
+                            ? axis.yAxis.orientation
+                            : CONSTANTS.AXIS_CONFIG.Y_AXIS.orientation,
       value        = goalLine.value,
       className    = goalLine.class
-                        ? 'qd-goalLine-line ' + goalLine.class
-                        : 'qd-goalLine-line',
-      linePosition = _this.yScale(value) - _this.yMin;
+                        ? 'fc-goalLine-line ' + goalLine.class
+                        : 'fc-goalLine-line',
+
+      xShift       =  (showAxisLine)
+                            ? (orientation === 'left')
+                                    ? CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
+                                    : 0
+                            : 0,
+      yShift       = _this.yScale(value) - _this.yMin;
 
   var goalElement = _this.plot.append('g')
-                              .attr('class', 'qd-goalLine');
+                              .attr('class', 'fc-goalLine');
 
   goalElement.append('g')
              .attr('class', className)
-             .attr('transform', 'translate(0, ' + linePosition + ')')
+             .attr('transform', 'translate(' + xShift + ', ' + yShift + ')')
              .call( _this.goalLine());
 
   if (goalLine.icon) {
@@ -754,8 +776,13 @@ Chart.prototype.addGoalLines = function() {
          iconClass = goalLine.icon.class
                             ? 'qd-goalLine-image ' + iconClass
                             : 'qd-goalLine-image',
-         left      = goalLine.icon.left;
+         left      = (goalLine.icon.left)
+                            ? goalLine.icon.left - 2.5
+                            : -2.5;
 
+    if (showAxisLine && orientation === 'left') { left += CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left + 2.5; }
+
+    if (goalLine.icon.toBase64) {
       _this.getBase64Image(url, function(base64url) {
         goalElement.append('svg:image')
                    .attr('x', left - 2.5)
@@ -765,6 +792,16 @@ Chart.prototype.addGoalLines = function() {
                    .attr('xlink:href', base64url)
                    .attr('class', iconClass);
       });
+    } else {
+      goalElement.append('svg:image')
+                 .attr('x', left)
+                 .attr('y', _this.yScale(value) - height/2 + 1)
+                 .attr('width', width)
+                 .attr('height', height)
+                 .attr('xlink:href', url)
+                 .attr('class', iconClass);
+    }
+
     }
 };
 
@@ -813,13 +850,13 @@ Chart.prototype.showTooltip = function(config, event, graph) {
       tooltipClass =  config.class ? config.class : '';
 
   d3.select(_this.element)
-    .selectAll('#d3-tip')
+    .selectAll('#fc-tooltip')
     .remove();
 
   var tooltip = d3.select(_this.element)
                   .append('div')
-                  .attr('class', 'qd-tooltip ' + tooltipClass)
-                  .attr('id', 'd3-tip');
+                  .attr('class', 'fc-tooltip ' + tooltipClass)
+                  .attr('id', 'fc-tooltip');
 
   tooltip.node().style.position = 'absolute';
   tooltip.node().style.visibility = 'hidden';
@@ -890,20 +927,20 @@ Chart.prototype.calculatePosition = function(position, d) {
   var _this   = this,
       legend  = _this.options.legend,
       line    = _this.options.line,
-      tooltip = _this.element.querySelector('#d3-tip'),
-      border_left_width = parseInt(window.getComputedStyle(_this.element.querySelector('#d3-tip'), ':after')
+      tooltip = _this.element.querySelector('#fc-tooltip'),
+      border_left_width = parseInt(window.getComputedStyle(_this.element.querySelector('#fc-tooltip'), ':after')
                                          .getPropertyValue('border-left-width')),
-      border_top_width  = parseInt(window.getComputedStyle(_this.element.querySelector('#d3-tip'), ':after')
+      border_top_width  = parseInt(window.getComputedStyle(_this.element.querySelector('#fc-tooltip'), ':after')
                                          .getPropertyValue('border-top-width')),
       tipHeight         = (border_left_width > border_top_width)
                                           ? border_left_width
                                           : border_top_width,
       tooltipHeight     = tipHeight + tooltip.offsetHeight,
       tooltipClasses    = tooltip.classList,
-      left    = _this.xScale(d[0]) + _this.shiftCalculate('x', '#d3-tip', tipHeight),
+      left    = _this.xScale(d[0]) + _this.shiftCalculate('x', '#fc-tooltip', tipHeight),
       top     = _this.element.offsetTop
                      + _this.yScale(d[1])
-                     + _this.shiftCalculate('y', '#d3-tip', tipHeight)
+                     + _this.shiftCalculate('y', '#fc-tooltip', tipHeight)
                      - _this.margin.top;
   if (line && line.plotPoints && line.plotPoints.icon && line.plotPoints.icon.width) {
     top -= line.plotPoints.icon.width/2;
@@ -1063,7 +1100,10 @@ Chart.prototype.horizontalGridLines = function() {
 Chart.prototype.goalLine = function() {
 
   var _this = this,
-      width = _this.width;
+      axis  = _this.options.axis,
+      width = (axis && axis.xAxis && axis.yAxis.showAxisLine)
+                    ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + _this.margin.left)
+                    : _this.width;;
 
   return d3.axisLeft(_this.yScale)
            .tickSize(-width)

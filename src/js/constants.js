@@ -2,7 +2,7 @@ const CONSTANTS = {
   DEFAULT_MARGIN: {
     LEFT: 27,
     BOTTOM: 30,
-    RIGHT: 27,
+    RIGHT: 35,
     TOP: 30
   },
   BAR: {
@@ -12,11 +12,6 @@ const CONSTANTS = {
     padding : .05
   },
   DEFAULT_COLORS : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
-  ANIMATION_DURATION : 1000,
-  ANIMATION_DELAY : {
-    ALLATONCE : 0,
-    ONEBYONE : 250
-  },
   LABEL_WIDTH: 35,
   LABEL_LINE_HEIGHT: .3,
   ICON: {
@@ -51,7 +46,7 @@ const CONSTANTS = {
       orientation: 'bottom',
       firstLabel: true,
       ticks: {
-        font_size: 12,
+        font_size: '13px',
         alignment: 'middle',
         padding: 5
       },
@@ -60,7 +55,7 @@ const CONSTANTS = {
     Y_AXIS: {
       orientation: 'left',
       ticks: {
-        font_size: '1rem',
+        font_size: '13px',
         padding: 5,
         alignment: 'end'
       },

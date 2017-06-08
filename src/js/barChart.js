@@ -109,8 +109,8 @@ BarChart.prototype.createBars = function(type, data) {
   switch (type) {
     case 'bar':
       var barPlot = _this.plot.append('g')
-                              .attr('class', 'fc-bar')
-                              .attr('transform', 'translate(' + margin.left + ', 0)');
+                              .attr('class', 'fc-bar');
+
 
       _this.bar = barPlot.selectAll('bar')
                           .data(data)
@@ -140,13 +140,18 @@ BarChart.prototype.createBars = function(type, data) {
   */
 BarChart.prototype.checkTransition = function() {
 
-  var _this = this;
-  var barWidth = _this.calculateBarwidth();
+  var _this      = this,
+      transition = _this.options.transition,
+      barWidth   = _this.calculateBarwidth();
 
-  if (_this.options.transition && _this.options.transition.animate) {
-    var a = CONSTANTS.ANIMATION_DELAY;
-    var animationDelay = a[(_this.options.transition.type).toUpperCase()] || 0;
-    _this.drawBarsWithAnimation(barWidth, animationDelay);
+  if (transition && transition.animate) {
+    var animationDelay = (transition.delay)
+                            ? transition.delay
+                            : 0,
+        duration       = (transition.duration)
+                            ? transition.duration
+                            : 1000;
+    _this.drawBarsWithAnimation(barWidth, animationDelay, duration);
   } else {
     _this.drawBarsWithoutAnimation(barWidth);
   }
@@ -186,10 +191,10 @@ BarChart.prototype.calculateBarwidth = function() {
   * @param {Integer} barWidth - User defined width of each bar.
   * @param {Integer} animationDelay - Delay after which each bars are drawn(in ms)
   */
-BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay) {
+BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay, duration) {
 
-  var _this   = this,
-      radius  = barWidth/2,
+  var _this  = this,
+      radius = barWidth/2,
       xShift = _this.barCentering(barWidth, _this.xScale.bandwidth());
 
   _this.bar.attr('d', function(d) {
@@ -199,7 +204,7 @@ BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay) {
           .attr('clip-path', 'url(#bar-clip)')
           .transition()
           .delay(function(d, i) { return i*animationDelay; })
-          .duration(CONSTANTS.ANIMATION_DURATION)
+          .duration(duration)
           .attr('d', function(d) {
             return _this.drawBar(d, xShift, barWidth)
           })
