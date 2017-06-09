@@ -1,9 +1,15 @@
 const CONSTANTS = {
   DEFAULT_MARGIN: {
-    LEFT: 27,
+    LEFT: 15,
+    BOTTOM: 30,
+    RIGHT: 15,
+    TOP: 15
+  },
+  ORIENTATION_MARGIN: {
+    LEFT: 35,
     BOTTOM: 30,
     RIGHT: 35,
-    TOP: 30
+    TOP: 22
   },
   BAR: {
     color: '#4682B4',

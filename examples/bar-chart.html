@@ -10,7 +10,6 @@
   <!-- <link rel="stylesheet" href="./css/style.css" type="text/css"> -->
   <style>
   .chart-container {
-    margin-top: 10px;
     height: 90%;
     width: 100%;
   }
@@ -41,7 +40,7 @@
 
     var chart = new BarChart(element, data, {
       bar : {
-        color : '#6DB245', // color of the bar
+        color : '#B8D551', // color of the bar
         width : 20,        // width of the bar
         curve : true,      // whether the curve at the top of bar is needed or not
         opacity : 0.8,     // opacity of each bar
@@ -60,7 +59,7 @@
       },
       grids : {
         vertical : {
-          show : true,     // whether the vertical grids needs to be shown
+          show : false,     // whether the vertical grids needs to be shown
           color : '#999',  // color of the vertical grids
           opacity : .5,    // opacity of the vertical grids
           values : [ 'Jan', 'Feb', 'Mar']
@@ -68,7 +67,7 @@
                            // values should be same as that given in the data
         },
         horizontal : {
-          show : true,       // whether the horizontal grids needs to be shown
+          show : false,       // whether the horizontal grids needs to be shown
           color : '#999',    // color of the horizontal grids
           opacity : .5,      // opacity of the horizontal grids
           skipFirst : false, // whether to skip drawing first grid line as sometimes
@@ -103,9 +102,9 @@
           }
         },
         yAxis : {
-          showAxisLine : true, // Whether to show the axis line or not
+          showAxisLine : false, // Whether to show the axis line or not
           firstLabel : true,   // Whether to show first label at y axis
-          orientation: 'right',
+          orientation: 'left',
           ticks : {
             values: [ { value : 10, label : '10 m unit' },
                       { value : 30, label : '30 m unit' },

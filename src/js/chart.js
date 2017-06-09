@@ -166,16 +166,15 @@ Chart.prototype.xScales = function() {
   // To set the extend at every possible orientation
   if (axis && axis.yAxis && axis.yAxis.orientation) {
     if (axis.yAxis.orientation === 'left') {
-      _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT;
-      _this.xMax = width - margin.right;
+      _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT + CONSTANTS.ORIENTATION_MARGIN.LEFT;
+      _this.xMax = width - (margin.right + CONSTANTS.DEFAULT_MARGIN.LEFT);
     } else {
-      console.log('THIS', _this)
-      _this.xMin = margin.left;
-      _this.xMax = width - (margin.right + CONSTANTS.DEFAULT_MARGIN.RIGHT);
+      _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT;
+      _this.xMax = width - (margin.right + CONSTANTS.DEFAULT_MARGIN.RIGHT + CONSTANTS.ORIENTATION_MARGIN.RIGHT);
     }
   } else {
-    _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT;
-    _this.xMax = width - margin.right;
+    _this.xMin = margin.left + CONSTANTS.DEFAULT_MARGIN.LEFT + CONSTANTS.ORIENTATION_MARGIN.LEFT;
+    _this.xMax = width - (margin.right + CONSTANTS.DEFAULT_MARGIN.RIGHT);
   }
 
   _this.xScale = d3.scaleBand()
@@ -200,10 +199,10 @@ Chart.prototype.yScales = function() {
   if (axis && axis.xAxis && axis.xAxis.orientation) {
     if (axis.xAxis.orientation === 'bottom') {
       _this.yMin = height - (margin.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM);
-      _this.yMax = margin.top;
+      _this.yMax = CONSTANTS.DEFAULT_MARGIN.TOP + margin.top;
     } else {
-      _this.yMin = height - 1;
-      _this.yMax = margin.top + CONSTANTS.DEFAULT_MARGIN.TOP;
+      _this.yMin = height;
+      _this.yMax = margin.top + CONSTANTS.DEFAULT_MARGIN.TOP + CONSTANTS.ORIENTATION_MARGIN.TOP;
     }
   } else {
     _this.yMin = height - (margin.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM);
@@ -379,7 +378,7 @@ Chart.prototype.addYAxis = function(config) {
                           ? ticksConfig.padding
                           : (orientation === 'left')
                                 ? 5
-                                : 20,
+                                : 30,
       showAxisLine   = (config && config.showAxisLine !== undefined)
                           ? config.showAxisLine
                           : CONSTANTS.AXIS_CONFIG.Y_AXIS.showAxisLine;
@@ -704,8 +703,8 @@ Chart.prototype.addHorizontalGridLines = function(config) {
                             : CONSTANTS.AXIS_CONFIG.Y_AXIS.orientation,
       xShift        =  (showAxisLine)
                             ? (orientation === 'left')
-                                    ? CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
-                                    : 0
+                                    ? CONSTANTS.ORIENTATION_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
+                                    : CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
                             : 0;
 
   _this.plot.append('g')
@@ -756,8 +755,8 @@ Chart.prototype.addGoalLines = function() {
 
       xShift       =  (showAxisLine)
                             ? (orientation === 'left')
-                                    ? CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
-                                    : 0
+                                    ? CONSTANTS.ORIENTATION_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
+                                    : CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left
                             : 0,
       yShift       = _this.yScale(value) - _this.yMin;
 
@@ -777,10 +776,12 @@ Chart.prototype.addGoalLines = function() {
                             ? 'qd-goalLine-image ' + iconClass
                             : 'qd-goalLine-image',
          left      = (goalLine.icon.left)
-                            ? goalLine.icon.left - 2.5
-                            : -2.5;
+                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + goalLine.icon.left - 2.5
+                            : CONSTANTS.DEFAULT_MARGIN.LEFT - 2.5;
 
-    if (showAxisLine && orientation === 'left') { left += CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left + 2.5; }
+    if (showAxisLine && orientation === 'left') {
+      left += CONSTANTS.ORIENTATION_MARGIN.LEFT + margin.left + 2.5;
+    }
 
     if (goalLine.icon.toBase64) {
       _this.getBase64Image(url, function(base64url) {
@@ -1102,8 +1103,20 @@ Chart.prototype.goalLine = function() {
   var _this = this,
       axis  = _this.options.axis,
       width = (axis && axis.xAxis && axis.yAxis.showAxisLine)
-                    ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + _this.margin.left)
-                    : _this.width;;
+                    ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.RIGHT + _this.margin.left)
+                    : _this.width;
+
+  var orientation = (axis && axis.yAxis && axis.yAxis.orientation)
+                          ? axis.yAxis.orientation
+                          : 'left';
+  if (axis && axis.xAxis && axis.yAxis.showAxisLine)
+    if (orientation === 'left') {
+      width -= CONSTANTS.ORIENTATION_MARGIN.LEFT;
+    } else {
+      width -= CONSTANTS.ORIENTATION_MARGIN.RIGHT;
+    }
+
+
 
   return d3.axisLeft(_this.yScale)
            .tickSize(-width)
