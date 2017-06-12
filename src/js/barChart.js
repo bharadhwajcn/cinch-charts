@@ -111,7 +111,6 @@ BarChart.prototype.createBars = function(type, data) {
       var barPlot = _this.plot.append('g')
                               .attr('class', 'fc-bar');
 
-
       _this.bar = barPlot.selectAll('bar')
                           .data(data)
                           .enter()
@@ -119,7 +118,7 @@ BarChart.prototype.createBars = function(type, data) {
                           .attr('class', 'bar')
                           .attr('fill', _this.color);
       break;
-    case 'stack':
+    case 'stackedBar':
       _this.groups = _this.plot.selectAll('g.stack')
                                .data(_this.stack_data)
                                .enter()

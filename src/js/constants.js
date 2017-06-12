@@ -17,6 +17,12 @@ const CONSTANTS = {
     opacity : 1,
     padding : .05
   },
+  STACKED_BAR: {
+    color: ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
+    curve: false,
+    opacity : 1,
+    padding : .05
+  },
   DEFAULT_COLORS : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
   LABEL_WIDTH: 35,
   LABEL_LINE_HEIGHT: .3,
@@ -32,7 +38,7 @@ const CONSTANTS = {
     class: 'bar'
   },
   STACK_CHART : {
-    type : 'stack',
+    type : 'stackedBar',
     element : '.bars',
     class: 'bars'
   },

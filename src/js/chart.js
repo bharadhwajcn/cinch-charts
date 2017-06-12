@@ -43,7 +43,7 @@ Chart.prototype.setValues = function(element, data, options, metaData) {
         _this.stackList = metaData.stack || [ ];
         _this.color = (bar && bar.color)
                             ? bar.color
-                            : CONSTANTS.STACKEDBAR.color;
+                            : CONSTANTS.STACKED_BAR.color;
         break;
 
     }
@@ -781,14 +781,12 @@ Chart.prototype.addGoalLines = function() {
                             ? 'qd-goalLine-image ' + iconClass
                             : 'qd-goalLine-image',
          left      = (goalLine.icon.left)
-                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + goalLine.icon.left + margin.left - 7.5
-                            : CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left - 7.5;
+                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + goalLine.icon.left + margin.left - 2.5
+                            : CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left - 2.5;
 
     if (showAxisLine) {
       if (orientation === 'left')
-        left += CONSTANTS.ORIENTATION_MARGIN.LEFT + 15;
-      else
-        left += CONSTANTS.ORIENTATION_MARGIN.RIGHT - 20;
+        left += CONSTANTS.ORIENTATION_MARGIN.LEFT;
     }
 
     if (goalLine.icon.toBase64) {
@@ -826,7 +824,7 @@ Chart.prototype.checkTooltip = function(type) {
     case 'bar':
       graph = CONSTANTS.BAR_CHART;
       break;
-    case 'stack':
+    case 'stackedBar':
       graph = CONSTANTS.STACK_CHART;
       break;
     case 'line':
@@ -878,7 +876,7 @@ Chart.prototype.showTooltip = function(config, event, graph) {
                   config.xValue = d[0];
                   config.yValue = d[1];
                   break;
-                case 'stack':
+                case 'stackedBar':
                   config.xValue = d.data[_this.xAxisKey];
                   config.yValue = _this.valueSum(d.data, _this.stackList);
                   config.stackData = d.data;
@@ -1086,7 +1084,7 @@ Chart.prototype.horizontalGridLines = function() {
   var _this = this,
       axis  = _this.options.axis,
       grids = _this.options.grids,
-      width = (axis && axis.xAxis && axis.yAxis.showAxisLine)
+      width = (axis && axis.xAxis && axis.xAxis.showAxisLine)
                     ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.RIGHT + _this.margin.left)
                     : _this.width;
 
@@ -1094,7 +1092,7 @@ Chart.prototype.horizontalGridLines = function() {
                           ? axis.yAxis.orientation
                           : 'left';
 
-  if (axis && axis.xAxis && axis.yAxis.showAxisLine) {
+  if (axis && axis.xAxis && axis.xAxis.showAxisLine) {
     if (orientation === 'left') {
       width -= CONSTANTS.ORIENTATION_MARGIN.LEFT;
     } else {
@@ -1123,7 +1121,7 @@ Chart.prototype.goalLine = function() {
 
   var _this = this,
       axis  = _this.options.axis,
-      width = (axis && axis.xAxis && axis.yAxis.showAxisLine)
+      width = (axis && axis.xAxis && axis.xAxis.showAxisLine)
                     ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.RIGHT + _this.margin.left)
                     : _this.width;
 
@@ -1131,7 +1129,7 @@ Chart.prototype.goalLine = function() {
                           ? axis.yAxis.orientation
                           : 'left';
 
-  if (axis && axis.xAxis && axis.yAxis.showAxisLine) {
+  if (axis && axis.xAxis && axis.xAxis.showAxisLine) {
     if (orientation === 'left') {
       width -= CONSTANTS.ORIENTATION_MARGIN.LEFT;
     } else {

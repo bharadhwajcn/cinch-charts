@@ -1,4 +1,3 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
 <html>
 
 <head>
@@ -6,6 +5,7 @@
   <script src="../src/js/constants.js"></script>
   <script src="../src/js/chart.js"></script>
   <script src="../src/js/barChart.js"></script>
+  <script src="../src/js/stackedBarChart.js"></script>
   <link rel="stylesheet" href="../src/styles/fu-bar-charts.css" type="text/css">
   <!-- <link rel="stylesheet" href="./css/style.css" type="text/css"> -->
   <style>
@@ -23,24 +23,20 @@
 
     var element = document.querySelector('.chart-container');
 
-    var data = [
-                  ['Jan', 10],
-                  ['Feb', 70],
-                  ['Mar', 30],
-                  ['Apr', 10],
-                  ['May', 60],
-                  ['Jun', 45],
-                  ['Jul', 76],
-                  ['Aug', 40],
-                  ['Sep', 40],
-                  ['Oct', 60],
-                  ['Nov', 40],
-                  ['Dec', 80]
-              ];
+    var data = [ { year : '2010', firstquarter : 20,  secondquarter : 25, thirdquarter : 18, fourthquarter : 22 },
+                 { year : '2011', firstquarter : 24,  secondquarter : 22, thirdquarter : 22, fourthquarter : 21 },
+                 { year : '2012', firstquarter : 21,  secondquarter : 26, thirdquarter : 19, fourthquarter : 23 },
+                 { year : '2013', firstquarter : 19,  secondquarter : 21, thirdquarter : 21, fourthquarter : 19 },
+                 { year : '2014', firstquarter : 22,  secondquarter : 19, thirdquarter : 17, fourthquarter : 21 },
+                 { year : '2015', firstquarter : 23,  secondquarter : 25, thirdquarter : 22, fourthquarter : 24 },
+                 { year : '2016', firstquarter : 21,  secondquarter : 22, thirdquarter : 25, fourthquarter : 23 } ];
 
-    var chart = new BarChart(element, data, {
+    var stack = ['firstquarter' , 'secondquarter', 'thirdquarter', 'fourthquarter'];
+
+    var chart = new StackedBarChart(element, data, stack, {
       bar : {
-        color : '#B8D551', // color of the bar
+        color :  ['#90ED7D', '#757575', '#00526C', '#6ED1F7', '#238FFF'],
+                           // color of the bar
         width : 20,        // width of the bar
         curve : true,      // whether the curve at the top of bar is needed or not
         opacity : 0.8,     // opacity of each bar
@@ -62,7 +58,7 @@
           show : true,     // whether the vertical grids needs to be shown
           color : '#999',  // color of the vertical grids
           opacity : .5,    // opacity of the vertical grids
-          values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
+          values : [ '2010', '2012', '2014', '2016']
                            // the values to which the grid needs to be drawn.
                            // values should be same as that given in the data
         },
@@ -96,7 +92,7 @@
           firstLabel : true,    // Whether to hide the first label at x axis
           orientation: 'bottom',
           ticks : {
-            values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
+            values : [ '2010', '2012', '2014', '2016'],
                                 // The tick values that need to be shown
             padding : 10,       // The padding between ticks and the axis
           }
@@ -124,19 +120,15 @@
         }
       },
       tooltip: {
-        show : true,              // Whether to show the tooltip or not
+        show : true,
         listener : 'click touchstart',
-                                  // listener that the tooltip should respond
-        class : 'custom-tooltip', // Custom CSS class for tooltip
-        /*body : {                // Inbuilt tooltip body
-          title : 'Product X',
-          xLabel : 'X Units',
-          yLabel : 'Y Units',
-        },*/
-        formatter : function() {  //  Customizable tooltip body
-          return this.yValue + ' units <br>in ' + this.xValue;
-        },
-      },
+        class : 'custom-tooltip',
+        formatter : function() {
+          return '<p> <b> Total </b> ' + this.yValue +
+                 '<br> First : ' + this.stackData.firstquarter + ' Second: ' + this.stackData.secondquarter +
+                 '<br> Third : ' + this.stackData.thirdquarter + ' Fourth: ' + this.stackData.fourthquarter + '</p>';
+        }
+      }
     });
 
   </script>
