@@ -59,21 +59,21 @@
       },
       grids : {
         vertical : {
-          show : false,     // whether the vertical grids needs to be shown
+          show : true,     // whether the vertical grids needs to be shown
           color : '#999',  // color of the vertical grids
           opacity : .5,    // opacity of the vertical grids
-          values : [ 'Jan', 'Feb', 'Mar']
+          values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
                            // the values to which the grid needs to be drawn.
                            // values should be same as that given in the data
         },
         horizontal : {
-          show : false,       // whether the horizontal grids needs to be shown
+          show : true,       // whether the horizontal grids needs to be shown
           color : '#999',    // color of the horizontal grids
           opacity : .5,      // opacity of the horizontal grids
           skipFirst : false, // whether to skip drawing first grid line as sometimes
                              //  they aren't required
           skipLast : false,  // similarly whether to skip the last grid line
-          values : [10, 30, 40, 50, 80]
+          values : [0, 10, 30, 40, 50, 80]
                              // the values for which the grid lines needs to be drawn
         }
       },
@@ -87,7 +87,7 @@
           class: 'goal-icon', // custom CSS class for icon
           height : 20,      // height of the icon
           width : 20,       // width of the icon
-          left: 0           // the amount that needs to be moved to left
+          left: -10          // the amount that needs to be moved to left
         }
       },
       axis : {
@@ -96,13 +96,13 @@
           firstLabel : true,    // Whether to hide the first label at x axis
           orientation: 'bottom',
           ticks : {
-            values: ['Jan', 'Mar', 'Jun', 'Aug', 'Oct', 'Dec'],
+            values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
                                 // The tick values that need to be shown
             padding : 10,       // The padding between ticks and the axis
           }
         },
         yAxis : {
-          showAxisLine : false, // Whether to show the axis line or not
+          showAxisLine : true, // Whether to show the axis line or not
           firstLabel : true,   // Whether to show first label at y axis
           orientation: 'left',
           ticks : {
@@ -118,6 +118,7 @@
             y : 0,             // The quantity by which the axis should be moved along y axis
             font_size : '12px', // Font size of the ticks at the axis
             formatter : function(value) {
+              console.log('VALUE', value)
               return String(value) + 'k units';
             },                  // Formatter function to customize tooltip
           }

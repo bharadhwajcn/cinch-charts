@@ -201,12 +201,12 @@ Chart.prototype.yScales = function() {
       _this.yMin = height - (margin.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM);
       _this.yMax = CONSTANTS.DEFAULT_MARGIN.TOP + margin.top;
     } else {
-      _this.yMin = height;
+      _this.yMin = height - (margin.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM);
       _this.yMax = margin.top + CONSTANTS.DEFAULT_MARGIN.TOP + CONSTANTS.ORIENTATION_MARGIN.TOP;
     }
   } else {
     _this.yMin = height - (margin.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM);
-    _this.yMax = margin.top;
+    _this.yMax = CONSTANTS.DEFAULT_MARGIN.TOP + margin.top;
   }
 
   var yAxisTicks    = (axis && axis.yAxis && axis.yAxis.ticks)
@@ -665,7 +665,12 @@ Chart.prototype.addVerticalGridLines = function(config) {
 
   var _this  = this,
       legend = _this.options.legend,
+      axis   = _this.options.axis,
       margin = _this.margin;
+
+  var orientation = (axis && axis.xAxis && axis.xAxis.orientation)
+                          ? axis.xAxis.orientation
+                          : 'bottom';
 
   var yTranslate = _this.yMin;
 
@@ -776,17 +781,20 @@ Chart.prototype.addGoalLines = function() {
                             ? 'qd-goalLine-image ' + iconClass
                             : 'qd-goalLine-image',
          left      = (goalLine.icon.left)
-                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + goalLine.icon.left - 2.5
-                            : CONSTANTS.DEFAULT_MARGIN.LEFT - 2.5;
+                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + goalLine.icon.left + margin.left - 7.5
+                            : CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left - 7.5;
 
-    if (showAxisLine && orientation === 'left') {
-      left += CONSTANTS.ORIENTATION_MARGIN.LEFT + margin.left + 2.5;
+    if (showAxisLine) {
+      if (orientation === 'left')
+        left += CONSTANTS.ORIENTATION_MARGIN.LEFT + 15;
+      else
+        left += CONSTANTS.ORIENTATION_MARGIN.RIGHT - 20;
     }
 
     if (goalLine.icon.toBase64) {
       _this.getBase64Image(url, function(base64url) {
         goalElement.append('svg:image')
-                   .attr('x', left - 2.5)
+                   .attr('x', left)
                    .attr('y', _this.yScale(value) - height/2 + 1)
                    .attr('width', width)
                    .attr('height', height)
@@ -1048,6 +1056,7 @@ Chart.prototype.verticalGridLines = function() {
 
   var _this  = this,
       grids  = _this.options.grids,
+      axis  = _this.options.axis,
       height = _this.yMin - _this.yMax;
 
   var xTick = d3.axisBottom(_this.xScale)
@@ -1078,8 +1087,20 @@ Chart.prototype.horizontalGridLines = function() {
       axis  = _this.options.axis,
       grids = _this.options.grids,
       width = (axis && axis.xAxis && axis.yAxis.showAxisLine)
-                    ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + _this.margin.left)
+                    ? _this.width - (CONSTANTS.DEFAULT_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.RIGHT + _this.margin.left)
                     : _this.width;
+
+  var orientation = (axis && axis.yAxis && axis.yAxis.orientation)
+                          ? axis.yAxis.orientation
+                          : 'left';
+
+  if (axis && axis.xAxis && axis.yAxis.showAxisLine) {
+    if (orientation === 'left') {
+      width -= CONSTANTS.ORIENTATION_MARGIN.LEFT;
+    } else {
+      width -= CONSTANTS.ORIENTATION_MARGIN.RIGHT;
+    }
+  }
 
   var yTick = d3.axisLeft(_this.yScale)
                 .tickSize(-width)
@@ -1109,12 +1130,14 @@ Chart.prototype.goalLine = function() {
   var orientation = (axis && axis.yAxis && axis.yAxis.orientation)
                           ? axis.yAxis.orientation
                           : 'left';
-  if (axis && axis.xAxis && axis.yAxis.showAxisLine)
+
+  if (axis && axis.xAxis && axis.yAxis.showAxisLine) {
     if (orientation === 'left') {
       width -= CONSTANTS.ORIENTATION_MARGIN.LEFT;
     } else {
       width -= CONSTANTS.ORIENTATION_MARGIN.RIGHT;
     }
+  }
 
 
 
