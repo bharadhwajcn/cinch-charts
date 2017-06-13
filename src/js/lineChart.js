@@ -87,6 +87,7 @@ LineChart.prototype.drawLineChart = function(type) {
 
   var _this     = this,
       line      = _this.options.line ? _this.options.line : { }
+      legend      = _this.options.legend,
       threshold = _this.options.threshold;
 
   if (legend && legend.show && legend.position === 'top') {
