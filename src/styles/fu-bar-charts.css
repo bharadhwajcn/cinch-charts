@@ -133,16 +133,17 @@ body {
 }
 
 /*============================================================================*/
+/* Line Chart */
 
-
-/**Line Graph**/
-
-.line {
+.fc-line {
   fill: none;
   stroke-linejoin: round;
   stroke-width: 4;
   stroke-linecap: round;
 }
+
+/*============================================================================*/
+
 
 .qd-legend {
   width: 100%;

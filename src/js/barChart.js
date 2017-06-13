@@ -109,17 +109,20 @@ BarChart.prototype.createBars = function(type, data) {
   switch (type) {
     case 'bar':
       var barPlot = _this.plot.append('g')
-                              .attr('class', 'fc-bar');
+                              .attr('class', 'fc-bars ');
 
       _this.bar = barPlot.selectAll('bar')
                           .data(data)
                           .enter()
                           .append('path')
-                          .attr('class', 'bar')
+                          .attr('class', 'fc-bar')
                           .attr('fill', _this.color);
       break;
     case 'stackedBar':
-      _this.groups = _this.plot.selectAll('g.stack')
+      var barPlot = _this.plot.append('g')
+                            .attr('class', 'fc-stacked-bars');
+
+      _this.groups = barPlot.selectAll('g.stack')
                                .data(_this.stack_data)
                                .enter()
                                .append('g')
@@ -129,7 +132,7 @@ BarChart.prototype.createBars = function(type, data) {
                                .data(function(d) { return d; })
                                .enter()
                                .append('path')
-                               .attr('class', 'bars');
+                               .attr('class', 'fc-stacked-bar');
       break;
   }
 };
@@ -288,7 +291,6 @@ BarChart.prototype.drawBar = function(d, margin, barWidth) {
   */
 BarChart.prototype.barCentering = function(barWidth) {
   var _this = this;
-
   if (barWidth <  _this.xScale.bandwidth())
     return (_this.xScale.bandwidth()-barWidth)/2;
   else

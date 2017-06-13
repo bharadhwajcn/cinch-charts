@@ -45,6 +45,12 @@ Chart.prototype.setValues = function(element, data, options, metaData) {
                             ? bar.color
                             : CONSTANTS.STACKED_BAR.color;
         break;
+      case 'line':
+        var line = _this.options.line;
+        _this.color = (line && line.color)
+                             ? line.color
+                             : CONSTANTS.LINE.color;
+        break;
 
     }
   }

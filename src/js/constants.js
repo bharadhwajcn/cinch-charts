@@ -23,6 +23,14 @@ const CONSTANTS = {
     opacity : 1,
     padding : .05
   },
+  LINE: {
+    color: '#4682B4',
+    width: 4,
+    opacity : 1,
+    icon : {
+      width : 10
+    }
+  },
   DEFAULT_COLORS : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
   LABEL_WIDTH: 35,
   LABEL_LINE_HEIGHT: .3,
@@ -34,18 +42,18 @@ const CONSTANTS = {
   DEFAULT_BAR_RADIUS: 0,
   BAR_CHART : {
     type : 'bar',
-    element : '.bar',
-    class: 'bar'
+    element : '.fc-bar',
+    class: 'fc-bar'
   },
   STACK_CHART : {
     type : 'stackedBar',
-    element : '.bars',
-    class: 'bars'
+    element : '.fc-stacked-bar',
+    class: 'fc-stacked-bar'
   },
   LINE_CHART : {
     type : 'line',
-    element : '.points',
-    class: 'points'
+    element : '.fc-line-point',
+    class: 'fc-line-point'
   },
   AREA_CHART : {
     type : 'line',
