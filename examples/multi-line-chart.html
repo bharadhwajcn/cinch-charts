@@ -1,0 +1,218 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="../bower_components/d3/d3.js"/></script>
+  <script src="../src/js/constants.js"></script>
+  <script src="../src/js/chart.js"></script>
+  <script src="../src/js/lineChart.js"></script>
+  <script src="../src/js/multiLineChart.js"></script>
+  <link rel="stylesheet" href="../src/styles/fu-bar-charts.css" type="text/css">
+  <!-- <link rel="stylesheet" href="./css/style.css" type="text/css"> -->
+  <style>
+  .chart-container {
+    height: 90%;
+    width: 100%;
+  }
+  </style>
+</head>
+
+<body>
+
+  <div class="chart-container"></div>
+
+  <script>
+
+    var line_data = [
+        { key : 'Series 1',
+          value : [
+                    ['Jan', 177],
+                    ['Feb', 104],
+                    ['Mar', 124],
+                    ['Apr', 127],
+                    ['May', 143],
+                    ['Jun', 130],
+                    ['Jul', 109],
+                    ['Aug', 154],
+                    ['Sep', 114],
+                    ['Oct', 102],
+                    ['Nov', 123],
+                    ['Dec', 135]
+                  ]
+        },
+        { key : 'Series 2',
+          value : [
+                    ['Jan', 82],
+                    ['Feb', 97],
+                    ['Mar', 78],
+                    ['Apr', 86],
+                    ['May', 116],
+                    ['Jun', 95],
+                    ['Jul', 109],
+                    ['Aug', 78],
+                    ['Sep', 86],
+                    ['Oct', 116],
+                    ['Nov', 95],
+                    ['Dec', 109]
+                  ]
+        },
+        // { key : 'Series 3',
+        //   value : [
+        //             ['Apr', 5],
+        //             ['Jan', 210],
+        //             ['Jul', 140],
+        //           ]
+        // },
+        // { key : 'Series 4',
+        //   value : [
+        //             ['Feb', 200],
+        //             ['Apr', 80],
+        //             ['Jan', 220]
+        //           ]
+        // },
+        // { key : 'Series 5',
+        //   value : [
+        //             [110, 100],
+        //             [140, 124],
+        //             [200, 190],
+        //           ]
+        // }
+    ];
+
+
+element = document.querySelector('.chart-container')
+
+    var chart = new MultiLineChart(element, line_data, {
+      line: {
+        width: 4,
+        class : 'line-class',
+        // color: ['#359fd1', '#B8D551', '#ABABAB'],
+        icon: {
+          url: ['./static/images/DIA.png', './static/images/DIA.png', './static/images/DIA.png', './static/images/DIA.png', './static/images/DIA.png'],
+          class: 'point-icon',
+          width : 10,
+        }
+      },
+      threshold : {
+        value : [120, 80],
+        icon: {
+          url: './static/images/Pulse.png',
+          width : 10,
+        }
+      },
+      grids : {
+        vertical : {
+          show : true,     // whether the vertical grids needs to be shown
+          color : '#999',  // color of the vertical grids
+          opacity : .5,    // opacity of the vertical grids
+          values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
+                           // the values to which the grid needs to be drawn.
+                           // values should be same as that given in the data
+        },
+        horizontal : {
+          show : true,       // whether the horizontal grids needs to be shown
+          color : '#999',    // color of the horizontal grids
+          opacity : .5,      // opacity of the horizontal grids
+          skipFirst : false, // whether to skip drawing first grid line as sometimes
+                             //  they aren't required
+          skipLast : false,  // similarly whether to skip the last grid line
+          values : [0, 10, 30, 40, 50, 80]
+                             // the values for which the grid lines needs to be drawn
+        }
+      },
+      transition: {
+        animate: true,
+        duration : 2000
+      },
+      margin : {           // margin within the svg container
+        left : 0,
+        right : 0,
+        top : 0,
+        bottom : 0
+      },
+      goalLine : {
+        value : 50,
+        class : 'goalline',
+        icon: {
+          url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+          class: 'goal-icon',
+          height : 15,
+          width : 13,
+          left: 0
+        }
+      },
+      tooltip: {
+        // body : {
+        //   title : 'OMRON',
+        //   xLabel : 'X Units',
+        //   yLabel : 'Y Units',
+        // },
+        formatter : function() {
+          return '<p>' + this.yValue + ' in <br>' + this.xValue + ' </p>';
+        },
+        show : true,
+        listener : 'click touchstart',
+        class : 'custom-tooltip'
+      },
+      axis : {
+        xAxis : {
+          showAxisLine : true, // Whether to show the axis line or not
+          firstLabel : true,    // Whether to hide the first label at x axis
+          orientation: 'bottom',
+          ticks : {
+            values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
+                                // The tick values that need to be shown
+            padding : 10,       // The padding between ticks and the axis
+          }
+        },
+        yAxis : {
+          showAxisLine : true, // Whether to show the axis line or not
+          firstLabel : true,   // Whether to show first label at y axis
+          orientation: 'left',
+          ticks : {
+            values: [ { value : 10, label : '10 m unit' },
+                      { value : 30, label : '30 m unit' },
+                      { value : 40, label : '40 m unit' },
+                      { value : 50, label : '50 m unit' },
+                      { value : 80, label : '80 m unit' },
+                    ],
+                                // The tick values along with its alias label
+                                //   that need to be shown
+            x : 0,             // The quantity by which the axis should be moved along x axis
+            y : 0,             // The quantity by which the axis should be moved along y axis
+            font_size : '12px', // Font size of the ticks at the axis
+            formatter : function(value) {
+              return String(value) + 'k units';
+            },                  // Formatter function to customize tooltip
+          }
+        }
+      },
+      tooltip: {
+        show : true,              // Whether to show the tooltip or not
+        listener : 'click touchstart',
+                                  // listener that the tooltip should respond
+        class : 'custom-tooltip', // Custom CSS class for tooltip
+        /*body : {                // Inbuilt tooltip body
+          title : 'Product X',
+          xLabel : 'X Units',
+          yLabel : 'Y Units',
+        },*/
+        formatter : function() {  //  Customizable tooltip body
+          return this.yValue + ' units <br>in ' + this.xValue;
+        },
+      },
+      connectNull: false,
+      legend: {
+        show: true,
+        class: 'legend-class',
+        subClass: 'legend-sub-class',
+        position : 'bottom',
+        animate : false,
+        height : 40,
+        clickable : [true, true, false, true, false]
+      }
+    });
+
+  </script>
+
+</body>
+</html>

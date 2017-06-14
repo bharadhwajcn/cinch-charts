@@ -31,7 +31,14 @@ const CONSTANTS = {
       width : 10
     }
   },
-  DEFAULT_COLORS : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
+  MULTI_LINE: {
+    color: ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
+    width: 4,
+    opacity : 1,
+    icon : {
+      width : 10
+    }
+  },
   LABEL_WIDTH: 35,
   LABEL_LINE_HEIGHT: .3,
   ICON: {

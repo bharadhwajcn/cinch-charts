@@ -51,6 +51,12 @@ Chart.prototype.setValues = function(element, data, options, metaData) {
                              ? line.color
                              : CONSTANTS.LINE.color;
         break;
+      case 'multiLine':
+        var line = _this.options.line;
+        _this.color = (line && line.color)
+                             ? line.color
+                             : CONSTANTS.MULTI_LINE.color;
+        break;
 
     }
   }
