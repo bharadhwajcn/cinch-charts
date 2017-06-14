@@ -6,18 +6,6 @@
   * @param {Object} data - Data for which graph is to be drawn
   * @param {Array} stack - List of json Keys that forms the stack
   * @param {Object} options - Other options that can be added to the graph.
-  *     {String} options.title - Title of the graph
-  *     {Object} options.transition - Details about the transition.
-  *       {Boolean} options.transition.animate - Whether animation needed or not.
-  *       {String} options.transition.type - Type of the animation required.
-  *     {Object} options.margin - Margin to the SVG canvas area.
-  *       {Integer} options.margin.top - Top margin.
-  *       {Integer} options.margin.bottom - Bottom margin.
-  *       {Integer} options.margin.left - Left margin.
-  *       {Integer} options.margin.right - Right margin.
-  *     {String} options.title - Title of the graph
-  *     {Integer} options.barWidth - Width of each bar of the graph
-  *     {Boolean} options.tooltip - Whether tooltip is needed or not.
   */
 var StackedBarChart = function(element, data, stack, options) {
 

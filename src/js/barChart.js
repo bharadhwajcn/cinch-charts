@@ -5,18 +5,6 @@
   * @param {String} element - Name of the element to which graph is to be drawn.
   * @param {Object} data - Data for which graph is to be drawn
   * @param {Object} options - Other options that can be added to the graph.
-  *     {String} options.title - Title of the graph
-  *     {Object} options.transition - Details about the transition.
-  *       {Boolean} options.transition.animate - Whether animation needed or not.
-  *       {String} options.transition.type - Type of the animation required.
-  *     {Object} options.margin - Margin to the SVG canvas area.
-  *       {Integer} options.margin.top - Top margin.
-  *       {Integer} options.margin.bottom - Bottom margin.
-  *       {Integer} options.margin.left - Left margin.
-  *       {Integer} options.margin.right - Right margin.
-  *     {String} options.title - Title of the graph
-  *     {Integer} options.barWidth - Width of each bar of the graph
-  *     {Boolean} options.tooltip - Whether tooltip is needed or not.
   */
 var BarChart = function(element, data, options) {
 
@@ -35,7 +23,10 @@ var BarChart = function(element, data, options) {
 
   // Redraw the graph when window size is altered so as to make it responsive.
   window.addEventListener('resize', function(event) {
-    _this.redrawGraph(element, data, options);
+    _this.setValues(element, data, options, {
+      type : 'bar'
+    });
+    _this.drawBarChart('bar');
   });
 
 };
@@ -43,14 +34,6 @@ var BarChart = function(element, data, options) {
 
 // Cloning the baseclass `Chart` so as to access all its methods.
 BarChart.prototype = Object.create(Chart.prototype);
-
-BarChart.prototype.redrawGraph = function(element, data, options) {
-  var _this = this;
-  _this.setValues(element, data, options, {
-    type : 'bar'
-  });
-  _this.drawBarChart('bar');
-};
 
 /**
   * Function which finds the X Axis ticks from the data provided.
