@@ -82,9 +82,12 @@ StackedBarChart.prototype.xExtentCalculate = function(data) {
 StackedBarChart.prototype.yExtentCalculate = function(data) {
 
   var _this = this;
-  return [0, d3.max(data.map(function(d) {
-               return _this.valueSum(d, _this.stackList);
-             }))];
+  var yExtent =  d3.extent(data.map(function(d) { return _this.valueSum(d, _this.stackList); }));
+  if (yExtent[0] > 0) {
+    yExtent[0] = 0;
+  }
+  return yExtent;
+  
 };
 
 /**

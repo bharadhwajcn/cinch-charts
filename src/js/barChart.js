@@ -48,7 +48,11 @@ BarChart.prototype.xExtentCalculate = function(data) {
   * @return {Array} - An array which contains minimum and maximum value.
   */
 BarChart.prototype.yExtentCalculate = function(data) {
-  return [0, d3.max(data, function(d) { return d[1]; })];
+  var yExtent = d3.extent(data, function(d) { return d[1]; });
+  if (yExtent[0] > 0) {
+    yExtent[0] = 0;
+  }
+  return yExtent;
 };
 
 /**

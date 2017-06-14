@@ -48,7 +48,11 @@ LineChart.prototype.xExtentCalculate = function(data) {
   * @return {Array} - An array which contains minimum and maximum value.
   */
 LineChart.prototype.yExtentCalculate = function(data) {
-  return [0, d3.max(data, function(d) {return d[1]})];
+  var yExtent = d3.extent(data, function(d) {return d[1]});
+  if (yExtent[0] > 0) {
+    yExtent[0] = 0;
+  }
+  return yExtent;
 };
 
 /**
@@ -87,12 +91,7 @@ LineChart.prototype.drawLineChart = function(type) {
 
   var _this     = this,
       line      = _this.options.line ? _this.options.line : { }
-      legend    = _this.options.legend,
       threshold = _this.options.threshold;
-
-  if (legend && legend.show && legend.position === 'top') {
-    _this.checkLegend(type, _this.data)
-  }
 
   // Calls the base class function to draw canvas.
   _this.drawChart();
@@ -114,17 +113,13 @@ LineChart.prototype.drawLineChart = function(type) {
     _this.checkTransition();
   }
 
-  if (legend && legend.show && legend.position === 'bottom') {
-    _this.checkLegend(type, _this.data);
-  }
-
 };
 
 /**
   * Function to draw the line of the line chart
   * @param {String} type      - type of the graph.
   * @param {Object} data      - Data to draw the line on the graph.
-  * @param {Object} line      - line element on the graph.
+  * @param {Object} line      - line config of the graph.
   * @param {Object} threshold - threshold config of the graph.
   * @param {String} lineId    - ID for the line.
   */
