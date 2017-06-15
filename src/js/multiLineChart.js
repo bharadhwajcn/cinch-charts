@@ -65,10 +65,11 @@ MultiLineChart.prototype.yExtentCalculate = function(data) {
   */
 MultiLineChart.prototype.drawLineChart = function(type) {
 
-  var _this     = this,
-      line      = _this.options.line ? _this.options.line : { }
-      legend    = _this.options.legend,
-      threshold = _this.options.threshold;
+  var _this      = this,
+      line       = _this.options.line ? _this.options.line : { }
+      legend     = _this.options.legend,
+      threshold  = _this.options.threshold,
+      transition = _this.options.transition;
 
   if (legend && legend.show && legend.position === 'top') {
     _this.checkLegend(type, _this.data)
@@ -89,9 +90,11 @@ MultiLineChart.prototype.drawLineChart = function(type) {
                       // returns true if line is defined; in this case, if y value is not null
                     })
                    .curve(d3.curveMonotoneX);
-
-    _this.drawMultiLines(type, _this.data, line, threshold);
-    _this.checkTransition();
+    if (transition && transition.delay && transition.delay > 0) {
+      _this.drawMultiLinesWithDelay(type, _this.data, line, threshold, transition.delay, 0);
+    } else {
+      _this.drawMultiLinesWithoutDelay(type, _this.data, line, threshold, 0);
+    }
   }
 
   if (legend && legend.show && legend.position === 'bottom') {
@@ -101,14 +104,40 @@ MultiLineChart.prototype.drawLineChart = function(type) {
 };
 
 /**
-  * Function to draw the line of the line chart
+  * Function to draw the line of the line chart with delay between each line
   * @param {String} type      - type of the graph.
   * @param {Object} data      - Data to draw the line on the graph.
   * @param {Object} line      - line config of the graph.
   * @param {Object} threshold - threshold config of the graph.
-  * @param {String} lineId    - ID for the line.
+  * @param {Integer} delay    - Delay between drawing 2 lines.
+  * @param {Integer} i        - Iteration number.
   */
-MultiLineChart.prototype.drawMultiLines = function(type, data, line, threshold) {
+MultiLineChart.prototype.drawMultiLinesWithDelay = function(type, data, line, threshold, delay, i) {
+  var _this = this;
+
+  var currentLineConfig      = _this.getLineConfig(line, i);
+  var currentThresholdConfig = _this.getThresholdConfig(threshold, i);
+  var lineId                 = 'line-' + String(i+1);
+
+  _this.drawLine(type, data[i].value, currentLineConfig, currentThresholdConfig, lineId);
+  _this.checkTransition();
+
+  if (++i < data.length) {
+    setTimeout(function() {
+      _this.drawMultiLinesWithDelay(type, data, line, threshold, delay, i);
+    }, delay);
+  }
+
+};
+
+/**
+  * Function to draw the line of the line chart without delay between lines
+  * @param {String} type      - type of the graph.
+  * @param {Object} data      - Data to draw the line on the graph.
+  * @param {Object} line      - line config of the graph.
+  * @param {Object} threshold - threshold config of the graph.
+  */
+MultiLineChart.prototype.drawMultiLinesWithoutDelay = function(type, data, line, threshold) {
   var _this = this;
 
   data.forEach(function(d, i) {
@@ -116,6 +145,7 @@ MultiLineChart.prototype.drawMultiLines = function(type, data, line, threshold) 
     var currentThresholdConfig = _this.getThresholdConfig(threshold, i);
     var lineId                 = 'line-' + String(i+1);
     _this.drawLine(type, d.value, currentLineConfig, currentThresholdConfig, lineId);
+    _this.checkTransition();
   });
 };
 
@@ -165,6 +195,7 @@ MultiLineChart.prototype.getLineConfig = function(line, i) {
 
 
 MultiLineChart.prototype.getThresholdConfig = function(threshold, i) {
+
   var _this           = this,
       thresholdConfig = { icon : { } };
 

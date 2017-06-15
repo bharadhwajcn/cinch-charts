@@ -125,9 +125,7 @@ LineChart.prototype.drawLineChart = function(type) {
   */
 LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
 
-  var _this       = this,
-      legend      = _this.options.legend,
-      legendSpace = _this.width/_this.data.length;
+  var _this       = this;
 
   var linePlot = _this.plot.append('g')
                            .attr('class', 'fc-line');
@@ -135,12 +133,17 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
   var filteredData = _this.options.connectNull
                           ? data.filter(_this.line.defined())
                           : data;
+
   var strokeWidth = (line && line.width)
                           ? line.width
                           : 4;
+
   var className = (line && line.class)
                           ? 'fc-line-stroke ' + line.class
                           : 'fc-line-stroke';
+  var color = (line && line.color)
+                          ? line.color
+                          : _this.color;
 
   linePlot.selectAll('.line')
           .data([data])
@@ -148,7 +151,7 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
           .append('path')
           .attr('class', className)
           .attr('id', 'fc-' + lineId)
-          .attr('stroke', _this.color)
+          .attr('stroke', color)
           .attr('stroke-width', strokeWidth)
           .attr('d', _this.line(filteredData))
           .attr('fill', 'none')
@@ -174,22 +177,25 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
   */
 LineChart.prototype.drawPlotPoints = function(type, plot, data, iconConfig, thresholdConfig, lineId) {
 
-  var _this = this;
+  var _this        = this,
+      thresholdVal = (thresholdConfig && thresholdConfig.value)
+                          ? thresholdConfig.value
+                          : null;
 
   var normalIconData = data.filter(function(d) {
-                          if (thresholdConfig && thresholdConfig.value) {
-                            var threshold = thresholdConfig.value;
-                          }
-                          if (threshold !== null && d[1] !== null && d[1] < threshold) {
-                            return d;
+                          if (thresholdVal === null) {
+                            if (d[1] !== null) {
+                              return d;
+                            }
+                          } else {
+                            if (d[1] !== null && d[1] < thresholdVal) {
+                              return d;
+                            }
                           }
                         });
 
   var thresholdData = data.filter(function(d) {
-                              if (thresholdConfig && thresholdConfig.value) {
-                                var threshold = thresholdConfig.value;
-                              }
-                              if (threshold !== null && d[1] !== null && d[1] >= threshold) {
+                              if (thresholdVal !== null && d[1] !== null && d[1] >= thresholdVal) {
                                   return d;
                               }
                             });
@@ -202,7 +208,7 @@ LineChart.prototype.drawPlotPoints = function(type, plot, data, iconConfig, thre
         _this.checkTooltip(type);
       });
     } else {
-      _this.addImagePlotPoints(plot, normalIconData, iconConfig, normalIconBase64Url, lineId)
+      _this.addImagePlotPoints(plot, normalIconData, iconConfig, iconConfig.url, lineId)
       _this.addImagePlotPoints(plot, thresholdData, iconConfig, _this.thresholdIconUrl, lineId)
       _this.checkTooltip(type);
     }

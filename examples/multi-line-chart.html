@@ -31,7 +31,7 @@
                     ['Apr', 127],
                     ['May', 143],
                     ['Jun', 130],
-                    ['Jul', 109],
+                    ['Jul', 90],
                     ['Aug', 154],
                     ['Sep', 114],
                     ['Oct', 102],
@@ -55,27 +55,22 @@
                     ['Dec', 109]
                   ]
         },
-        // { key : 'Series 3',
-        //   value : [
-        //             ['Apr', 5],
-        //             ['Jan', 210],
-        //             ['Jul', 140],
-        //           ]
-        // },
-        // { key : 'Series 4',
-        //   value : [
-        //             ['Feb', 200],
-        //             ['Apr', 80],
-        //             ['Jan', 220]
-        //           ]
-        // },
-        // { key : 'Series 5',
-        //   value : [
-        //             [110, 100],
-        //             [140, 124],
-        //             [200, 190],
-        //           ]
-        // }
+        { key : 'Series 3',
+          value : [
+                    ['Jan', 50],
+                    ['Feb', 40],
+                    ['Mar', 95],
+                    ['Apr', 75],
+                    ['May', 90],
+                    ['Jun', null],
+                    ['Jul', 74],
+                    ['Aug', 68],
+                    ['Sep', 60],
+                    ['Oct', 90],
+                    ['Nov', 48],
+                    ['Dec', 66]
+                  ]
+        },
     ];
 
 
@@ -83,22 +78,25 @@ element = document.querySelector('.chart-container')
 
     var chart = new MultiLineChart(element, line_data, {
       line: {
-        width: 4,
-        class : 'line-class',
-        // color: ['#359fd1', '#B8D551', '#ABABAB'],
+        width: [4, 8],
+        color: ['#359fd1', '#B8D551', '#ABABAB'],
         icon: {
-          url: ['./static/images/DIA.png', './static/images/DIA.png', './static/images/DIA.png', './static/images/DIA.png', './static/images/DIA.png'],
-          class: 'point-icon',
-          width : 10,
+          show : [true, true, true],
+          url: ['https://bharadhwajcn.github.io/fubar-charts/images/blue_star.png',
+                'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+                'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+              ],
+          width : [10, 15, 10]
         }
       },
       threshold : {
-        value : [120, 80],
+        value : [131, null, 60],
         icon: {
-          url: './static/images/Pulse.png',
+          url: ['https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png'],
           width : 10,
         }
       },
+      connectNull: false,
       grids : {
         vertical : {
           show : true,     // whether the vertical grids needs to be shown
@@ -121,7 +119,8 @@ element = document.querySelector('.chart-container')
       },
       transition: {
         animate: true,
-        duration : 2000
+        duration : 2000,
+        delay : 1000,
       },
       margin : {           // margin within the svg container
         left : 0,
@@ -139,19 +138,6 @@ element = document.querySelector('.chart-container')
           width : 13,
           left: 0
         }
-      },
-      tooltip: {
-        // body : {
-        //   title : 'OMRON',
-        //   xLabel : 'X Units',
-        //   yLabel : 'Y Units',
-        // },
-        formatter : function() {
-          return '<p>' + this.yValue + ' in <br>' + this.xValue + ' </p>';
-        },
-        show : true,
-        listener : 'click touchstart',
-        class : 'custom-tooltip'
       },
       axis : {
         xAxis : {
@@ -200,7 +186,6 @@ element = document.querySelector('.chart-container')
           return this.yValue + ' units <br>in ' + this.xValue;
         },
       },
-      connectNull: false,
       legend: {
         show: true,
         class: 'legend-class',

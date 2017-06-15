@@ -840,7 +840,7 @@ Chart.prototype.checkTooltip = function(type) {
       graph = CONSTANTS.STACK_CHART;
       break;
     case 'line':
-    case 'multiline':
+    case 'multiLine':
       graph = CONSTANTS.LINE_CHART;
       break;
     case 'area':
