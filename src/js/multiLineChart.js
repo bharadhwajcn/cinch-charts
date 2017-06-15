@@ -226,11 +226,113 @@ MultiLineChart.prototype.getThresholdConfig = function(threshold, i) {
   */
 MultiLineChart.prototype.checkLegend = function(type, data) {
   var _this = this;
-  if (_this.options.legend && _this.options.legend.show && type === 'multiline') {
+  if (_this.options.legend && _this.options.legend.show) {
     _this.addLegend(type, data)
   }
 };
 
+MultiLineChart.prototype.addLegend = function(type, data) {
+
+  var _this  = this,
+      line   = _this.options.line,
+      legend = _this.options.legend;
+
+  var className =  (legend && legend.class)
+                            ? 'fc-legend ' + legend.class
+                            : 'fc-legend';
+
+  var legendSpace = _this.width/data.length;
+
+  d3.select(_this.element)
+    .selectAll('#fc-legend')
+    .remove();
+
+  var legendPlot = d3.select(_this.element)
+                     .append('div')
+                     .attr('class', className)
+                     .attr('id', 'fc-legend');
+
+
+  data.forEach(function(d, i) {
+
+    var clickable = _this.checkClickable(legend, i)
+    var listener  = document.ontouchstart !== null ? 'click' : 'touchstart';
+        d.active  = true;
+    var legendCanvas = legendPlot.append('div')
+                                 .attr('id', 'fc-legend-' + String(i+1))
+                                 .attr('class', 'fc-legend-element')
+                                 .on(listener, function() {
+                                   if (clickable)
+                                     return _this.toggleVisibility(d, i);
+                                 });
+
+    legendCanvas.node().style.width = legendSpace;
+    if (!clickable) {
+      legendCanvas.node().style.cursor = 'default';
+    }
+
+    if (legend && legend.show) {
+      if (line.icon && line.icon.url && line.icon.url[i]) {
+        var imageUrl = line.icon.url[i];
+        _this.getBase64Image(imageUrl, function(base64url) {
+          legendCanvas.append('img')
+                      .attr('src', base64url);
+          legendCanvas.append('span')
+                      .text(d.key);
+        });
+      } else {
+        var image = legendCanvas.append('div')
+                                .attr('class', 'fc-legend-circle');
+
+        image.node().style.background = _this.color[i];
+        legendCanvas.append('span')
+                    .attr('float', 'left')
+                    .text(d.key);
+      }
+    }
+
+  });
+};
+
+MultiLineChart.prototype.checkClickable = function(legend, i) {
+
+  if (legend) {
+    if (legend.clickable[i] || (legend.clickable[i] === undefined && legend.clickable)) {
+      return true;
+    }
+  }
+  return false;
+
+};
+
+
+MultiLineChart.prototype.toggleVisibility = function(d, i) {
+  var _this  = this,
+      legend = _this.options.legend;
+
+  if (d.active) {
+    d3.select(_this.element)
+      .selectAll('#fc-line-' + String(i+1))
+      .transition(100)
+      .style('display', 'none');
+    d3.select(_this.element)
+      .selectAll('#fc-legend-' + String(i+1))
+      .transition(100)
+      .style('opacity', 0.5);
+  } else {
+    d3.select(_this.element)
+      .selectAll('#fc-line-' + String(i+1))
+      .transition(100)
+      .style('display', null);
+    d3.select(_this.element)
+      .selectAll('#fc-legend-' + String(i+1))
+      .transition(100)
+      .style('opacity', 1);
+  }
+  d.active = !d.active;
+  return d;
+
+};
 
 MultiLineChart.prototype.flattenArray = function(array) {
   var data = [ ];

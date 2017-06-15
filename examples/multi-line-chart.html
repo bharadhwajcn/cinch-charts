@@ -7,7 +7,6 @@
   <script src="../src/js/lineChart.js"></script>
   <script src="../src/js/multiLineChart.js"></script>
   <link rel="stylesheet" href="../src/styles/fu-bar-charts.css" type="text/css">
-  <!-- <link rel="stylesheet" href="./css/style.css" type="text/css"> -->
   <style>
   .chart-container {
     height: 90%;
@@ -78,25 +77,25 @@ element = document.querySelector('.chart-container')
 
     var chart = new MultiLineChart(element, line_data, {
       line: {
-        width: [4, 8],
-        color: ['#359fd1', '#B8D551', '#ABABAB'],
+        width: [4, 8, 4],
+        color: ['#359fd1', '#B8D551', '#FD8635'],
         icon: {
           show : [true, true, true],
           url: ['https://bharadhwajcn.github.io/fubar-charts/images/blue_star.png',
                 'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
-                'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+                'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
               ],
           width : [10, 15, 10]
         }
       },
       threshold : {
-        value : [131, null, 60],
+        value : [131, 90, null],
         icon: {
           url: ['https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png'],
           width : 10,
         }
       },
-      connectNull: false,
+      connectNull: true,
       grids : {
         vertical : {
           show : true,     // whether the vertical grids needs to be shown
@@ -189,11 +188,10 @@ element = document.querySelector('.chart-container')
       legend: {
         show: true,
         class: 'legend-class',
-        subClass: 'legend-sub-class',
         position : 'bottom',
-        animate : false,
-        height : 40,
-        clickable : [true, true, false, true, false]
+        animate : true,
+        height : 45,
+        clickable : [true, true, true]
       }
     });
 

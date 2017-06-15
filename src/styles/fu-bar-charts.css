@@ -143,14 +143,16 @@ body {
 }
 
 /*============================================================================*/
+/* Legend Properties */
 
-
-.qd-legend {
+/* Legend attributes */
+.fc-legend {
   width: 100%;
   font: 10px sans-serif;
 }
 
-.qd-legend-element {
+/* Legend element properties */
+.fc-legend-element {
   cursor: pointer;
   text-align: center;
   vertical-align: middle;
@@ -159,7 +161,17 @@ body {
   line-height: 45px;
 }
 
-.qd-legend-circle {
+/* Legend image property */
+.fc-legend-element img {
+  height: 15px;
+  width: 15px;
+  position: relative;
+  margin: 0 5px 0 0;
+  top: 3px;
+}
+
+/* Legend color image property */
+.fc-legend-circle {
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -167,14 +179,4 @@ body {
   display: inline-block;
   margin-right: 10px;
 }
-.qd-legend .qd-legend-element img {
-  margin: 0 5px 0 0;
-}
-
-.legend img {
-  height: 15px;
-  position: relative;
-  top: 3px;
-}
-
-  /** Tooltip Styles **/
+/*============================================================================*/

@@ -128,7 +128,8 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
   var _this       = this;
 
   var linePlot = _this.plot.append('g')
-                           .attr('class', 'fc-line');
+                           .attr('class', 'fc-line')
+                           .attr('id', 'fc-' + lineId);
 
   var filteredData = _this.options.connectNull
                           ? data.filter(_this.line.defined())
@@ -150,7 +151,7 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
           .enter()
           .append('path')
           .attr('class', className)
-          .attr('id', 'fc-' + lineId)
+          .attr('id', 'fc-path-' + lineId)
           .attr('stroke', color)
           .attr('stroke-width', strokeWidth)
           .attr('d', _this.line(filteredData))
@@ -158,7 +159,7 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
           .attr('clip-path', 'url(#fc-clip-' + lineId + ')');
 
   if (line && line.icon && line.icon.show) {
-    _this.drawPlotPoints(type, linePlot, filteredData, line.icon, threshold, lineId);
+    _this.drawPlotPoints(type, linePlot, filteredData, line, threshold, lineId);
   }
   _this.clipPath = _this.plot.append('clipPath')
                              .attr('id', 'fc-clip-' + lineId)
@@ -171,16 +172,17 @@ LineChart.prototype.drawLine = function(type, data, line, threshold, lineId) {
   * @param {String} type      - type of the graph.
   * @param {Object} plot      - plot to which new elements need to be added.
   * @param {Object} data      - Data to draw the line on the graph.
-  * @param {Object} iconConfig - icon config of the graph.
+  * @param {Object} line       - line config of the graph.
   * @param {Object} thresholdConfig - threshold config of the graph.
   * @param {String} lineId    - ID for the line.
   */
-LineChart.prototype.drawPlotPoints = function(type, plot, data, iconConfig, thresholdConfig, lineId) {
+LineChart.prototype.drawPlotPoints = function(type, plot, data, line, thresholdConfig, lineId) {
 
   var _this        = this,
       thresholdVal = (thresholdConfig && thresholdConfig.value)
                           ? thresholdConfig.value
-                          : null;
+                          : null,
+      iconConfig   = line.icon;
 
   var normalIconData = data.filter(function(d) {
                           if (thresholdVal === null) {
@@ -213,7 +215,7 @@ LineChart.prototype.drawPlotPoints = function(type, plot, data, iconConfig, thre
       _this.checkTooltip(type);
     }
   } else {
-    _this.addColorPlotPoints(plot, normalIconData, iconConfig, iconConfig.url, lineId)
+    _this.addColorPlotPoints(plot, normalIconData, line, iconConfig.url, lineId)
     _this.addImagePlotPoints(plot, thresholdData, iconConfig, _this.thresholdIconUrl, lineId)
     _this.checkTooltip(type);
   }
@@ -224,7 +226,7 @@ LineChart.prototype.drawPlotPoints = function(type, plot, data, iconConfig, thre
   * Function to add the image plot points to the line chart
   * @param {Object} plot       - plot to which new elements need to be added.
   * @param {Object} data       - Data to draw the line on the graph.
-  * @param {Object} iconConfig - icon config of the graph.
+  * @param {Object} line       - line config of the graph.
   * @param {String} iconUrl    - url for the icon.
   * @param {String} lineId     - ID for the line.
   */
@@ -258,17 +260,20 @@ LineChart.prototype.addImagePlotPoints = function(plot, data, iconConfig, iconUr
   * @param {String} iconUrl    - url for the icon.
   * @param {String} lineId     - ID for the line.
   */
-LineChart.prototype.addColorPlotPoints = function(plot, data, iconConfig, iconUrl, lineId) {
+LineChart.prototype.addColorPlotPoints = function(plot, data, line, iconUrl, lineId) {
 
   var _this       = this,
-      line        = _this.options.line,
+      iconConfig  = line.icon
       currentLine = '.fc-' + lineId
       iconWidth   = iconConfig.width
                         ? iconConfig.width
                         : CONSTANTS.LINE.icon.width,
       radius      = (line && line.width)
                         ? 1.25 * line.width
-                        : 1.25 * CONSTANTS.LINE.width;
+                        : 1.25 * CONSTANTS.LINE.width,
+      color       = (line && line.color)
+                        ? line.color
+                        : _this.color;
 
   plot.selectAll(currentLine)
       .data(data)
@@ -279,7 +284,7 @@ LineChart.prototype.addColorPlotPoints = function(plot, data, iconConfig, iconUr
       .attr('cy', function(d) { return _this.yScale(d[1]); })
       .attr('r', radius)
       .attr('stroke-width', 1)
-      .attr('stroke', _this.color)
+      .attr('stroke', color)
       .attr('fill', '#fff')
       .attr('clip-path', 'url(#fc-clip-' + lineId + ')');
 };
