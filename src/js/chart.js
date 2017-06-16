@@ -496,9 +496,9 @@ Chart.prototype.checkYAxisLabels = function(axis, config) {
 
   var _this          = this,
       translateLeft  = _this.defaultMargin(),
-      font_size      = (config.ticks && config.ticks.font_size)
-                            ? config.ticks.font_size
-                            : CONSTANTS.AXIS_CONFIG.X_AXIS.ticks.font_size;
+      fontSize       = (config.ticks && config.ticks.fontSize)
+                            ? config.ticks.fontSize
+                            : CONSTANTS.AXIS_CONFIG.X_AXIS.ticks.fontSize;
 
 
 
@@ -508,51 +508,26 @@ Chart.prototype.checkYAxisLabels = function(axis, config) {
                                 .attr('transform', 'translate(0,' + topMargin + ')')
                                 .call(xAxis)
                                 .selectAll('.tick text')
-                                .attr('font-size', font_size);
+                                .attr('font-size', fontSize);
 
-  _this.adjustTickPosition(config, 'x');
-  _this.checkAxisLabelRotation(config, 'x');
-
-};
-
-/**
- * To adjust the tick label postions of both axis
- * @param {object} config   - Axis configuration options
- * @param {String} axis     - axis code
- */
-Chart.prototype.adjustTickPosition = function(config, axis) {
-
-  var _this = this;
-  var tickPosition = {
-    x : (config.ticks && config.ticks.x) ? config.ticks.x : 0,
-    y : (config.ticks && config.ticks.y) ? config.ticks.y : 0
-  };
-  var selector = (axis === 'x' || axis === 'X') ? '#x-axis g' : '#y-axis g';
-  var regex    = /translate\(\s*([^\s,)]+)[ ,]([^\s,)]+)/;
-  var elements = _this.element.querySelectorAll(selector);
-
-  elements.forEach(function(tick) {
-    var textElement = tick.querySelector('text');
-    textElement.setAttribute('transform', 'translate(' + tickPosition.x + ',' + tickPosition.y + ')');
-  });
+  _this.checkAxisLabelAlteration(config, 'x');
 
 };
-
 
 /**
  * To check whether X axis label is to be rotated or not.
  * @param {object} config - X Axis configuration options
  * @param {String} axis   - axis code
  */
-Chart.prototype.checkAxisLabelRotation = function(config, axis) {
+Chart.prototype.checkAxisLabelAlteration = function(config, axis) {
 
   var _this = this,
       ticks = config.ticks;
-  if (ticks && ticks.rotate && ticks.rotate.angle) {
-    var angle  = ticks.rotate.angle,
-        xShift = ticks.rotate.x || '0px',
-        yShift = ticks.rotate.y || '0px';
-    _this.rotateAxisLabel(axis, xShift, yShift, angle);
+  if (ticks && ticks.position) {
+    var angle  = ticks.position.angle || 0,
+        xShift = ticks.position.x || '0',
+        yShift = ticks.position.y || '0';
+    _this.alterAxisLabel(axis, xShift, yShift, angle);
   }
 
 };
@@ -569,9 +544,9 @@ Chart.prototype.drawYAxis = function(config, yAxis, leftMargin) {
       alignment = (config.ticks && config.ticks.alignment)
                                 ? config.ticks.alignment
                                 : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks.alignment,
-      font_size = (config.ticks && config.ticks.font_size)
-                                ? config.ticks.font_size
-                                : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks.font_size;
+      fontSize = (config.ticks && config.ticks.fontSize)
+                                ? config.ticks.fontSize
+                                : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks.fontSize;
 
   _this.yAxisLabels =  _this.plot.append('g')
                                  .attr('class', 'fc-axis fc-y-axis')
@@ -579,11 +554,10 @@ Chart.prototype.drawYAxis = function(config, yAxis, leftMargin) {
                                  .attr('transform', 'translate(' + leftMargin + ', 0)')
                                  .call(yAxis)
                                  .selectAll('.tick text')
-                                 .attr('font-size', font_size)
+                                 .attr('font-size', fontSize)
                                  .call(_this.wrap, CONSTANTS.LABEL_WIDTH, alignment);
 
-  _this.adjustTickPosition(config, 'y');
-  _this.checkAxisLabelRotation(config, 'y');
+  _this.checkAxisLabelAlteration(config, 'y');
 
 };
 
@@ -613,16 +587,20 @@ Chart.prototype.addGridLines = function(config) {
   * @param{String} yShift - The amount by which the text is to be shifted in Y Axis
   * @param{Integer} angle - Angle of rotation
   */
-Chart.prototype.rotateAxisLabel = function(axis, xShift, yShift, angle) {
+Chart.prototype.alterAxisLabel = function(axis, xShift, yShift, angle) {
 
   var _this = this;
       axis  = (axis === 'x' || axis === 'X')
                     ? _this.xAxisLabels
                     : _this.yAxisLabels;
 
-  axis.attr('dx', xShift)
-      .attr('dy', yShift)
-      .attr('transform', 'rotate(-' + angle + ')');
+  if (angle === 0 ) {
+    axis.attr('transform','translate(' + xShift + ',' + yShift + ')');
+  } else if (xShift === 0 && yShift === 0) {
+    axis.attr('transform', 'rotate(-' + angle + ')');
+  } else {
+    axis.attr('transform', 'rotate(-' + angle + '), translate(' + xShift + ',' + yShift + ')');
+  }
 
 };
 

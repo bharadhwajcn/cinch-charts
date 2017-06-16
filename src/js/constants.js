@@ -73,7 +73,7 @@ const CONSTANTS = {
       orientation: 'bottom',
       firstLabel: true,
       ticks: {
-        font_size: '13px',
+        fontSize: '13px',
         alignment: 'middle',
         padding: 5
       },
@@ -82,7 +82,7 @@ const CONSTANTS = {
     Y_AXIS: {
       orientation: 'left',
       ticks: {
-        font_size: '13px',
+        fontSize: '13px',
         padding: 5,
         alignment: 'end'
       },
