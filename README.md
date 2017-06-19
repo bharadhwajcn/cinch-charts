@@ -306,6 +306,7 @@ var options = {
         class : 'goal-line-class',
         icon: {
             url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+            toBase64: true,
             class: 'goal-icon-class',
             height : 15,
             width : 13,
@@ -504,7 +505,7 @@ var chart = new BarChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar-chart.png" alt="Basic Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 
 
 ### <a name="bar-chart-examples-full-option"></a> Full option Chart Example ###
@@ -610,7 +611,7 @@ var chart = new BarChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_bar-chart.png" alt="Full option Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_bar_chart.png" alt="Full option Bar Chart Example" width="500"/>
 -------------------------
 
 # <a name="stacked-bar-chart"></a>Stacked Bar Chart #
@@ -696,7 +697,7 @@ var data = [
 
 ------------
 
-## <a name="stacked-bar-chart-stack"></a>Stack ##
+## <a name="stacked-bar-chart-stack"></a>Stack Format##
 
 The `stack` used here is used to say, which all keys in `data` needs to be made as  
 as stack for `StackedBarChart`. Its format is simply an array of valid keys from  
@@ -893,6 +894,7 @@ var options = {
         class : 'goal-line-class',
         icon: {
             url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+            toBase64: true,
             class: 'goal-icon-class',
             height : 15,
             width : 13,
