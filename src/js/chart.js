@@ -234,7 +234,7 @@ Chart.prototype.yScales = function() {
   var ticks = [ ];
   if (typeof tickValues[0] === 'object') {
     tickValues.forEach(function(d) {
-      ticks.push(d.key);
+      ticks.push(d.value);
     });
   } else {
     ticks = tickValues;
@@ -412,7 +412,8 @@ Chart.prototype.addYAxis = function(config) {
   }
 
   if (!firstLabel) {
-    if (_this.element.querySelector('#y-axis').children === undefined  && _this.element.querySelector('#y-axis').childNodes[CONSTANTS.FIRST_CHILD] !== undefined){
+    if (_this.element.querySelector('#y-axis').children === undefined  &&
+        _this.element.querySelector('#y-axis').childNodes[CONSTANTS.FIRST_CHILD] !== undefined) {
       _this.element.querySelector('#y-axis')
                    .childNodes[CONSTANTS.FIRST_CHILD]
                    .remove();
@@ -451,22 +452,20 @@ Chart.prototype.checkYAxisLabels = function(axis, config) {
     if (typeof tick[0] === 'object') {
       var values = [ ],
           labels = [ ];
+      if (tick.indexOf(_this.yExtent[0]) < 0)
+        tick.unshift({ value : _this.yExtent[0], label : _this.yExtent[0] });
       tick.forEach(function(d) {
         values.push(d.value);
         labels.push(d.label)
       });
+
     } else {
+      if (tick.indexOf(_this.yExtent[0]) < 0)
+        tick.unshift(_this.yExtent[0]);
       var values = tick,
           labels = tick;
     }
-    if (values.indexOf(_this.yExtent[0]) < 0) {
-      if (firstLabel) {
-        values.unshift(_this.yExtent[0]);
-      } else {
-        values.unshift('');
-      }
-      labels.unshift('');
-    }
+
     axis.tickValues(values)
         .tickFormat(function(d, i) {
           if (config && config.ticks && config.ticks.formatter)
@@ -736,7 +735,7 @@ Chart.prototype.addGoalLines = function() {
 
   var _this        = this,
       goalLine     = _this.options.goalLine,
-      margin       = _this.options.margin,
+      margin       = _this.margin,
       axis         = _this.options.axis,
       showAxisLine = (axis && axis.yAxis && axis.yAxis.showAxisLine !== undefined)
                             ? axis.yAxis.showAxisLine
@@ -772,12 +771,12 @@ Chart.prototype.addGoalLines = function() {
                             ? 'qd-goalLine-image ' + iconClass
                             : 'qd-goalLine-image',
          left      = (goalLine.icon.left)
-                            ? CONSTANTS.DEFAULT_MARGIN.LEFT + goalLine.icon.left + margin.left - 2.5
-                            : CONSTANTS.DEFAULT_MARGIN.LEFT + margin.left - 2.5;
+                            ? goalLine.icon.left + margin.left - 2.5
+                            : margin.left - 2.5;
 
     if (showAxisLine) {
       if (orientation === 'left')
-        left += CONSTANTS.ORIENTATION_MARGIN.LEFT;
+        left += CONSTANTS.ORIENTATION_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.LEFT;
     }
 
     if (goalLine.icon.toBase64) {
@@ -1099,6 +1098,14 @@ Chart.prototype.horizontalGridLines = function() {
     var tick = grids.horizontal.values;
     if (tick.indexOf(_this.yExtent[0]) < 0) {
       tick.unshift(_this.yExtent[0]);
+      // if (axis && axis.yAxis && axis.yAxis.ticks && axis.yAxis.ticks.values) {
+      //   if (typeof axis.yAxis.ticks.values === 'object') {
+      //     axis.yAxis.ticks.values.unshift({ value : _this.yExtent[0], label : _this.yExtent[0]});
+        console.log('HHA',axis.yAxis.ticks.values, tick )
+        // } else {
+        //   axis.yAxis.ticks.values.unshift(_this.yExtent[0]);
+        // }
+      // }
     }
     yTick.tickValues(tick);
   }

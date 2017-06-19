@@ -182,9 +182,13 @@ BarChart.prototype.calculateBarwidth = function() {
   */
 BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay, duration) {
 
-  var _this  = this,
-      radius = barWidth/2,
-      xShift = _this.barCentering(barWidth, _this.xScale.bandwidth());
+  var _this   = this,
+      bar     = _this.options.bar,
+      radius  = barWidth/2,
+      xShift  = _this.barCentering(barWidth, _this.xScale.bandwidth()),
+      opacity = (bar && bar.opacity)
+                      ? bar.opacity
+                      : CONSTANTS.BAR.opacity;
 
   _this.bar.attr('d', function(d) {
             var x = _this.xScale(d[0]) + xShift;
@@ -197,7 +201,7 @@ BarChart.prototype.drawBarsWithAnimation = function(barWidth, animationDelay, du
           .attr('d', function(d) {
             return _this.drawBar(d, xShift, barWidth)
           })
-          .attr('opacity', _this.options.bar.opacity);
+          .attr('opacity', opacity);
 
 };
 
@@ -214,8 +218,7 @@ BarChart.prototype.drawBarsWithoutAnimation = function(barWidth) {
       opacity = (bar && bar.opacity)
                       ? bar.opacity
                       : CONSTANTS.BAR.opacity,
-      xShift  = _this.barCentering(barWidth, _this.xScale.bandwidth())
-                  + _this.defaultMargin() - _this.xMin;
+      xShift  = _this.barCentering(barWidth, _this.xScale.bandwidth());
 
   _this.bar.attr('d', function(d) {
               return _this.drawBar(d, xShift, barWidth);
