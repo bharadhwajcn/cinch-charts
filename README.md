@@ -20,7 +20,7 @@ A simple, light-weight charting library built on top of `d3.js`.
         - [Goal Line](#bar-chart-options-goal-line)
         - [Tooltip](#bar-chart-options-tool-tip)
         - [Axis](#bar-chart-options-axis)
-    + [Examples](#bar-chart-examples) 
+    + [Examples](#bar-chart-examples)
         - [Basic Bar chart](#bar-chart-examples-basic)
         - [Full Option Bar chart](#bar-chart-examples-full-option)
 2.    [Stacked Bar Chart](#stacked-bar-chart)
@@ -30,7 +30,6 @@ A simple, light-weight charting library built on top of `d3.js`.
 6.    [Area Bar Chart](#area-bar-chart)
 
 ------------
-
 
 # <a name="bar-chart"></a>Bar Chart #
 
@@ -50,7 +49,7 @@ var barChart = new BarChart(container_element, data, options)
 
 ## <a name="bar-chart-dom-element"></a>DOM Element ##
 
-`container_element` is the element in which the graph is to be drawn. The    
+`container_element` is the element in which the graph is to be drawn. The
 `container_element` can be one of the following things,
 
 - Class Name of the element in the format `.class-name`.
@@ -116,7 +115,7 @@ contains the X and Y value of each co-ordinate.
 
 ## <a name="bar-chart-options"></a>Options ##
 
-All the optional functionalities that is needed to be added to the graph are added   
+All the optional functionalities that is needed to be added to the graph are added
 in `options` part. This can be used for adding more functionalities or to customize  
 the current graph. `options` is a javascript object. The following can be added in  
 `options` part.
@@ -190,7 +189,7 @@ var options = {
         vertical : {
             show : true,
             color : '#999',
-            opacity : .5, 
+            opacity : .5,
             values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
         },
         horizontal : {
@@ -198,7 +197,7 @@ var options = {
           color : '#999',
           opacity : .5,
           values : [0, 10, 30, 50, 70, 90],
-          skipFirst : false, 
+          skipFirst : false,
           skipLast : false
         }
     }
@@ -217,7 +216,7 @@ Defines the transition or animation of the bars involved in the graph.
     + Expected Value: A postive integer which is duration in milliseconds.
 * **delay** - To specify the delay between the animation at adjacent bars.
     + Expected Value: A postive integer which is delay in milliseconds.
-    
+
 **Example:**  
 
 ```javascript
@@ -282,7 +281,7 @@ reference base line.
         + Expected Value: A positive integer value.
     - left - Amount by which the added image must be shifted to left.
         + Expected Value: A non negative integer value.
- 
+
 **Example:**  
 
 ```javascript
@@ -347,11 +346,11 @@ var options = {
     }
 };
 ```
-    
+
 
 ### <a name="bar-chart-options-axis"></a>7. Axis ###
 
-Defines about the various attributes of X and Y axis. 
+Defines about the various attributes of X and Y axis.
 
 **Attributes**
 
@@ -365,7 +364,7 @@ Defines about the various attributes of X and Y axis.
     - **ticks** - To details about the ticks that should appear in x-axis.
         + **values** - Values for which ticks need to be shown.
                 - Expected Value: This can be done in 2 ways as the user wants.  
-                    i)  Array of valid values in x-axis for which the ticks needs to be shown.   
+                    i)  Array of valid values in x-axis for which the ticks needs to be shown.
                       `[value1, value2, ..., valuen]`  
                     ii) Array of objects which contains valid x-axis values and its required labels.  
                       `[{ value : value1, label : label1 }, { value : value2, label : label2 }, ..., { value : value3, label : label3 } ]`  
@@ -392,7 +391,7 @@ Defines about the various attributes of X and Y axis.
     - **ticks** - To details about the ticks that should appear in y-axis.
         + **values** - Values for which ticks need to be shown.
                 - Expected Value: This can be done in 2 ways as the user wants.  
-                    i)  Array of valid values in x-axis for which the ticks needs to be shown.   
+                    i)  Array of valid values in x-axis for which the ticks needs to be shown.
                       `[value1, value2, ..., valuen]`  
                     ii) Array of objects which contains valid y-axis values and its required labels.  
                       `[{ value : value1, label : label1 }, { value : value2, label : label2 }, ..., { value : value3, label : label3 } ]`  
@@ -449,7 +448,7 @@ var options = {
         }
     }
 };
-```    
+```
 ------------
 
 ## <a name="bar-chart-examples"></a>Examples ##
@@ -489,6 +488,7 @@ var chart = new BarChart(element, data);
 ```
 
 **Output:**
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar-chart.png" alt="Basic Bar Chart Example" width="500"/>
 
 
 ### <a name="bar-chart-examples-full-option"></a> Full option Chart Example ###
@@ -497,101 +497,101 @@ var chart = new BarChart(element, data);
 
 ```javascript
 var chart = new BarChart(element, data, {
-    bar : {
-        color : '#B8D551', 
-        width : 20,       
-        curve : true,      
-        opacity : 0.8,     
-        padding : .01,    
-    },
-    margin : {        
-        left : 0,
-        right : 0,
-        top : 0,
-        bottom : 0
-    },
-    transition: {
-        animate: true,
-        delay : 100,
-        duration : 200
-    },
-    grids : {
-        vertical : {
-            show : true,     
-            color : '#999', 
-            opacity : .5,   
-            values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
-        },
-        horizontal : {
-            show : true,      
-            color : '#999',  
-            opacity : .5,     
-            skipFirst : false,
-            skipLast : false,  
-            values : [0, 10, 30, 40, 50, 80]
-        }
-    },
-    goalLine : {
-        value : 60,       
-        class : 'goalline',  
-        icon: {
-          url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
-          toBase64 : true,
-          class: 'goal-icon',
-          height : 20,
-          width : 20,
-          left: 0 
-        }
-    },
-    axis : {
-        xAxis : {
-            showAxisLine : true,
-            firstLabel : true,
-            orientation: 'bottom',
-            ticks : {
-                values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
-                padding : 10,   
-                position :  {
-                    angle : 30,
-                    x : -10,
-                    y : 0
-                },
-            }
-        },
-        yAxis : {
-            showAxisLine : true, 
-            firstLabel : true,
-            orientation: 'left',
-            ticks : {
-                values: [ { value : 10, label : '10 m unit' },
-                          { value : 30, label : '30 m unit' },
-                          { value : 40, label : '40 m unit' },
-                          { value : 50, label : '50 m unit' },
-                          { value : 80, label : '80 m unit' },
-                        ],
-                position :  {
-                    angle : 30,
-                    x : -5,
-                    y : -10
-                },
-                fontSize : '12px',
-                formatter : function(value) {
-                    return String(value) + 'k units';
-                },
-            }
-        }
-    },
-    tooltip: {
-        show : true,           
-        listener : 'click touchstart',
-        class : 'custom-tooltip', 
-        formatter : function() {  
-            return this.yValue + ' units <br>in ' + this.xValue;
-        }
-    }
+  bar : {
+      color : '#B8D551',
+      width : 20,
+      curve : true,
+      opacity : 0.8,
+      padding : .01,
+  },
+  margin : {
+      left : 0,
+      right : 0,
+      top : 0,
+      bottom : 0
+  },
+  transition: {
+      animate: true,
+      delay : 100,
+      duration : 200
+  },
+  grids : {
+      vertical : {
+          show : true,
+          color : '#999',
+          opacity : .5,
+          values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
+      },
+      horizontal : {
+          show : true,
+          color : '#999',
+          opacity : .5,
+          skipFirst : false,
+          skipLast : false,
+          values : [10, 30, 50, 70, 90]
+      }
+  },
+  goalLine : {
+      value : 60,
+      class : 'goalline',
+      icon: {
+        url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+        toBase64 : true,
+        class: 'goal-icon',
+        height : 20,
+        width : 20,
+        left: 0
+      }
+  },
+  axis : {
+      xAxis : {
+          showAxisLine : false,
+          firstLabel : true,
+          orientation: 'bottom',
+          ticks : {
+            values : [ { value : 'Jan',  label : '01' },
+                       { value : 'Mar',  label : '03' },
+                       { value : 'May',  label : '05' },
+                       { value : 'Aug',  label : '08' },
+                       { value : 'Oct',  label : '10' },
+                       { value : 'Dec',  label : '12' } ],
+              padding : 10,
+              position :  {
+                  angle : 30,
+                  x : -10,
+                  y : -5
+              },
+          }
+      },
+      yAxis : {
+          showAxisLine : false,
+          firstLabel : false,
+          orientation: 'left',
+          ticks : {
+              values: [10, 30, 50, 70, 90],
+              position :  {
+                  angle : 30,
+                  x : -5,
+                  y : -5
+              },
+              fontSize : '12px',
+              formatter : function(value) {
+                  return String(value) + 'k units';
+              },
+          }
+      }
+  },
+  tooltip: {
+      show : true,
+      listener : 'click touchstart',
+      class : 'custom-tooltip',
+      formatter : function() {
+          return this.yValue + ' units <br>in ' + this.xValue;
+      }
+  }
 });
 ```
 
 **Output:**
-
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_bar-chart.png" alt="Full option Bar Chart Example" width="500"/>
 -------------------------
