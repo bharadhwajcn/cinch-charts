@@ -23,7 +23,7 @@ A simple, light-weight charting library built on top of `d3.js`.
     + [Examples](#bar-chart-examples)
         - [Basic Bar chart](#bar-chart-examples-basic)
         - [Full Option Bar chart](#bar-chart-examples-full-option)
-2.    [Stacked Bar Chart](#stacked-bar-chart)
+2. [Stacked Bar Chart](#stacked-bar-chart)
     + [Constructor Code](#stacked-bar-chart-constructor-code)
     + [DOM Element](#stacked-bar-chart-dom-element)
     + [Data Format](#stacked-bar-chart-data-format)
@@ -612,6 +612,7 @@ var chart = new BarChart(element, data, {
 **Output:**
 
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_bar_chart.png" alt="Full option Bar Chart Example" width="500"/>
+
 -------------------------
 
 # <a name="stacked-bar-chart"></a>Stacked Bar Chart #
@@ -697,7 +698,7 @@ var data = [
 
 ------------
 
-## <a name="stacked-bar-chart-stack"></a>Stack Format##
+## <a name="stacked-bar-chart-stack"></a>Stack Format ##
 
 The `stack` used here is used to say, which all keys in `data` needs to be made as  
 as stack for `StackedBarChart`. Its format is simply an array of valid keys from  
@@ -1156,16 +1157,16 @@ var chart = new StackedBarChart(element, data, stack, {
                 padding : 10,
             }
         },
-      yAxis : {
-          showAxisLine : true,
-          firstLabel : true,
-          orientation: 'left',
-          ticks : {
-              font_size : '12px',
-              formatter : function(value) {
-                  return String(value) + 'k units';
-              },
-          }
+        yAxis : {
+            showAxisLine : true,
+            firstLabel : true,
+            orientation: 'left',
+            ticks : {
+                font_size : '12px',
+                formatter : function(value) {
+                    return String(value) + 'k units';
+                }
+            }
         }
     },
     tooltip: {
@@ -1184,4 +1185,5 @@ var chart = new StackedBarChart(element, data, stack, {
 **Output:**  
 
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_stacked_bar_chart.png" alt="Full option Stacked Bar Chart Example" width="500"/>
+
 -------------------------
