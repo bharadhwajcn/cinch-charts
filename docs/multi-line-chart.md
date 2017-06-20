@@ -1,4 +1,4 @@
-# <a name="line-chart"></a> LINE CHART #
+# <a name="multi-line-chart"></a> MULTI LINE CHART #
 
 ## Index ##
 
@@ -23,10 +23,10 @@
 
 ## <a name="constructor-code"></a>Constructor Code ##
 
-The below is the code for invoking a `Linechart`.
+The below is the code for invoking a `MultiLinechart`.
 
 ```javascript
-var lineChart = new LineChart(container_element, data, options)
+var multiLineChart = new MultiLineChart(container_element, data, options)
 ```
 
 - **`container_element`** is the DOM element into which the Chart is to be appended.
@@ -72,30 +72,65 @@ var lineChart = new LineChart(container_element, data, options)
 
 ## <a name="data-format"></a>Data Format ##
 
-The data format used for `LineChart` is simply an array of arrays. Each inner arrays
-contains the X and Y value of each co-ordinate.
+The data format used for `MultiLineChart` is simply an array of multiple line objects.  
+Each line object is represented as a key-value pair containing the identifing key  
+of that line and the data of that line.
 
 **Data Format:**
 ```
-[ [x1, y1], [x2, y2], ... , [xn, yn] ]
+[
+  {
+    key : line-name-1,
+    value : [ [x11, y11], [x12, y12], ..., [x1n,y1n] ]
+  },
+  {
+    key : line-name-2,
+    value : [ [x21, y21], [x22, y22], ..., [x2n,y2n] ]
+  },
+  ...,
+  {
+    key : line-name-m,
+    value : [ [xm1, ym1], [xm2, ym2], ..., [xmn,ymn] ]
+  }
+]
 ```
 
 **Example:**
 
 ```javascript
 var data = [
-    ['Jan', 10],
-    ['Feb', 70],
-    ['Mar', 30],
-    ['Apr', 10],
-    ['May', 60],
-    ['Jun', 45],
-    ['Jul', 76],
-    ['Aug', 40],
-    ['Sep', 40],
-    ['Oct', 60],
-    ['Nov', 40],
-    ['Dec', 80]
+    { key : 'Series 1',
+      value : [
+                ['Jan', 177],
+                ['Feb', 104],
+                ['Mar', 124],
+                ['Apr', 127],
+                ['May', 143],
+                ['Jun', 130],
+                ['Jul', 90],
+                ['Aug', 154],
+                ['Sep', 114],
+                ['Oct', 102],
+                ['Nov', 123],
+                ['Dec', 135]
+              ]
+    },
+    { key : 'Series 2',
+      value : [
+                ['Jan', 82],
+                ['Feb', 97],
+                ['Mar', 78],
+                ['Apr', 86],
+                ['May', 116],
+                ['Jun', 95],
+                ['Jul', 109],
+                ['Aug', 78],
+                ['Sep', 86],
+                ['Oct', 116],
+                ['Nov', 95],
+                ['Dec', 109]
+              ]
+    }
 ];
 ```
 
@@ -114,21 +149,21 @@ Defines the attributes related to the Line of a line chart.
 
 **Attributes**
 
-* **color**  - The color of the line in the chart.
-    + Expected Value: A valid HEX or RGB code or even name of the color.
-* **width**  - Defines the width of the line in line Chart.
-    + Expected Value: A positive real number.
+* **color**  - The color for each of the line in the chart.
+    + Expected Value: An array of valid HEX or RGB code or even name of the color.
+* **width**  - Defines the width of each line in line Chart.
+    + Expected Value: An array of positive real number where each represent the width of each line.
 * **icon** - To specify the details of the icons used as plot points.
-    - **show** - To specify whether the plot points need to be shown.
-        + Expected Value: Boolean. `true` or `false`.
-    - **url** - The URL for the image that need to be used as plot point.
-        + Expected Value: The URL to the image, either relative path or whole URL. If no URL is provided and `show` is set to `true`, the color of the line is set as plot point.
+    - **show** - To specify whether the plot points need to be shown for a particular line.
+        + Expected Value: Boolean array. `true` or `false`.
+    - **url** - The array of URL for the image that need to be used as plot point for each line.
+        + Expected Value: The array of URL to the image, either relative path or whole URL. If no URL is provided and `show` is set to `true`, the color of the line is set as plot point.
     - **toBase64** - To specify whether the image needs to be converted to Base64.
-        + Expected Value: Boolean. `true` or `false`.
+        + Expected Value: Boolean array. `true` or `false`.
     - **class** - User defined CSS class name for image.
         + Expected Value: A user defined CSS class name.
-    - **width**  - Defines the width of the plot point image.
-        + Expected Value: A positive real number.
+    - **width** - Defines the width of the plot point image.
+        + Expected Value: An array positive real number where each represent the width of plot point of that line.
 
 
 **Example:**
@@ -136,14 +171,17 @@ Defines the attributes related to the Line of a line chart.
 ```javascript
 var options = {
     line: {
-        color : '#B8D551',
-        width: 4,
+        color : ['#359fd1', '#B8D551', '#FD8635'],,
+        width: [4, 8, 4],
         icon: {
-            show: true,
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
-            toBase64: false,
+            show: [true, true, true],
+            url: ['https://bharadhwajcn.github.io/fubar-charts/images/blue_star.png',
+                  'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+                  'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
+                ],
+            toBase64: [false, true, false],
             class: 'point-icon',
-            width : 10
+            width : [10, 15, 10]
         }
     }
 };
@@ -155,11 +193,11 @@ Helps to set the threshold value to each line, after which we can change the plo
 
 **Attributes**
 
-* **value**  - The threshold value above which the plotpoint icon needs to be changed.
-    + Expected Value: An integer.
+* **value**  - Array of threshold value where each represents the value of corresponding line.
+    + Expected Value: An array of integers.
 * **icon** - To specify the details of the icons used as plot points.
-    - **url** - The URL for the image that need to be used as plot point.
-        + Expected Value: The URL to the image, either relative path or whole URL. If no URL is provided and `show` is set to `true`, the color of the line is set as plot point.
+    - **url** - The URL for the image that need to be used as threshold plot point.
+        + Expected Value: The URL to the image, either relative path or whole URL.
     - **toBase64** - To specify whether the image needs to be converted to Base64.
         + Expected Value: Boolean. `true` or `false`.
     - **width**  - Defines the width of the plot point image.
@@ -171,7 +209,7 @@ Helps to set the threshold value to each line, after which we can change the plo
 ```javascript
 var options = {
     threshold: {
-      value : 80,
+        value : [131, 90, null]
         icon: {
             url: 'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
             toBase64: false
@@ -187,13 +225,13 @@ Defines what should be done, if the user data contains `null` as y-axis value.
 **Attributes**
 
 * **connectNull** - Whether to avoid the `null` value and draw a single line or break the line into two when a `null` value is found.
-    + Expected Value: Boolean. `true` or `false`. `true` will give output as a single line.
+    + Expected Value: Boolean array. `true` or `false`. `true` will give output as a single line.
 
 **Example:**
 
 ```javascript
 var options = {
-    connectNull: true
+    connectNull: [true, false, true]
 };
 ```
 
@@ -259,6 +297,8 @@ Defines the transition or animation of the lines involved in the graph.
     + Expected Value: Boolean. `true` or `false`.
 * **duration** - To specify the duration of animation of drawing the line.
     + Expected Value: A positive integer which is duration in milliseconds.
+* **delay** - To specify the delay between the animation of adjacent lines.
+    + Expected Value: A positive integer which is delay in milliseconds.
 
 **Example:**
 
@@ -266,7 +306,8 @@ Defines the transition or animation of the lines involved in the graph.
 var options = {
     transition: {
         animate: true,
-        duration : 2000
+        duration : 2000,
+        delay : 1000,
     }
 };
 ```
@@ -493,6 +534,38 @@ var options = {
 };
 ```
 
+### <a name="options-legend"></a>10. Legend ###
+
+Defines about the `legend` to be added so as to identify the lines.
+
+**Attributes**
+
++ **show** - To specify whether to show the legend or not.
+    - Expected Value: Boolean. `true` or `false`.
+* **class** - The user defined CSS class to the legend.
+    + Expected Value: A user defined CSS class name.
+* **position** - The position where the legend needs to be placed.
+    + Expected Value: String. Either `top` or `bottom`.
+* **clickable**  - Whether clicking on legend should toggle the visibility of line.
+    + Expected Value: Boolean array. `true` or `false`.
+* **height** - Height of the legend.
+    + Expected Value: A positive integer.
+
+**Example:**
+
+```javascript
+var options = {
+    legend: {
+        show: true,
+        class: 'legend-class',
+        position : 'bottom',
+        clickable : [true, true, true],
+        height : 45
+    }
+};
+```
+
+
 ------------
 
 ## <a name="examples"></a>Examples ##
@@ -508,18 +581,57 @@ options that are available.
 var element = document.querySelector('.chart-container');
 
 var data = [
-    ['Jan', 10],
-    ['Feb', 70],
-    ['Mar', 30],
-    ['Apr', 10],
-    ['May', 60],
-    ['Jun', 45],
-    ['Jul', 76],
-    ['Aug', 40],
-    ['Sep', 40],
-    ['Oct', 60],
-    ['Nov', 40],
-    ['Dec', 80]
+    {
+        key : 'Series 1',
+        value : [
+                  ['Jan', 177],
+                  ['Feb', 104],
+                  ['Mar', 124],
+                  ['Apr', 127],
+                  ['May', 143],
+                  ['Jun', 130],
+                  ['Jul', 90],
+                  ['Aug', 154],
+                  ['Sep', 114],
+                  ['Oct', 102],
+                  ['Nov', 123],
+                  ['Dec', 135]
+                ]
+    },
+    {
+        key : 'Series 2',
+        value : [
+                  ['Jan', 82],
+                  ['Feb', 97],
+                  ['Mar', 78],
+                  ['Apr', 86],
+                  ['May', 116],
+                  ['Jun', 95],
+                  ['Jul', null],
+                  ['Aug', 78],
+                  ['Sep', 86],
+                  ['Oct', 116],
+                  ['Nov', 95],
+                  ['Dec', 109]
+                ]
+    },
+    {
+        key : 'Series 3',
+        value : [
+                  ['Jan', 50],
+                  ['Feb', 40],
+                  ['Mar', 95],
+                  ['Apr', 75],
+                  ['May', 90],
+                  ['Jun', null],
+                  ['Jul', 74],
+                  ['Aug', 68],
+                  ['Sep', 60],
+                  ['Oct', 90],
+                  ['Nov', 48],
+                  ['Dec', 66]
+                ]
+    }
 ];
 ```
 
@@ -528,16 +640,16 @@ var data = [
 **Code Snippet:**
 
 ```javascript
-var chart = new LineChart(element, data);
+var chart = new MultiLineChart(element, data);
 ```
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_line_chart.png" alt="Basic Line Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_multi_line_chart.png" alt="Basic Multi Line Chart Example" width="500"/>
 
 **Live example:**
 
-Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/0d7mLjx3/" target="_blank">here</a>
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/nnu5xqj4/">here</a>
 
 
 ### <a name="examples-full-option-chart"></a> Full option Chart Example ###
@@ -545,30 +657,33 @@ Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/0d7mLjx3/" 
 **Code Snippet:**
 
 ```javascript
-var chart = new LineChart(element, data, {
+var chart = new MultiLineChart(element, data, {
     line: {
-        color: '#B8D551',
-        width: 4,
+        width: [4, 8, 4],
+        color: ['#359fd1', '#B8D551', '#FD8635'],
         icon: {
-            show: true,
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
-            toBase64: false,
-            class: 'point-icon',
-            width: 10
+            show: [true, true, true],
+            url: ['https://bharadhwajcn.github.io/fubar-charts/images/blue_star.png',
+                  'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+                  'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
+            ],
+            width: [10, 15, 10]
         }
     },
     threshold: {
-        value: 50,
+        value: [131, 90, null],
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
-            toBase64: false,
+            url: ['https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png'],
+            width: 10,
         }
     },
+    connectNull: [true, false, true],
     grids: {
         vertical: {
             show: true,
             color: '#999',
             opacity: .5,
+            values: ['Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec']
         },
         horizontal: {
             show: true,
@@ -576,12 +691,13 @@ var chart = new LineChart(element, data, {
             opacity: .5,
             skipFirst: false,
             skipLast: false,
-            values: [10, 30, 50, 70, 80]
+            values: [30, 60, 90, 120, 150, 180]
         }
     },
     transition: {
         animate: true,
-        duration: 2000
+        duration: 2000,
+        delay: 1000,
     },
     margin: {
         left: 0,
@@ -590,7 +706,7 @@ var chart = new LineChart(element, data, {
         bottom: 0
     },
     goalLine: {
-        value: 50,
+        value: 130,
         class: 'goalline',
         icon: {
             url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
@@ -608,9 +724,6 @@ var chart = new LineChart(element, data, {
             ticks: {
                 values: ['Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
                 padding: 10,
-                formatter: function(value) {
-                    return value + " '17";
-                }
             }
         },
         yAxis: {
@@ -618,18 +731,29 @@ var chart = new LineChart(element, data, {
             firstLabel: false,
             orientation: 'left',
             ticks: {
-                values: [
-                    { value: 10, label: '10 m unit' },
-                    { value: 30, label: '30 m unit' },
-                    { value: 50, label: '50 m unit' },
-                    { value: 70, label: '70 m unit' },
-                    { value: 90, label: '90 m unit' },
-                ],
-                position : {
-                    x : 0,
-                    y : 10
+                values: [{
+                  value: 30,
+                  label: '30m unit'
+                }, {
+                  value: 60,
+                  label: '60m unit'
+                }, {
+                  value: 90,
+                  label: '90m unit'
+                }, {
+                  value: 120,
+                  label: '120m unit'
+                }, {
+                  value: 150,
+                  label: '150m unit'
+                }, {
+                  value: 180,
+                  label: '180m unit'
+                }],
+                position: {
+                  y: 10,
                 },
-                font_size: '12px',
+                font_size: '12px'
             }
         }
     },
@@ -638,19 +762,25 @@ var chart = new LineChart(element, data, {
         listener: 'click touchstart',
         class: 'custom-tooltip',
         formatter: function() {
-          return this.yValue + ' units <br>in ' + this.xValue;
+            return this.yValue + ' units <br>in ' + this.xValue;
         }
     },
-    connectNull: true
+    legend: {
+        show: true,
+        class: 'legend-class',
+        position: 'bottom',
+        height: 45,
+        clickable: [true, true, true]
+    }
 });
 ```
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_line_chart.png" alt="Full option Line Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_multi_line_chart.png" alt="Full option Multi Line Chart Example" width="500"/>
 
 **Live example:**
 
-Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/g89zc7dx/" target="_blank">here</a>
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/reya463o/" target="_blank">here</a>
 
 -------------------------

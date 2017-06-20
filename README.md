@@ -35,9 +35,13 @@ var chart = new BarChart(element, data);
 
 **Output**
 
-<a href="https://jsfiddle.net/bharadhwaj_cn/c1tz9jL4/">
+<a href="https://jsfiddle.net/bharadhwaj_cn/kd7zk2bL/">
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 </a>
+
+**Live Example**
+
+[Here](https://jsfiddle.net/bharadhwaj_cn/kd7zk2bL/) is the JSFiddle link for the same.
 
 ----------------
 
@@ -46,5 +50,6 @@ var chart = new BarChart(element, data);
 1. [Bar Chart](./docs/bar-chart.md#bar-chart)
 2. [Stacked Bar Chart](./docs/stacked-bar-chart.md#stacked-bar-chart)
 3. [Line Chart](./docs/line-chart.md#line-chart)
+4. [Multi Line Chart](./docs/multi-line-chart.md#line-chart)
 
 -------------
