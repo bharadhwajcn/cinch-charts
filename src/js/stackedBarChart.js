@@ -63,6 +63,7 @@ StackedBarChart.prototype.createStack = function() {
         data[i][0] = 0;
       }
     });
+    _this.color.reverse();
   }
 
 
