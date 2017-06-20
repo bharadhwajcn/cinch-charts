@@ -27,7 +27,7 @@ A simple, light-weight charting library built on top of `d3.js`.
     + [Constructor Code](#stacked-bar-chart-constructor-code)
     + [DOM Element](#stacked-bar-chart-dom-element)
     + [Data Format](#stacked-bar-chart-data-format)
-    + [Stack Format](#stacked-bar-chart-stack-format)
+    + [Stack Format](#stacked-bar-chart-stack)
     + [Options](#stacked-bar-chart-options)
         - [Bar](#stacked-bar-chart-options-bar)
         - [Grids](#stacked-bar-chart-options-grids)
@@ -507,6 +507,10 @@ var chart = new BarChart(element, data);
 
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 
+**Live example:**
+
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/c1tz9jL4/" target="_blank">here</a>
+
 
 ### <a name="bar-chart-examples-full-option"></a> Full option Chart Example ###
 
@@ -613,6 +617,10 @@ var chart = new BarChart(element, data, {
 
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_bar_chart.png" alt="Full option Bar Chart Example" width="500"/>
 
+**Live example:**
+
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/00ruhhur/" target="_blank">here</a>
+
 -------------------------
 
 # <a name="stacked-bar-chart"></a>Stacked Bar Chart #
@@ -632,7 +640,7 @@ var barChart = new StackedBarChart(container_element, data, stack, options)
 
 ------------
 
-## <a name="bar-chart-dom-element"></a>DOM Element ##
+## <a name="stacked-bar-chart-dom-element"></a>DOM Element ##
 
 `container_element` is the element in which the graph is to be drawn. The
 `container_element` can be one of the following things,
@@ -675,10 +683,10 @@ objects contains value of each attribute as a property.
 **Data Format:**
 ```
 [
-  { attribute1 : value11 }, { attribute2 : value12 }, ..., { attributen : value1n },  
-  { attribute1 : value21 }, { attribute2 : value22 }, ..., { attributen : value2n },  
+  { attribute1 : value11, attribute2 : value12, ..., attributen : value1n },  
+  { attribute1 : value21, attribute2 : value22, ..., attributen : value2n },  
   ... ,
-  { attribute1 : valuem1 }, { attribute2 : valuem2 }, ..., { attributen : valuemn },  
+  { attribute1 : valuem1, attribute2 : valuem2, ..., attributen : valuemn },  
 ]
 ```
 
@@ -756,7 +764,7 @@ var options = {
 };
 ```
 
-### <a name="stack-bar-chart-options-grids"></a>2. Grids ###
+### <a name="stacked-bar-chart-options-grids"></a>2. Grids ###
 
 Defines the properties of the grids lines that are to be added on the graph.
 
@@ -808,7 +816,7 @@ var options = {
 };
 ```
 
-### <a name="bar-chart-options-transition"></a>3. Transition ###
+### <a name="stacked-bar-chart-options-transition"></a>3. Transition ###
 
 Defines the transition or animation of the bars involved in the graph.
 
@@ -1094,6 +1102,9 @@ var chart = new StackedBarChart(element, data, stack);
 
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_stacked_bar_chart.png" alt="Basic Stacked Bar Chart Example" width="500"/>
 
+**Live example:**
+
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/cvnk19f8/" target="_blank">here</a>
 
 ### <a name="stacked-bar-chart-examples-full-option"></a> Full option Chart Example ###
 
@@ -1185,5 +1196,9 @@ var chart = new StackedBarChart(element, data, stack, {
 **Output:**  
 
 <img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_stacked_bar_chart.png" alt="Full option Stacked Bar Chart Example" width="500"/>
+
+**Live example:**
+
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/qLmntobt/" target="_blank">here</a>
 
 -------------------------
