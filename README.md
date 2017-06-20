@@ -28,7 +28,7 @@ Let's see how to draw a simple bar chart using this library.
 ```javascript
 var element = document.querySelector('.chart-container');
 
-var data = [ ['2014', 50], ['2015', 70], ['2016', 30], ['Apr', 40] ];
+var data = [ ['2014', 50], ['2015', 70], ['2016', 30], ['2017', 40] ];
 
 var chart = new BarChart(element, data);
 ```
@@ -36,7 +36,7 @@ var chart = new BarChart(element, data);
 **Output**
 
 <a href="https://jsfiddle.net/bharadhwaj_cn/kd7zk2bL/">
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Example_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 </a>
 
 **Live Example**

@@ -15,6 +15,7 @@
     - [Goal Line](#options-goal-line)
     - [Tooltip](#options-tool-tip)
     - [Axis](#options-axis)
+    - [Legend](#options-legend)
 + [Examples](#examples)
     - [Basic Bar chart](#examples-basic-chart)
     - [Full Option Bar chart](#examples-full-option-chart)
@@ -564,7 +565,6 @@ var options = {
     }
 };
 ```
-
 
 ------------
 
