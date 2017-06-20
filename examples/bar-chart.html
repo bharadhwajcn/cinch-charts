@@ -99,6 +99,11 @@
             values : [ 'Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
                                 // The tick values that need to be shown
             padding : 10,       // The padding between ticks and the axis
+            position :  {
+                angle : 30,
+                x : -10,
+                y : 0
+            },
           }
         },
         yAxis : {
@@ -112,11 +117,12 @@
                       { value : 50, label : '50 m unit' },
                       { value : 80, label : '80 m unit' },
                     ],
-                                // The tick values along with its alias label
-                                //   that need to be shown
-            x : 0,             // The quantity by which the axis should be moved along x axis
-            y : 0,             // The quantity by which the axis should be moved along y axis
-            font_size : '12px', // Font size of the ticks at the axis
+            position :  {
+                angle : 30,
+                x : -5,
+                y : -10
+            },
+            fontSize : '12px', // Font size of the ticks at the axis
             formatter : function(value) {
               return String(value) + 'k units';
             },                  // Formatter function to customize tooltip
