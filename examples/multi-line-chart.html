@@ -21,7 +21,7 @@
 
   <script>
 
-    var line_data = [
+    var data = [
         { key : 'Series 1',
           value : [
                     ['Jan', 177],
@@ -46,7 +46,7 @@
                     ['Apr', 86],
                     ['May', 116],
                     ['Jun', 95],
-                    ['Jul', 109],
+                    ['Jul', null],
                     ['Aug', 78],
                     ['Sep', 86],
                     ['Oct', 116],
@@ -73,9 +73,9 @@
     ];
 
 
-element = document.querySelector('.chart-container')
+    var element = document.querySelector('.chart-container')
 
-    var chart = new MultiLineChart(element, line_data, {
+    var chart = new MultiLineChart(element, data {
       line: {
         width: [4, 8, 4],
         color: ['#359fd1', '#B8D551', '#FD8635'],
@@ -95,7 +95,7 @@ element = document.querySelector('.chart-container')
           width : 10,
         }
       },
-      connectNull: true,
+      connectNull: [true, false, true],
       grids : {
         vertical : {
           show : true,     // whether the vertical grids needs to be shown
@@ -112,7 +112,7 @@ element = document.querySelector('.chart-container')
           skipFirst : false, // whether to skip drawing first grid line as sometimes
                              //  they aren't required
           skipLast : false,  // similarly whether to skip the last grid line
-          values : [0, 10, 30, 40, 50, 80]
+          values : [30, 60, 90, 120, 150, 180]
                              // the values for which the grid lines needs to be drawn
         }
       },
@@ -128,7 +128,7 @@ element = document.querySelector('.chart-container')
         bottom : 0
       },
       goalLine : {
-        value : 50,
+        value : 130,
         class : 'goalline',
         icon: {
           url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
@@ -140,7 +140,7 @@ element = document.querySelector('.chart-container')
       },
       axis : {
         xAxis : {
-          showAxisLine : true, // Whether to show the axis line or not
+          showAxisLine : false, // Whether to show the axis line or not
           firstLabel : true,    // Whether to hide the first label at x axis
           orientation: 'bottom',
           ticks : {
@@ -150,24 +150,23 @@ element = document.querySelector('.chart-container')
           }
         },
         yAxis : {
-          showAxisLine : true, // Whether to show the axis line or not
-          firstLabel : true,   // Whether to show first label at y axis
+          showAxisLine : false, // Whether to show the axis line or not
+          firstLabel : false,   // Whether to show first label at y axis
           orientation: 'left',
           ticks : {
-            values: [ { value : 10, label : '10 m unit' },
-                      { value : 30, label : '30 m unit' },
-                      { value : 40, label : '40 m unit' },
-                      { value : 50, label : '50 m unit' },
-                      { value : 80, label : '80 m unit' },
+            values: [ { value : 30, label : '30m unit' },
+                      { value : 60, label : '60m unit' },
+                      { value : 90, label : '90m unit' },
+                      { value : 120, label : '120m unit' },
+                      { value : 150, label : '150m unit' },
+                      { value : 180, label : '180m unit' },
                     ],
                                 // The tick values along with its alias label
                                 //   that need to be shown
-            x : 0,             // The quantity by which the axis should be moved along x axis
-            y : 0,             // The quantity by which the axis should be moved along y axis
+            position : {
+              y : 10,
+            },
             font_size : '12px', // Font size of the ticks at the axis
-            formatter : function(value) {
-              return String(value) + 'k units';
-            },                  // Formatter function to customize tooltip
           }
         }
       },
@@ -189,7 +188,6 @@ element = document.querySelector('.chart-container')
         show: true,
         class: 'legend-class',
         position : 'bottom',
-        animate : true,
         height : 45,
         clickable : [true, true, true]
       }
