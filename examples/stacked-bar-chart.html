@@ -38,7 +38,10 @@
         color :  ['#90ED7D', '#757575', '#00526C', '#6ED1F7', '#238FFF'],
                            // color of the bar
         width : 20,        // width of the bar
-        curve : true,      // whether the curve at the top of bar is needed or not
+        curve : {
+          show : true,
+          bars : 'top'
+        },      // whether the curve at the top of bar is needed or not
         opacity : 0.8,     // opacity of each bar
         padding : .01,     // space between 2 adjacent bar
       },

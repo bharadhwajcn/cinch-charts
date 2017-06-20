@@ -758,8 +758,11 @@ Defines the attributes related to the Bar of a bar chart.
     + Expected Value: An array of valid HEX or RGB code or even name of the color.
 * **width**  - Defines the width of the bar in Bar Chart.
     + Expected Value: A positive real number.
-* **curve** - To specify whether the top edge of bar is curved or not.
-    + Expected Value: Boolean. `true` or `false`.
+* **curve** - To specify the type of the curve needed for the bars.
+    - **show** - To specify whether the top edge of bar is curved or not.
+        + Expected Value: Boolean. `true` or `false`.
+    - **bars** - To specify whether every bar needs curved top or the top most one.
+        + Expected Value: String either `top` for making only top as curved or `all` for making all bars in stacked curved.
 * **opacity** - To mention the opacity of the bars.
     + Expected Value: A real number between 0 and 1 (both inclusive).
 * **padding** - To define the width between two adjacent bars.
@@ -773,7 +776,10 @@ var options = {
     bar : {
         color :  ['#90ED7D', '#757575', '#00526C', '#6ED1F7', '#238FFF'],
         width : 20,
-        curve : true,
+        curve : {
+            show : true,
+            bars : 'all'
+        },
         opacity : 0.8,
         padding : .01
     },
@@ -1131,7 +1137,10 @@ var chart = new StackedBarChart(element, data, stack, {
     bar : {
         color :  ['#90ED7D', '#757575', '#00526C', '#6ED1F7'],
         width : 20,
-        curve : true,
+        curve : {
+            show : true,
+            bars : 'top'
+        },
         opacity : 0.8,
         padding : .01,
     },
@@ -1393,7 +1402,7 @@ Defines what should be done, if the user data contains `null` as y-axis value.
 
 * **connectNull** - Whether to avoid the `null` value and draw a single line or break the line into two when a `null` value is found.
     + Expected Value: Boolean. `true` or `false`. `true` will give output as a single line.
-    
+
 **Example:**  
 
 ```javascript
@@ -1773,7 +1782,7 @@ var chart = new LineChart(element, data, {
         vertical: {
             show: true,
             color: '#999',
-            opacity: .5, 
+            opacity: .5,
         },
         horizontal: {
             show: true,
@@ -1808,7 +1817,7 @@ var chart = new LineChart(element, data, {
     axis: {
         xAxis: {
             showAxisLine: false,
-            firstLabel: true, 
+            firstLabel: true,
             orientation: 'bottom',
             ticks: {
                 values: ['Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
@@ -1820,15 +1829,15 @@ var chart = new LineChart(element, data, {
         },
         yAxis: {
             showAxisLine: false,
-            firstLabel: false, 
+            firstLabel: false,
             orientation: 'left',
             ticks: {
                 values: [
-                    { value: 10, label: '10 m unit' }, 
-                    { value: 30, label: '30 m unit' }, 
-                    { value: 50, label: '50 m unit' }, 
-                    { value: 70, label: '70 m unit' }, 
-                    { value: 90, label: '90 m unit' }, 
+                    { value: 10, label: '10 m unit' },
+                    { value: 30, label: '30 m unit' },
+                    { value: 50, label: '50 m unit' },
+                    { value: 70, label: '70 m unit' },
+                    { value: 90, label: '90 m unit' },
                 ],
                 position : {
                     x : 0,
@@ -1841,7 +1850,7 @@ var chart = new LineChart(element, data, {
     tooltip: {
         show: true,
         listener: 'click touchstart',
-        class: 'custom-tooltip', 
+        class: 'custom-tooltip',
         formatter: function() {
           return this.yValue + ' units <br>in ' + this.xValue;
         }
