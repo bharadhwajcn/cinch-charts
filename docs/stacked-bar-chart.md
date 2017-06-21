@@ -64,7 +64,7 @@ var stackedBarChart = new StackedBarChart(container_element, data, stack, option
     ```javascript
     var element = document.querySelector('.chart-container'); // or
     var element = document.querySelector('#first-container'); // or
-    var element = document.getElementByClass('chart-container'); // or
+    var element = document.getElementsByClassName('chart-container')[0]; // or
     var element = document.getElementById('first-container');
     ```
 
