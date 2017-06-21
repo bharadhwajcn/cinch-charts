@@ -2,11 +2,8 @@
 
 <head>
   <script type="text/javascript" src="../bower_components/d3/d3.js"/></script>
-  <script src="../src/js/constants.js"></script>
-  <script src="../src/js/chart.js"></script>
-  <script src="../src/js/lineChart.js"></script>
-  <script src="../src/js/multiLineChart.js"></script>
-  <link rel="stylesheet" href="../src/styles/fu-bar-charts.css" type="text/css">
+  <script src="../build/js/main.min.js"></script>
+  <link rel="stylesheet" href="../build/css/fu-bar-charts.css" type="text/css">
   <style>
   .chart-container {
     height: 90%;
@@ -75,7 +72,7 @@
 
     var element = document.querySelector('.chart-container')
 
-    var chart = new MultiLineChart(element, data {
+    var chart = new MultiLineChart(element, data, {
       line: {
         width: [4, 8, 4],
         color: ['#359fd1', '#B8D551', '#FD8635'],
