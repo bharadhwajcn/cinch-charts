@@ -1,4 +1,4 @@
-const CONSTANTS = {
+var CONSTANTS = {
   DEFAULT_MARGIN: {
     LEFT: 15,
     BOTTOM: 30,
@@ -98,6 +98,5 @@ const CONSTANTS = {
       xLabel : 'X value',
       yLabel : 'Y value'
     }
-  },
-  THRESHOLD: { }
+  }
 };
