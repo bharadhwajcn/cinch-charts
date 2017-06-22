@@ -462,9 +462,7 @@ Chart.prototype.setValues = function(t, e, i, o) {
   var o = [];
   for (i = i || 1, o[0] = t; t + i <= e;) o[o.length] = t += i;
   return o
-}, void 0 === Element.prototype.remove && (Element.prototype.remove = function() {
-  this.parentNode && this.parentNode.removeChild(this)
-}), void 0 === String.prototype.contains && (String.prototype.contains = function() {
+}, void 0 === String.prototype.contains && (String.prototype.contains = function() {
   return -1 !== String.prototype.indexOf.apply(this, arguments)
 });
 var LineChart = function(t, e, i) {

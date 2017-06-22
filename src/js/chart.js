@@ -1261,14 +1261,6 @@ Array.range = function(start, stop, step) {
   return a;
 };
 
-if (Element.prototype.remove === undefined) {
-  Element.prototype.remove = function() {
-    if (this.parentNode) {
-      this.parentNode.removeChild(this);
-    }
-  };
-}
-
 if (String.prototype.contains === undefined) {
   String.prototype.contains = function() {
     return String.prototype.indexOf.apply(this, arguments) !== -1;

@@ -462,9 +462,7 @@ Chart.prototype.setValues = function(t, e, i, a) {
   var a = [];
   for (i = i || 1, a[0] = t; t + i <= e;) a[a.length] = t += i;
   return a
-}, void 0 === Element.prototype.remove && (Element.prototype.remove = function() {
-  this.parentNode && this.parentNode.removeChild(this)
-}), void 0 === String.prototype.contains && (String.prototype.contains = function() {
+}, void 0 === String.prototype.contains && (String.prototype.contains = function() {
   return -1 !== String.prototype.indexOf.apply(this, arguments)
 });
 var BarChart = function(t, e, i) {
