@@ -49,42 +49,30 @@ var folder    = {
                   ]
 };
 
-function jsMinify(fileName, filesReqd, cb) {
+function jsFileCreate(fileName, filesReqd, cb) {
   return pump([
-            gulp.src(filesReqd),
-            order(filesReqd, { base: './' }),
-            deporder(),
-            concat(fileName + '.min.js'),
-            stripDebug(),
-            uglify(),
-            gulp.dest(folder.build + 'js/min/')
-        ], cb);
-}
-
-function prettyPrint(fileName, cb) {
-  return pump([
-        gulp.src(folder.build + 'js/min/' + fileName + '.min.js'),
+        gulp.src(filesReqd),
+        order(filesReqd, { base: './' }),
+        deporder(),
+        concat(fileName + '.min.js'),
+        stripDebug(),
+        uglify(),
+        gulp.dest(folder.build + 'js/min/'),
         beautify({ indent_size: 2 }),
         rename(fileName + '.js'),
         gulp.dest(folder.build + 'js/')
     ], cb);
 }
 
-function jsMinifyFiles() {
+
+function createJsFiles() {
   return files.forEach(function(type) {
-    return jsMinify(type, filesReqd[type]);
-  })
+    return jsFileCreate(type, filesReqd[type]);
+  });
 }
 
-function prettyPrintMinFiles() {
-  return files.forEach(function(type) {
-    return prettyPrint(type, filesReqd[type]);
-  })
-}
 
-gulp.task('js-minify', jsMinifyFiles());
-
-gulp.task('js', ['js-minify'], prettyPrintMinFiles());
+gulp.task('js', createJsFiles());
 
 gulp.task('css-minify', function(cb) {
   pump([
@@ -92,9 +80,8 @@ gulp.task('css-minify', function(cb) {
         postcss(cssnano),
         rename('fubar-charts.min.css'),
         gulp.dest(folder.build + 'css/min/')
-    ], cb);
+      ], cb);
 });
-
 
 gulp.task('css', ['css-minify'], function(cb) {
   pump([
@@ -103,7 +90,7 @@ gulp.task('css', ['css-minify'], function(cb) {
         cssBeautify(),
         rename('fubar-charts.css'),
         gulp.dest(folder.build + 'css/')
-    ], cb);
+      ], cb);
 });
 
 gulp.task('run', ['js', 'css']);
