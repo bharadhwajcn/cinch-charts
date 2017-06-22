@@ -1,5 +1,7 @@
 # FUBAR CHARTS #
 
+[![Build Status](https://travis-ci.org/bharadhwajcn/fubar-charts.svg?branch=master)](https://travis-ci.org/bharadhwajcn/fubar-charts)
+
 A simple, light-weight charting library built on top of `d3.js`.
 
 ---------
