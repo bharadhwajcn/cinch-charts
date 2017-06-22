@@ -4,7 +4,7 @@ node_js:
  - "6"
  - "node"
 script:
-  - npm install mocha --save-dev
+  - npm install mocha fs d3 --save-dev
   - ./node_modules/mocha/bin/mocha
 cache:
   directories:
