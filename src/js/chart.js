@@ -1098,14 +1098,6 @@ Chart.prototype.horizontalGridLines = function() {
     var tick = grids.horizontal.values;
     if (tick.indexOf(_this.yExtent[0]) < 0) {
       tick.unshift(_this.yExtent[0]);
-      // if (axis && axis.yAxis && axis.yAxis.ticks && axis.yAxis.ticks.values) {
-      //   if (typeof axis.yAxis.ticks.values === 'object') {
-      //     axis.yAxis.ticks.values.unshift({ value : _this.yExtent[0], label : _this.yExtent[0]});
-        console.log('HHA',axis.yAxis.ticks.values, tick )
-        // } else {
-        //   axis.yAxis.ticks.values.unshift(_this.yExtent[0]);
-        // }
-      // }
     }
     yTick.tickValues(tick);
   }
