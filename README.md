@@ -2,17 +2,40 @@
 
 [![Build Status](https://travis-ci.org/bharadhwajcn/fubar-charts.svg?branch=master)](https://travis-ci.org/bharadhwajcn/fubar-charts)
 
-A simple, light-weight charting library built on top of `d3.js`.
+A simple, light-weight charting library built on top of `d3.js`. The only dependency for this library is [d3.js](https://d3js.org/). Make sure you are using `d3.js` version 4+, if you are adding dependency explicitly.
 
 ---------
 ## INSTALLATION ##
 
-You can easily install the package from [Bower](https://bower.io). Make sure that, you already have  
-`bower` installed.
+### Github ###
+
+From `Github`, you can clone this repository, and the can find the required  
+files under the folder `build`.
+
+For cloning the repository, via `HTTPS` use,
+
+```
+git clone https://github.com/bharadhwajcn/fubar-charts.git
+```
+
+or using `SSH` use,
+
+```
+git clone git@github.com:bharadhwajcn/fubar-charts.git
+```
+
+or you can download the zip file for the repository by [clicking here](https://github.com/bharadhwajcn/fubar-charts/archive/master.zip).
+
+
+### Bower ###
+
+You can easily install the package from [Bower](https://bower.io). Make sure that,
+you already have `bower` installed.
 
 ```
 bower install fubar-charts
 ```
+
 -----------
 
 ## EXAMPLE ##
