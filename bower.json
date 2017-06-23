@@ -4,9 +4,7 @@
   "authors": [
     "bharadhwaj <bharadhwaj@qburst.com>"
   ],
-  "description": "A simple, light-weight charting library built on top of d3.js. The only
-dependency for this library is d3.js. Make sure you are using d3.js version 4+,
-if you are adding dependency explicitly.",
+  "description": "A simple, light-weight charting library built on top of d3.js",
   "main": "src/",
   "keywords": [
     "charts"
