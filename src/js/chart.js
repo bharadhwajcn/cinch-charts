@@ -863,6 +863,8 @@ Chart.prototype.showTooltip = function(config, event, graph) {
               triggeredEvent = d3.event.type;
               switch (graph.type) {
                 case 'bar':
+                case 'line':
+                case 'area':
                   config.xValue = d[0];
                   config.yValue = d[1];
                   break;
@@ -871,9 +873,6 @@ Chart.prototype.showTooltip = function(config, event, graph) {
                   config.yValue = _this.valueSum(d.data, _this.stackList);
                   config.stackData = d.data;
                   break;
-                case 'line':
-                  config.xValue = d[0];
-                  config.yValue = d[1];
                 case 'multiline':
                   config.xValue = d[0];
                   config.yValue = d[1];

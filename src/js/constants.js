@@ -40,6 +40,11 @@ var CONSTANTS = {
       width : 10
     }
   },
+  AREA: {
+    color: '#4584F1',
+    opacity : 1,
+    padding : .05
+  },
   LABEL_WIDTH: 35,
   LABEL_LINE_HEIGHT: .3,
   ICON: {
@@ -64,9 +69,9 @@ var CONSTANTS = {
     class: 'fc-line-point'
   },
   AREA_CHART : {
-    type : 'line',
-    element : '.points',
-    class: 'points'
+    type : 'area',
+    element : '.fc-area-point',
+    class: 'fc-area-point'
   },
   FIRST_CHILD: 1,
   AXIS_CONFIG: {

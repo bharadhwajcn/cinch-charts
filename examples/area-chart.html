@@ -1,0 +1,135 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="../bower_components/d3/d3.js"/></script>
+  <script src="../src/js/constants.js"></script>
+  <script src="../src/js/chart.js"></script>
+  <script src="../src/js/areaChart.js"></script>
+  <link rel="stylesheet" href="../src/css/fubar-charts.css" type="text/css">
+</head>
+
+<body>
+
+  <div class="chart-container"></div>
+
+  <script>
+
+    var data = [
+          ['Jan', 10],
+          ['Feb', 20],
+          ['Mar', 10],
+          ['Apr', 20],
+          ['May', 10],
+          ['Jun', 20],
+          ['Jul', 10],
+          ['Aug', 20],
+          ['Sep', 10],
+          ['Oct', 20],
+          ['Nov', 10],
+          ['Dec', 20]
+    ];
+
+    var chart = new AreaChart('.chart-container', data, {
+      area: {
+        color: 'rgb(184, 213, 81)',
+        opacity : 0.75,
+        icon: {
+          show : true,
+          toBase64: true,
+          class: 'point-icon',
+          width : 10
+        }
+      },
+      grids: {
+        vertical: {
+          show: true,
+          color: '#999',
+          opacity: .5,
+        },
+        horizontal: {
+          show: true,
+          color: '#999',
+          opacity: .5,
+          skipFirst: false,
+          skipLast: false,
+          values: [10, 30, 50, 70, 80]
+        }
+      },
+      transition: {
+        animate: true,
+        duration: 2000
+      },
+      margin: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      },
+      goalLine: {
+        value: 50,
+        class: 'goalline',
+        icon: {
+          url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+          toBase64: true,
+          class: 'goal-icon',
+          height: 15,
+          width: 13,
+          left: 0
+        }
+      },
+      axis: {
+        xAxis: {
+          showAxisLine: false,
+          firstLabel: true,
+          orientation: 'bottom',
+          ticks: {
+            values: ['Jan', 'Mar', 'May', 'Aug', 'Oct', 'Dec'],
+            padding: 10,
+            formatter: function(value) {
+              return value + " '17";
+            }
+          }
+        },
+        yAxis: {
+          showAxisLine: false,
+          firstLabel: false,
+          orientation: 'left',
+          ticks: {
+            values: [{
+              value: 10,
+              label: '10 m unit'
+            }, {
+              value: 30,
+              label: '30 m unit'
+            }, {
+              value: 50,
+              label: '50 m unit'
+            }, {
+              value: 70,
+              label: '70 m unit'
+            }, {
+              value: 80,
+              label: '80 m unit'
+            }, ],
+            position : {
+              x : 0,
+              y : 10
+            },
+            font_size: '12px',
+          }
+        }
+      },
+      tooltip: {
+        show: true,
+        listener: 'click touchstart',
+        class: 'custom-tooltip',
+        formatter: function() {
+          return this.yValue + ' units <br>in ' + this.xValue;
+        },
+      }
+    });
+
+  </script>
+
+</body>
+</html>
