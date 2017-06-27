@@ -40,6 +40,15 @@ var CONSTANTS = {
         width: 10
       }
     },
+    AREA: {
+      color: "#4584F1",
+      opacity: 1,
+      padding: .05,
+      icon: {
+        show: !0,
+        width: 5
+      }
+    },
     LABEL_WIDTH: 35,
     LABEL_LINE_HEIGHT: .3,
     ICON: {
@@ -63,9 +72,9 @@ var CONSTANTS = {
       class: "fc-line-point"
     },
     AREA_CHART: {
-      type: "line",
-      element: ".points",
-      class: "points"
+      type: "area",
+      element: ".fc-area-point",
+      class: "fc-area-point"
     },
     FIRST_CHILD: 1,
     AXIS_CONFIG: {
@@ -352,13 +361,13 @@ Chart.prototype.setValues = function(t, e, i, o) {
   l.node().style.position = "absolute", l.node().style.visibility = "hidden", n.plot.selectAll(i.element).on(e, function(e) {
     switch (a = d3.event.type, i.type) {
       case "bar":
+      case "line":
+      case "area":
         t.xValue = e[0], t.yValue = e[1];
         break;
       case "stackedBar":
         t.xValue = e.data[n.xAxisKey], t.yValue = n.valueSum(e.data, n.stackList), t.stackData = e.data;
         break;
-      case "line":
-        t.xValue = e[0], t.yValue = e[1];
       case "multiline":
         t.xValue = e[0], t.yValue = e[1], t.line = e[2]
     }

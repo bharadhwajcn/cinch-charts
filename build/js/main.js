@@ -40,6 +40,15 @@ var CONSTANTS = {
         width: 10
       }
     },
+    AREA: {
+      color: "#4584F1",
+      opacity: 1,
+      padding: .05,
+      icon: {
+        show: !0,
+        width: 5
+      }
+    },
     LABEL_WIDTH: 35,
     LABEL_LINE_HEIGHT: .3,
     ICON: {
@@ -63,9 +72,9 @@ var CONSTANTS = {
       class: "fc-line-point"
     },
     AREA_CHART: {
-      type: "line",
-      element: ".points",
-      class: "points"
+      type: "area",
+      element: ".fc-area-point",
+      class: "fc-area-point"
     },
     FIRST_CHILD: 1,
     AXIS_CONFIG: {
@@ -126,13 +135,13 @@ Chart.prototype.setValues = function(t, e, i, a) {
     top: l && l.top ? l.top : 0,
     bottom: l && l.bottom ? l.bottom : 0
   };
-  var s = n.options.axis;
+  var c = n.options.axis;
   n.options.legend;
-  if (s && s.xAxis && s.xAxis.orientation) CONSTANTS.DEFAULT_MARGIN.BOTTOM;
+  if (c && c.xAxis && c.xAxis.orientation) CONSTANTS.DEFAULT_MARGIN.BOTTOM;
   else CONSTANTS.DEFAULT_MARGIN.TOP;
-  var c = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+  var s = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
     d = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-  n.width = 0 === n.element.offsetWidth ? c : n.element.offsetWidth, n.height = 0 === n.element.offsetHeight ? d : n.element.offsetHeight, n.elementHeight = 0 === n.element.offsetHeight ? d : n.element.offsetHeight, n.element.addEventListener("touchstart", function(t) {
+  n.width = 0 === n.element.offsetWidth ? s : n.element.offsetWidth, n.height = 0 === n.element.offsetHeight ? d : n.element.offsetHeight, n.elementHeight = 0 === n.element.offsetHeight ? d : n.element.offsetHeight, n.element.addEventListener("touchstart", function(t) {
     t.defaultPrevented()
   }, !1)
 }, Chart.prototype.drawChart = function() {
@@ -162,11 +171,11 @@ Chart.prototype.setValues = function(t, e, i, a) {
   i && i.xAxis && i.xAxis.orientation ? "bottom" === i.xAxis.orientation ? (t.yMin = n - (e.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM), t.yMax = CONSTANTS.DEFAULT_MARGIN.TOP + e.top) : (t.yMin = n - (e.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM), t.yMax = e.top + CONSTANTS.DEFAULT_MARGIN.TOP + CONSTANTS.ORIENTATION_MARGIN.TOP) : (t.yMin = n - (e.bottom + CONSTANTS.DEFAULT_MARGIN.BOTTOM), t.yMax = CONSTANTS.DEFAULT_MARGIN.TOP + e.top);
   var r = i && i.yAxis && i.yAxis.ticks ? i.yAxis.ticks : CONSTANTS.AXIS_CONFIG.Y_AXIS.ticks,
     l = a && a.value ? a.value : 0,
-    s = r.values ? r.values : [],
-    c = [];
-  "object" == typeof s[0] ? s.forEach(function(t) {
-    c.push(t.value)
-  }) : c = s, o[1] = d3.max([l, o[1], d3.max(c)]), l === o[1] && (o[1] *= 1.1, s.push(Math.round(o[1]))), t.yScale = d3.scaleLinear().rangeRound([t.yMin, t.yMax]).domain(o), 0 === s.length && t.yScale.nice()
+    c = r.values ? r.values : [],
+    s = [];
+  "object" == typeof c[0] ? c.forEach(function(t) {
+    s.push(t.value)
+  }) : s = c, o[1] = d3.max([l, o[1], d3.max(s)]), l === o[1] && (o[1] *= 1.1, c.push(Math.round(o[1]))), t.yScale = d3.scaleLinear().rangeRound([t.yMin, t.yMax]).domain(o), 0 === c.length && t.yScale.nice()
 }, Chart.prototype.addAxes = function() {
   var t = this,
     e = t.options.axis,
@@ -217,12 +226,12 @@ Chart.prototype.setValues = function(t, e, i, a) {
     l = t && void 0 !== t.showAxisLine ? t.showAxisLine : CONSTANTS.AXIS_CONFIG.Y_AXIS.showAxisLine;
   switch (o) {
     case "right":
-      s = d3.axisRight(i).tickPadding(r);
-      s = e.checkYAxisLabels(s, t), e.drawYAxis(t, s, e.xMax);
+      c = d3.axisRight(i).tickPadding(r);
+      c = e.checkYAxisLabels(c, t), e.drawYAxis(t, c, e.xMax);
       break;
     default:
-      var s = d3.axisLeft(i).tickPadding(r);
-      s = e.checkYAxisLabels(s, t), e.drawYAxis(t, s, e.xMin)
+      var c = d3.axisLeft(i).tickPadding(r);
+      c = e.checkYAxisLabels(c, t), e.drawYAxis(t, c, e.xMin)
   }
   n || (void 0 === e.element.querySelector("#y-axis").children && void 0 !== e.element.querySelector("#y-axis").childNodes[CONSTANTS.FIRST_CHILD] ? e.element.querySelector("#y-axis").childNodes[CONSTANTS.FIRST_CHILD].remove() : void 0 !== e.element.querySelector("#y-axis").children[CONSTANTS.FIRST_CHILD] && e.element.querySelector("#y-axis").children[CONSTANTS.FIRST_CHILD].remove()), l || (e.element.querySelector("#y-axis path").remove(), d3.select("#y-axis").selectAll("line").remove())
 }, Chart.prototype.checkYAxisLabels = function(t, e) {
@@ -278,7 +287,7 @@ Chart.prototype.setValues = function(t, e, i, a) {
   t = "x" === t || "X" === t ? n.xAxisLabels : n.yAxisLabels, 0 === a ? t.attr("transform", "translate(" + e + "," + i + ")") : 0 === e && 0 === i ? t.attr("transform", "rotate(-" + a + ")") : t.attr("transform", "rotate(-" + a + "), translate(" + e + "," + i + ")")
 }, Chart.prototype.wrap = function(t, e, i) {
   t.each(function() {
-    for (var t, a = d3.select(this), n = a.text().split(/\s+/).reverse(), o = [], r = 0, l = CONSTANTS.LABEL_LINE_HEIGHT, s = a.attr("x"), c = a.attr("y"), d = parseFloat(a.attr("dy")) + l, h = a.text(null).append("tspan").attr("x", s).attr("y", c).attr("dy", d + "em").attr("text-anchor", i); t = n.pop();) o.push(t), h.text(o.join(" ")), h.node().getComputedTextLength() > e && (o.pop(), h.text(o.join(" ")), o = [t], h = a.append("tspan").attr("x", s).attr("y", c).attr("dy", ++r * l + d + "em").attr("text-anchor", i).text(t))
+    for (var t, a = d3.select(this), n = a.text().split(/\s+/).reverse(), o = [], r = 0, l = CONSTANTS.LABEL_LINE_HEIGHT, c = a.attr("x"), s = a.attr("y"), d = parseFloat(a.attr("dy")) + l, h = a.text(null).append("tspan").attr("x", c).attr("y", s).attr("dy", d + "em").attr("text-anchor", i); t = n.pop();) o.push(t), h.text(o.join(" ")), h.node().getComputedTextLength() > e && (o.pop(), h.text(o.join(" ")), o = [t], h = a.append("tspan").attr("x", c).attr("y", s).attr("dy", ++r * l + d + "em").attr("text-anchor", i).text(t))
   })
 }, Chart.prototype.addVerticalGridLines = function(t) {
   var e = this,
@@ -297,11 +306,11 @@ Chart.prototype.setValues = function(t, e, i, a) {
     r = n ? "left" === o ? CONSTANTS.ORIENTATION_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.LEFT + i.left : CONSTANTS.DEFAULT_MARGIN.LEFT + i.left : 0;
   e.plot.append("g").attr("id", "horizontal-grid").attr("class", "fc-grid horizontal-grid").attr("transform", "translate(" + r + ",0)").call(e.horizontalGridLines());
   var l = e.element.querySelectorAll("#horizontal-grid g"),
-    s = l.length;
+    c = l.length;
   [].forEach.call(l, function(e, i) {
     var a = "";
     t.color && (a += "stroke : " + t.color + ";"), t.opacity && (a += "stroke-opacity : " + t.opacity + ";"), e.querySelector("line").setAttribute("style", a)
-  }), t.skipFirst && l[0].remove(), t.skipLast && l[s - 1].remove()
+  }), t.skipFirst && l[0].remove(), t.skipLast && l[c - 1].remove()
 }, Chart.prototype.addGoalLines = function() {
   var t = this,
     e = t.options.goalLine,
@@ -311,10 +320,10 @@ Chart.prototype.setValues = function(t, e, i, a) {
     o = a && a.yAxis && a.yAxis.orientation ? a.yAxis.orientation : CONSTANTS.AXIS_CONFIG.Y_AXIS.orientation,
     r = e.value,
     l = e.class ? "fc-goalLine-line " + e.class : "fc-goalLine-line",
-    s = n ? "left" === o ? CONSTANTS.ORIENTATION_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.LEFT + i.left : CONSTANTS.DEFAULT_MARGIN.LEFT + i.left : 0,
-    c = t.yScale(r) - t.yMin,
+    c = n ? "left" === o ? CONSTANTS.ORIENTATION_MARGIN.LEFT + CONSTANTS.DEFAULT_MARGIN.LEFT + i.left : CONSTANTS.DEFAULT_MARGIN.LEFT + i.left : 0,
+    s = t.yScale(r) - t.yMin,
     d = t.plot.append("g").attr("class", "fc-goalLine");
-  if (d.append("g").attr("class", l).attr("transform", "translate(" + s + ", " + c + ")").call(t.goalLine()), e.icon) {
+  if (d.append("g").attr("class", l).attr("transform", "translate(" + c + ", " + s + ")").call(t.goalLine()), e.icon) {
     var h = e.icon.height,
       p = e.icon.width,
       u = e.icon.url,
@@ -352,13 +361,13 @@ Chart.prototype.setValues = function(t, e, i, a) {
   l.node().style.position = "absolute", l.node().style.visibility = "hidden", o.plot.selectAll(i.element).on(e, function(e) {
     switch (n = d3.event.type, i.type) {
       case "bar":
+      case "line":
+      case "area":
         t.xValue = e[0], t.yValue = e[1];
         break;
       case "stackedBar":
         t.xValue = e.data[o.xAxisKey], t.yValue = o.valueSum(e.data, o.stackList), t.stackData = e.data;
         break;
-      case "line":
-        t.xValue = e[0], t.yValue = e[1];
       case "multiline":
         t.xValue = e[0], t.yValue = e[1], t.line = e[2]
     }
@@ -378,12 +387,12 @@ Chart.prototype.setValues = function(t, e, i, a) {
     o = i.element.querySelector("#fc-tooltip"),
     r = parseInt(window.getComputedStyle(i.element.querySelector("#fc-tooltip"), ":after").getPropertyValue("border-left-width")),
     l = parseInt(window.getComputedStyle(i.element.querySelector("#fc-tooltip"), ":after").getPropertyValue("border-top-width")),
-    s = r > l ? r : l,
-    c = s + o.offsetHeight,
+    c = r > l ? r : l,
+    s = c + o.offsetHeight,
     d = o.classList,
-    h = i.xScale(e[0]) + i.shiftCalculate("x", "#fc-tooltip", s),
-    p = i.element.offsetTop + i.yScale(e[1]) + i.shiftCalculate("y", "#fc-tooltip", s) - i.margin.top;
-  return n && n.plotPoints && n.plotPoints.icon && n.plotPoints.icon.width && (p -= n.plotPoints.icon.width / 2), p - i.element.offsetTop < 0 ? (p += c + s, n && n.plotPoints && n.plotPoints.icon && n.plotPoints.icon.width && (p += n.plotPoints.icon.width + 2), d.add("bottom"), d.remove("left", "top", "right")) : (d.remove("bottom", "left", "right"), d.add("top")), h - i.element.offsetLeft < 0 ? (h += o.offsetWidth / 2 + s, p += c / 2 + s / 2, d.add("right"), d.remove("bottom", "top")) : h + o.offsetWidth > i.element.offsetWidth && (h -= o.offsetWidth / 2 + s, p += c / 2 + s / 2, d.remove("bottom", "top", "right"), d.add("left")), "left" === t ? h + "px" : a && "top" === a.position ? p + i.legendHeight + s / 2 + "px" : p + "px"
+    h = i.xScale(e[0]) + i.shiftCalculate("x", "#fc-tooltip", c),
+    p = i.element.offsetTop + i.yScale(e[1]) + i.shiftCalculate("y", "#fc-tooltip", c) - i.margin.top;
+  return n && n.plotPoints && n.plotPoints.icon && n.plotPoints.icon.width && (p -= n.plotPoints.icon.width / 2), p - i.element.offsetTop < 0 ? (p += s + c, n && n.plotPoints && n.plotPoints.icon && n.plotPoints.icon.width && (p += n.plotPoints.icon.width + 2), d.add("bottom"), d.remove("left", "top", "right")) : (d.remove("bottom", "left", "right"), d.add("top")), h - i.element.offsetLeft < 0 ? (h += o.offsetWidth / 2 + c, p += s / 2 + c / 2, d.add("right"), d.remove("bottom", "top")) : h + o.offsetWidth > i.element.offsetWidth && (h -= o.offsetWidth / 2 + c, p += s / 2 + c / 2, d.remove("bottom", "top", "right"), d.add("left")), "left" === t ? h + "px" : a && "top" === a.position ? p + i.legendHeight + c / 2 + "px" : p + "px"
 }, Chart.prototype.shiftCalculate = function(t, e, i) {
   var a = this,
     n = a.element.querySelector(e).offsetWidth,
@@ -546,8 +555,8 @@ BarChart.prototype = Object.create(Chart.prototype), BarChart.prototype.xExtentC
   return "M" + (e + o) + " " + i + "h" + (a - 2 * o) + "a" + o + " " + o + " 0 0 1 " + o + " " + o + "v" + (n - 2 * o) + "v" + o + "h" + -o + "h" + (2 * o - a) + "h" + -o + "v" + -o + "v" + (2 * o - n) + "a" + o + " " + o + " 0 0 1 " + o + " " + -o + "z"
 }, BarChart.prototype.drawBar = function(t, e, i) {
   var a, n, o, r, l = this,
-    s = l.options.bar;
-  return r = s && s.curve ? i / 2 : 0, a = l.xScale(t[0]) + e, n = l.yScale(t[1]), o = l.yMin - l.yScale(t[1]), l.drawRoundedRectangle(t, a, n, i, o, r)
+    c = l.options.bar;
+  return r = c && c.curve ? i / 2 : 0, a = l.xScale(t[0]) + e, n = l.yScale(t[1]), o = l.yMin - l.yScale(t[1]), l.drawRoundedRectangle(t, a, n, i, o, r)
 }, BarChart.prototype.barCentering = function(t) {
   var e = this;
   return t < e.xScale.bandwidth() ? (e.xScale.bandwidth() - t) / 2 : 0
@@ -590,16 +599,16 @@ LineChart.prototype = Object.create(Chart.prototype), LineChart.prototype.xExten
 }, LineChart.prototype.drawLine = function(t, e, i, a, n, o) {
   var r = this,
     l = r.plot.append("g").attr("class", "fc-line").attr("id", "fc-" + o),
-    s = n ? e.filter(r.line.defined()) : e,
-    c = i && i.width ? i.width : 4,
+    c = n ? e.filter(r.line.defined()) : e,
+    s = i && i.width ? i.width : 4,
     d = i && i.class ? "fc-line-stroke " + i.class : "fc-line-stroke",
     h = i && i.color ? i.color : r.color;
-  l.selectAll(".line").data([e]).enter().append("path").attr("class", d).attr("id", "fc-path-" + o).attr("stroke", h).attr("stroke-width", c).attr("d", r.line(s)).attr("fill", "none").attr("clip-path", "url(#fc-clip-" + o + ")"), i && i.icon && i.icon.show && r.drawPlotPoints(t, l, s, i, a, o), r.clipPath = r.plot.append("clipPath").attr("id", "fc-clip-" + o).append("rect")
+  l.selectAll(".line").data([e]).enter().append("path").attr("class", d).attr("id", "fc-path-" + o).attr("stroke", h).attr("stroke-width", s).attr("d", r.line(c)).attr("fill", "none").attr("clip-path", "url(#fc-clip-" + o + ")"), i && i.icon && i.icon.show && r.drawPlotPoints(t, l, c, i, a, o), r.clipPath = r.plot.append("clipPath").attr("id", "fc-clip-" + o).append("rect")
 }, LineChart.prototype.drawPlotPoints = function(t, e, i, a, n, o) {
   var r = this,
     l = n && n.value ? n.value : null,
-    s = a.icon,
-    c = i.filter(function(t) {
+    c = a.icon,
+    s = i.filter(function(t) {
       if (null === l) {
         if (null !== t[1]) return t
       } else if (null !== t[1] && t[1] < l) return t
@@ -607,9 +616,9 @@ LineChart.prototype = Object.create(Chart.prototype), LineChart.prototype.xExten
     d = i.filter(function(t) {
       if (null !== l && null !== t[1] && t[1] >= l) return t
     });
-  s && s.url ? s.toBase64 ? r.getBase64Image(s.url, function(i) {
-    r.addImagePlotPoints(e, c, s, i, o), r.addImagePlotPoints(e, d, s, r.thresholdIconUrl, o), r.checkTooltip(t)
-  }) : (r.addImagePlotPoints(e, c, s, s.url, o), r.addImagePlotPoints(e, d, s, r.thresholdIconUrl, o), r.checkTooltip(t)) : (r.addColorPlotPoints(e, c, a, s.url, o), r.addImagePlotPoints(e, d, s, r.thresholdIconUrl, o), r.checkTooltip(t))
+  c && c.url ? c.toBase64 ? r.getBase64Image(c.url, function(i) {
+    r.addImagePlotPoints(e, s, c, i, o), r.addImagePlotPoints(e, d, c, r.thresholdIconUrl, o), r.checkTooltip(t)
+  }) : (r.addImagePlotPoints(e, s, c, c.url, o), r.addImagePlotPoints(e, d, c, r.thresholdIconUrl, o), r.checkTooltip(t)) : (r.addColorPlotPoints(e, s, a, c.url, o), r.addImagePlotPoints(e, d, c, r.thresholdIconUrl, o), r.checkTooltip(t))
 }, LineChart.prototype.addImagePlotPoints = function(t, e, i, a, n) {
   var o = this,
     r = ".fc-" + n;
@@ -649,6 +658,83 @@ LineChart.prototype = Object.create(Chart.prototype), LineChart.prototype.xExten
 }, LineChart.prototype.doesDataExist = function(t) {
   return !!(t && t.length > 0)
 };
+var AreaChart = function(t, e, i) {
+  var a = this;
+  a.setValues(t, e, i, {
+    type: "area"
+  }), a.xExtent = a.xExtentCalculate(a.data), a.yExtent = a.yExtentCalculate(a.data), a.drawAreaChart("area"), window.addEventListener("resize", function(n) {
+    a.setValues(t, e, i, {
+      type: "area"
+    }), a.drawAreaChart("area")
+  })
+};
+AreaChart.prototype = Object.create(Chart.prototype), AreaChart.prototype.xExtentCalculate = function(t) {
+  return t.map(function(t) {
+    return t[0]
+  })
+}, AreaChart.prototype.yExtentCalculate = function(t) {
+  return [0, d3.max(t, function(t) {
+    return t[1]
+  })]
+}, AreaChart.prototype.drawAreaChart = function(t) {
+  var e = this;
+  e.margin;
+  e.drawChart(), e.drawArea(e.data), e.checkAreaTransition(), e.checkGoalLine()
+}, AreaChart.prototype.checkAreaTransition = function() {
+  var t = this,
+    e = t.options.transition;
+  if (e && e.animate) {
+    var i = e.duration ? e.duration : 1e3;
+    t.drawAreaWithAnimation(i)
+  } else t.drawAreaWithoutAnimation()
+}, AreaChart.prototype.checkGoalLine = function() {
+  var t = this;
+  t.options.goalLine && t.options.goalLine.value && t.addGoalLines()
+}, AreaChart.prototype.drawArea = function(t) {
+  var e = this,
+    i = e.margin,
+    a = e.options.area,
+    n = i.left + e.xScale.bandwidth() / 2,
+    o = a && a.color ? a.color : CONSTANTS.AREA.color,
+    r = a && a.opacity ? a.opacity : CONSTANTS.AREA.opacity,
+    l = d3.area().x(function(t) {
+      return e.xScale(t[0])
+    }).y1(function(t) {
+      return e.yScale(t[1])
+    }).y0(e.yScale(e.yExtent[0]));
+  e.clipPath = e.plot.append("clipPath").attr("id", "fc-area-clip").append("rect");
+  var c = e.plot.append("g").attr("class", "fc-area");
+  c.append("path").datum(t).attr("class", "fc-area-path").attr("transform", "translate(" + n + ", 0)").attr("fill", o).attr("opacity", r).attr("clip-path", "url(#fc-area-clip)").attr("d", l), a && a.icon && a.icon.show && e.drawPlotPoints(c, a, t)
+}, AreaChart.prototype.drawPlotPoints = function(t, e, i) {
+  var a = this,
+    n = e.icon;
+  e.color ? e.color : CONSTANTS.AREA.color;
+  n && n.url ? n.toBase64 ? a.getBase64Image(n.url, function(e) {
+    a.addImagePlotPoints(t, i, n, e), a.checkTooltip("area")
+  }) : (a.addImagePlotPoints(t, i, n, n.url), a.checkTooltip("area")) : (a.addColorPlotPoints(t, i, e), a.checkTooltip("area"))
+}, AreaChart.prototype.addImagePlotPoints = function(t, e, i, a) {
+  var n = this,
+    o = i.width ? i.width : CONSTANTS.LINE.icon.width;
+  t.selectAll(".fc-area").data(e).enter().append("svg:image").attr("class", "fc-area-point").attr("x", function(t) {
+    return n.xScale(t[0]) + n.xScale.bandwidth() / 2 - o / 2
+  }).attr("y", function(t) {
+    return n.yScale(t[1]) - o / 2
+  }).attr("width", o).attr("height", o).attr("xlink:href", a).attr("clip-path", "url(#fc-area-clip)")
+}, AreaChart.prototype.addColorPlotPoints = function(t, e, i) {
+  var a = this,
+    n = i.icon;
+  iconWidth = n.width ? n.width : CONSTANTS.AREA.icon.width, color = i && i.color ? i.color : a.color, t.selectAll(".fc-area").data(e).enter().append("circle").attr("class", "fc-area-point").attr("cx", function(t) {
+    return a.xScale(t[0]) + a.xScale.bandwidth() / 2
+  }).attr("cy", function(t) {
+    return a.yScale(t[1]) + iconWidth / 4
+  }).attr("r", iconWidth / 2).attr("stroke-width", 1).attr("stroke", color).attr("fill", "#fff").attr("clip-path", "url(#fc-area-clip)")
+}, AreaChart.prototype.drawAreaWithAnimation = function(t) {
+  var e = this;
+  e.clipPath.attr("width", 0).attr("height", e.height).transition().duration(t).attr("width", e.width)
+}, AreaChart.prototype.drawAreaWithoutAnimation = function() {
+  var t = this;
+  t.clipPath.attr("width", t.width).attr("height", t.height)
+};
 var MultiLineChart = function(t, e, i) {
   var a = this;
   a.setValues(t, e, i, {
@@ -680,10 +766,10 @@ MultiLineChart.prototype = Object.create(LineChart.prototype), MultiLineChart.pr
 }, MultiLineChart.prototype.drawMultiLinesWithDelay = function(t, e, i, a, n, o) {
   var r = this,
     l = r.options.connectNull,
-    s = r.getLineConfig(i, o),
-    c = r.getThresholdConfig(a, o),
+    c = r.getLineConfig(i, o),
+    s = r.getThresholdConfig(a, o),
     d = "line-" + String(o + 1);
-  r.drawLine(t, e[o].value, s, c, l[o], d), r.checkTransition(), ++o < e.length && setTimeout(function() {
+  r.drawLine(t, e[o].value, c, s, l[o], d), r.checkTransition(), ++o < e.length && setTimeout(function() {
     r.drawMultiLinesWithDelay(t, e, i, a, n, o)
   }, n)
 }, MultiLineChart.prototype.drawMultiLinesWithoutDelay = function(t, e, i, a) {
@@ -691,8 +777,8 @@ MultiLineChart.prototype = Object.create(LineChart.prototype), MultiLineChart.pr
   e.forEach(function(e, o) {
     var r = n.getLineConfig(i, o),
       l = n.getThresholdConfig(a, o),
-      s = "line-" + String(o + 1);
-    n.drawLine(t, e.value, r, l, s), n.checkTransition()
+      c = "line-" + String(o + 1);
+    n.drawLine(t, e.value, r, l, c), n.checkTransition()
   })
 }, MultiLineChart.prototype.getLineConfig = function(t, e) {
   var i = this,
@@ -718,18 +804,18 @@ MultiLineChart.prototype = Object.create(LineChart.prototype), MultiLineChart.pr
   var l = d3.select(i.element).append("div").attr("class", o).attr("id", "fc-legend");
   e.forEach(function(t, e) {
     var o = i.checkClickable(n, e),
-      s = null !== document.ontouchstart ? "click" : "touchstart";
+      c = null !== document.ontouchstart ? "click" : "touchstart";
     t.active = !0;
-    var c = l.append("div").attr("id", "fc-legend-" + String(e + 1)).attr("class", "fc-legend-element").on(s, function() {
+    var s = l.append("div").attr("id", "fc-legend-" + String(e + 1)).attr("class", "fc-legend-element").on(c, function() {
       if (o) return i.toggleVisibility(t, e)
     });
-    if (c.node().style.width = r, o || (c.node().style.cursor = "default"), n && n.show)
+    if (s.node().style.width = r, o || (s.node().style.cursor = "default"), n && n.show)
       if (a.icon && a.icon.url && a.icon.url[e]) {
         var d = a.icon.url[e];
         i.getBase64Image(d, function(e) {
-          c.append("img").attr("src", e), c.append("span").text(t.key)
+          s.append("img").attr("src", e), s.append("span").text(t.key)
         })
-      } else c.append("div").attr("class", "fc-legend-circle").node().style.background = i.color[e], c.append("span").attr("float", "left").text(t.key)
+      } else s.append("div").attr("class", "fc-legend-circle").node().style.background = i.color[e], s.append("span").attr("float", "left").text(t.key)
   })
 }, MultiLineChart.prototype.checkClickable = function(t, e) {
   return !(!t || !(t.clickable[e] || void 0 === t.clickable[e] && t.clickable))
@@ -803,11 +889,11 @@ StackedBarChart.prototype = Object.create(BarChart.prototype), StackedBarChart.p
   var r = e + a.xScale(t.data[a.xAxisKey]),
     l = a.valueSum(t.data, a.stackList);
   if (isNaN(t[1])) {
-    s = a.yScale(t[0]);
+    c = a.yScale(t[0]);
     height = 0
   } else {
-    var s = a.yScale(t[1]);
+    var c = a.yScale(t[1]);
     height = a.yScale(t[0]) - a.yScale(t[1])
   }
-  return n && n.curve && n.curve.show && "ALL" === n.curve.bars.toUpperCase() ? a.drawRoundedRectangle(t, r, s, i, height, o) : l === t[1] ? a.drawRoundedRectangle(t, r, s, i, height, o) : a.drawRoundedRectangle(t, r, s, i, height, 0)
+  return n && n.curve && n.curve.show && "ALL" === n.curve.bars.toUpperCase() ? a.drawRoundedRectangle(t, r, c, i, height, o) : l === t[1] ? a.drawRoundedRectangle(t, r, c, i, height, o) : a.drawRoundedRectangle(t, r, c, i, height, 0)
 };

@@ -16,7 +16,7 @@ var folder    = {
                    src: 'src/',
                    build: 'build/'
                  };
-    files     = ['main', 'bar', 'line', 'multiLine', 'stackedBar'];
+    files     = ['main', 'bar', 'line', 'area', 'multiLine', 'stackedBar'];
     filesReqd = {
     'main'      : [
                       folder.src + 'js/constants.js',
@@ -34,6 +34,11 @@ var folder    = {
                       folder.src + 'js/constants.js',
                       folder.src + 'js/chart.js',
                       folder.src + 'js/lineChart.js',
+                  ],
+    'area'      : [
+                      folder.src + 'js/constants.js',
+                      folder.src + 'js/chart.js',
+                      folder.src + 'js/areaChart.js',
                   ],
     'multiLine' : [
                       folder.src + 'js/constants.js',
