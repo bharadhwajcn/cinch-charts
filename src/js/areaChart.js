@@ -62,7 +62,6 @@ AreaChart.prototype.drawAreaChart = function(type) {
   _this.drawArea(_this.data);
   _this.checkAreaTransition();
   _this.checkGoalLine();
-  _this.checkTooltip(type);
 
 
 };
@@ -91,25 +90,22 @@ AreaChart.prototype.checkAreaTransition = function() {
   * To draw the goal lines if the user have opted to.
   */
 AreaChart.prototype.checkGoalLine = function() {
-
   var _this = this;
 
   if (_this.options.goalLine && _this.options.goalLine.value) {
     _this.addGoalLines();
   }
-
 };
 
 
 
 AreaChart.prototype.drawArea = function(data) {
   var _this      = this,
-      margin     = _this.options.margin,
-      areaConfig = _this.options.area;
-
-  var xTranslate = margin.left + _this.xScale.bandwidth()/2,
-      color      = areaConfig.color ? areaConfig.color : CONSTANTS.AREA.color,
-      opacity    = areaConfig.opacity ? areaConfig.opacity : CONSTANTS.AREA.opacity;
+      margin     = _this.margin,
+      areaConfig = _this.options.area,
+      xTranslate = margin.left + _this.xScale.bandwidth()/2,
+      color      = (areaConfig && areaConfig.color) ? areaConfig.color : CONSTANTS.AREA.color,
+      opacity    = (areaConfig && areaConfig.opacity) ? areaConfig.opacity : CONSTANTS.AREA.opacity;
 
   var area = d3.area()
                .x(function(d) { return _this.xScale(d[0]); })
@@ -148,13 +144,16 @@ AreaChart.prototype.drawPlotPoints = function(plot, area, data) {
   if (icon && icon.url) {
     if (icon.toBase64) {
       _this.getBase64Image(icon.url, function(base64url) {
-        _this.addImagePlotPoints(plot, data, icon, base64url)
+        _this.addImagePlotPoints(plot, data, icon, base64url);
+        _this.checkTooltip('area');
       });
     } else {
-      _this.addImagePlotPoints(plot, data, icon, icon.url)
+      _this.addImagePlotPoints(plot, data, icon, icon.url);
+      _this.checkTooltip('area');
     }
   } else {
     _this.addColorPlotPoints(plot, data, area);
+    _this.checkTooltip('area');
   }
 
 };
@@ -167,13 +166,12 @@ AreaChart.prototype.drawPlotPoints = function(plot, area, data) {
   * @param {String} iconUrl    - url for the icon.
   */
 AreaChart.prototype.addImagePlotPoints = function(plot, data, iconConfig, iconUrl) {
-
   var _this     = this,
       iconWidth = iconConfig.width
                       ? iconConfig.width
                       : CONSTANTS.LINE.icon.width;
 
-  plot.selectAll('.fc-area-path')
+  plot.selectAll('.fc-area')
       .data(data)
       .enter()
       .append('svg:image')
@@ -194,27 +192,23 @@ AreaChart.prototype.addImagePlotPoints = function(plot, data, iconConfig, iconUr
   * @param {Object} area - area config of the graph.
   */
 AreaChart.prototype.addColorPlotPoints = function(plot, data, area) {
-
   var _this      = this,
       iconConfig = area.icon
       iconWidth  = iconConfig.width
                         ? iconConfig.width
-                        : CONSTANTS.LINE.icon.width,
-      radius     = (area && area.width)
-                        ? line.width
-                        : CONSTANTS.LINE.width,
+                        : CONSTANTS.AREA.icon.width,
       color      = (area && area.color)
                         ? area.color
                         : _this.color;
 
-  plot.selectAll('.fc-area-path')
+  plot.selectAll('.fc-area')
       .data(data)
       .enter()
       .append('circle')
       .attr('class', 'fc-area-point')
       .attr('cx', function(d) { return _this.xScale(d[0]) + _this.xScale.bandwidth()/2; })
-      .attr('cy', function(d) { return _this.yScale(d[1]) + radius/2; })
-      .attr('r', radius)
+      .attr('cy', function(d) { return _this.yScale(d[1]) + iconWidth/4; })
+      .attr('r', iconWidth/2)
       .attr('stroke-width', 1)
       .attr('stroke', color)
       .attr('fill', '#fff')
@@ -224,7 +218,6 @@ AreaChart.prototype.addColorPlotPoints = function(plot, data, area) {
 
 
 AreaChart.prototype.drawAreaWithAnimation = function(duration) {
-
   var _this = this;
 
   _this.clipPath.attr('width', 0)
@@ -236,7 +229,6 @@ AreaChart.prototype.drawAreaWithAnimation = function(duration) {
 };
 
 AreaChart.prototype.drawAreaWithoutAnimation = function() {
-
   var _this = this;
 
   _this.clipPath.attr('width', _this.width)

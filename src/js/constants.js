@@ -43,7 +43,11 @@ var CONSTANTS = {
   AREA: {
     color: '#4584F1',
     opacity : 1,
-    padding : .05
+    padding : .05,
+    icon : {
+      show : true,
+      width : 5
+    }
   },
   LABEL_WIDTH: 35,
   LABEL_LINE_HEIGHT: .3,
