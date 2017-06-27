@@ -6,6 +6,12 @@
   <script src="../src/js/chart.js"></script>
   <script src="../src/js/areaChart.js"></script>
   <link rel="stylesheet" href="../src/css/fubar-charts.css" type="text/css">
+  <style>
+  .chart-container {
+    height: 90%;
+    width: 100%;
+  }
+  </style>
 </head>
 
 <body>
@@ -31,11 +37,12 @@
 
     var chart = new AreaChart('.chart-container', data, {
       area: {
-        color: 'rgb(184, 213, 81)',
+        color: '#B8D551',
         opacity : 0.75,
         icon: {
           show : true,
           toBase64: true,
+          url: 'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
           class: 'point-icon',
           width : 10
         }
