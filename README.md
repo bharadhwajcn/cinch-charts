@@ -78,5 +78,6 @@ var chart = new BarChart(element, data);
 2. [Stacked Bar Chart](./docs/stacked-bar-chart.md#stacked-bar-chart)
 3. [Line Chart](./docs/line-chart.md#line-chart)
 4. [Multi Line Chart](./docs/multi-line-chart.md#line-chart)
+5. [Area Chart](./docs/area-chart.md#area-chart)
 
 -------------
