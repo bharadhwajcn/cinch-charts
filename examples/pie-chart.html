@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" >
+<html>
+
+<head>
+  <script type="text/javascript" src="../bower_components/d3/d3.js"/></script>
+  <script src="../src/js/pieChart.js"></script>
+  <link rel="stylesheet" href="../build/css/fubar-charts.css" type="text/css">
+  <style>
+  .chart-container {
+    height: 90%;
+    width: 100%;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="chart-container" height="500"></div>
+
+  <script>
+
+    var element = document.querySelector('.chart-container');
+
+    var data = [
+                  ['Jan', 50],
+                  ['Feb', 50],
+                  ['Mar', 30],
+                  ['Apr', 10],
+                  ['May', 60],
+              ];
+
+    var chart = new PieChart(element, data, {
+      pie : {
+        color : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
+        radius : 250,
+        padding : 10,
+      }
+    });
+
+  </script>
+
+</body>
+</html>
