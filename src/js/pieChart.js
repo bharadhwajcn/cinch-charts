@@ -121,64 +121,108 @@ PieChart.prototype.createArc = function() {
 
   var _this = this,
       pie   = _this.options.pie;
-  var outerRadius = (pie && pie.radius && pie.radius < Math.min(_this.canvasHeight, _this.canvasWidth)/2)
+
+  var toRadian     = Math.PI/180;
+  var outerRadius  = (pie && pie.radius && pie.radius < Math.min(_this.canvasHeight, _this.canvasWidth)/2)
                           ? pie.radius
                           : Math.min(_this.canvasHeight, _this.canvasWidth)/2;
-  var innerRadius = 0;
-
+  var innerRadius  = (pie && pie.chart && pie.chart.type && pie.chart.type.toUpperCase() === 'DOUGHNUT')
+                          ? (pie.chart.width)
+                                ? outerRadius - pie.chart.width
+                                : outerRadius * 0.75
+                          : 0;
+  var cornerRadius = (pie && pie.cornerRadius)
+                          ? pie.cornerRadius
+                          : 0;
+  var padAngle     = (pie && pie.padding)
+                          ? pie.padding * toRadian
+                          : 0;
 
   var arcElement = d3.arc()
-                     .innerRadius(0)
+                     .innerRadius(innerRadius)
                      .outerRadius(outerRadius)
-                     .cornerRadius(0);
+                     .cornerRadius(cornerRadius)
+                     .padAngle(padAngle);
   return arcElement;
 
 };
 
 PieChart.prototype.createPie = function() {
-  var _this    = this,
-      pie      = _this.options.pie,
-      toRadian = Math.PI/180,
-      padAngle = (pie && pie.padding)
-                      ? pie.padding * toRadian
-                      : 0;
+
+  var _this      = this,
+      pie        = _this.options.pie,
+      toRadian   = Math.PI/180,
+      endAngle   = (pie && pie.curve)
+                        ? pie.curve * toRadian
+                        : 2*Math.PI,
+      startAngle = (pie && pie.startAngle)
+                        ? pie.startAngle * toRadian
+                        : 0;
 
   var pieElement = d3.pie()
                      .value(function(d) { return d[1]; })
-                     .padAngle(padAngle)
-                     .startAngle(0)
-                     .endAngle(2*Math.PI)
+                     .startAngle(startAngle)
+                     .endAngle(startAngle + endAngle)
                      .sort(null);
   return pieElement;
 
 };
 
-
-
 PieChart.prototype.drawPieChart = function() {
 
-  var _this = this;
+  var _this      = this,
+      margin     = _this.margin,
+      transition = _this.options.transition;
 
   var arc   = _this.createArc();
   var pie   = _this.createPie();
   var color = _this.setColorPattern();
 
-  var xTranslate = _this.canvasWidth/2,
-      yTranslate = _this.canvasHeight/2;
+  var xTranslate = _this.canvasWidth/2 + margin.left,
+      yTranslate = _this.canvasHeight/2 + margin.top;
 
+  var outerRadius  = (pie && pie.radius && pie.radius < Math.min(_this.canvasHeight, _this.canvasWidth)/2)
+                          ? pie.radius
+                          : Math.min(_this.canvasHeight, _this.canvasWidth)/2;
   _this.createCanvas();
 
   var svg = _this.plot.append('g')
                       .attr('class', 'fc-pie-chart')
                       .attr('transform', 'translate(' + xTranslate + ',' + yTranslate + ')');
 
-  var path = svg.selectAll('path')
-                .data(pie(_this.data))
-                .enter()
-                .append('path')
-                .attr('class', 'fc-pie')
-                .attr('d', arc)
-                .attr('fill', function(d) {
-                  return color(d.data[0]);
-                });
+  _this.pieChartPlot = svg.selectAll('path')
+                          .data(pie(_this.data))
+                          .enter()
+                          .append('path')
+                          .attr('class', 'fc-pie')
+                          .attr('d', arc)
+                          .attr('fill', function(d) {
+                            return color(d.data[0]);
+                          });
+
+  if (transition && transition.animate) {
+    _this.animateDraw(arc);
+  }
+
+};
+
+PieChart.prototype.animateDraw = function(arc) {
+
+  var _this      = this,
+      transition = _this.options.transition;
+
+  var duration = (transition && transition.duration)
+                              ? transition.duration
+                              : 1000;
+
+  var animatePie = function(d) {
+    var i = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+    return function(t) { return arc(i(t)); };
+  };
+
+  _this.pieChartPlot.transition()
+                    .ease(d3.easeLinear)
+                    .duration(duration)
+                    .attrTween('d', animatePie);
+
 };

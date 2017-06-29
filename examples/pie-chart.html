@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../build/css/fubar-charts.css" type="text/css">
   <style>
   .chart-container {
-    height: 90%;
+    height: 100%;
     width: 100%;
   }
   </style>
@@ -23,17 +23,47 @@
     var data = [
                   ['Jan', 50],
                   ['Feb', 50],
-                  ['Mar', 30],
-                  ['Apr', 10],
-                  ['May', 60],
+                  ['Mar', 50],
+                  ['Apr', 50],
               ];
 
     var chart = new PieChart(element, data, {
       pie : {
+        chart : {
+          type : 'doughnut',
+          width : 50,
+        },
         color : ['#CDDC39', '#4CAF50', '#009688', '#00BCD4', '#2196F3', '#3F51B5', '#673AB7'],
         radius : 250,
-        padding : 10,
-      }
+        cornerRadius : 3,
+        padding : 1,
+        curve : 360,
+        startAngle : 0
+      },
+      margin: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      },
+      transition: {
+        animate: true,
+        duration : 1000
+      },
+      tooltip: {
+        show : true,              // Whether to show the tooltip or not
+        listener : 'click touchstart',
+                                  // listener that the tooltip should respond
+        class : 'custom-tooltip', // Custom CSS class for tooltip
+        /*body : {                // Inbuilt tooltip body
+          title : 'Product X',
+          xLabel : 'X Units',
+          yLabel : 'Y Units',
+        },*/
+        formatter : function() {  //  Customizable tooltip body
+          return this.yValue + ' units <br>in ' + this.xValue;
+        },
+      },
     });
 
   </script>
