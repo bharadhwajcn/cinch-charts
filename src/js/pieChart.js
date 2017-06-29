@@ -221,7 +221,7 @@ PieChart.prototype.animateDraw = function(arc) {
   };
 
   _this.pieChartPlot.transition()
-                    .ease(d3.easeLinear)
+                    .ease(d3.easeExp)
                     .duration(duration)
                     .attrTween('d', animatePie);
 

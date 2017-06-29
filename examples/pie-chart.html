@@ -21,10 +21,12 @@
     var element = document.querySelector('.chart-container');
 
     var data = [
-                  ['Jan', 50],
-                  ['Feb', 50],
-                  ['Mar', 50],
-                  ['Apr', 50],
+                  ['Jan', 10],
+                  ['Feb', 70],
+                  ['Mar', 30],
+                  ['Apr', 10],
+                  ['May', 60],
+                  ['Jun', 45]
               ];
 
     var chart = new PieChart(element, data, {
@@ -48,7 +50,7 @@
       },
       transition: {
         animate: true,
-        duration : 1000
+        duration : 2000
       },
       tooltip: {
         show : true,              // Whether to show the tooltip or not
