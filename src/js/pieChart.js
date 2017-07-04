@@ -295,3 +295,31 @@ PieChart.prototype.showTooltip = function(config, event) {
       }
   }, false);
 };
+
+/**
+ * Formats the body for tooltip when title, X-Label and Y-Label are given.
+ * @param {Object} config   - tooltip configuration options.
+ * @return {String} content - Formatted HTML string for tooltip body.
+ */
+PieChart.prototype.tooltipBody = function(config) {
+
+    var _this   = this;
+        title   = config.body && config.body.title ? config.body.title : 'Title',
+        xLabel  = config.body && config.body.xLabel ? config.body.xLabel : 'X: ',
+        yLabel  = config.body && config.body.yLabel ? config.body.yLabel : 'Y: ',
+        xValue  = config.xValue,
+        yValue  = config.yValue,
+        content = '';
+
+    if (title) {
+      content += '<b>' + title + '</b>';
+    }
+    if (xLabel) {
+       content += '<br/>' + xLabel + ': ' + xValue;
+    }
+    if (yLabel) {
+       content += '<br/>' + yLabel + ': ' + yValue;
+    }
+    return content;
+
+};
