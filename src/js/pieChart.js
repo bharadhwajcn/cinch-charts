@@ -200,6 +200,7 @@ PieChart.prototype.drawPieChart = function() {
                             return color(d.data[0]);
                           });
 
+  _this.checkTooltip();
   if (transition && transition.animate) {
     _this.animateDraw(arc);
   }
@@ -225,4 +226,72 @@ PieChart.prototype.animateDraw = function(arc) {
                     .duration(duration)
                     .attrTween('d', animatePie);
 
+};
+
+/**
+ * To draw the tooltip if the user have opted to.
+ * @param {String} type - Type of the chart
+ */
+PieChart.prototype.checkTooltip = function() {
+  var _this = this;
+
+  if (_this.options.tooltip && _this.options.tooltip.show) {
+    var event = _this.options.tooltip.listener
+                    ? _this.options.tooltip.listener
+                    : 'mousemove';
+    _this.showTooltip(_this.options.tooltip, event);
+  }
+};
+
+PieChart.prototype.showTooltip = function(config, event) {
+  var _this = this,
+      previousValue,
+      triggeredEvent,
+      tooltipClass =  config.class ? 'fc-tooltip ' + config.class : 'fc-tooltip';
+
+  d3.select(_this.element)
+    .selectAll('#fc-tooltip')
+    .remove();
+
+  var tooltip = d3.select(_this.element)
+                  .append('div')
+                  .attr('class', tooltipClass)
+                  .attr('id', 'fc-tooltip');
+
+  tooltip.node().style.position = 'absolute';
+  tooltip.node().style.display = 'none';
+
+  _this.pieChartPlot.on(event, function(d) {
+    triggeredEvent = d3.event.type;
+    config.xValue = d.data[0];
+    config.yValue = d.data[1];
+    if (previousValue !== d) {
+      tooltip.node().style.display = 'block';
+      tooltip.html(config.formatter ? config.formatter() : _this.tooltipBody(config))
+      tooltip.style('top', (d3.event.layerY + 10) + 'px')
+             .style('left', (d3.event.layerX + 10) + 'px');
+      (d3.event.type != 'mouseover') ? previousValue = d : previousValue = '';
+    } else {
+      tooltip.node().style.display = 'none';
+      previousValue = '';
+    }
+  })
+  .on('mouseout', function() {
+    if (triggeredEvent === 'mouseover') {
+      tooltip.node().style.display = 'none';
+    }
+  });
+
+  document.addEventListener('touchstart', function (e) {
+      var touch = e.touches[0];
+      if (!e.target.classList.contains('fc-pie')) {
+        tooltip.node().style.display = 'none';
+      }
+  }, false);
+
+  document.addEventListener('click', function (e) {
+      if (!e.target.classList.contains('fc-pie')) {
+        tooltip.node().style.display = 'none';
+      }
+  }, false);
 };
