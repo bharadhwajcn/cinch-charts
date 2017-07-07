@@ -179,4 +179,10 @@ body {
   display: inline-block;
   margin-right: 10px;
 }
+
+/* Legend element text property */
+.fc-legend-element text {
+  font-size: 12.5px;
+  fill: #5F5F5F;
+}
 /*============================================================================*/

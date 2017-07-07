@@ -78,6 +78,10 @@ PieChart.prototype.setCanvasBoundary = function() {
                               ? height
                               : _this.element.offsetHeight;
 
+  if (_this.options.legend && _this.options.legend.show) {
+    _this.width -= 100;
+  }
+
   _this.canvasHeight = _this.height - (margin.top + margin.bottom),
   _this.canvasWidth  = _this.width - (margin.left + margin.right);
 
@@ -126,7 +130,8 @@ PieChart.prototype.createArc = function() {
   var outerRadius  = (pie && pie.radius && pie.radius < Math.min(_this.canvasHeight, _this.canvasWidth)/2)
                           ? pie.radius
                           : Math.min(_this.canvasHeight, _this.canvasWidth)/2;
-  var innerRadius  = (pie && pie.chart && pie.chart.type && pie.chart.type.toUpperCase() === 'DOUGHNUT')
+  var innerRadius  = (pie && pie.chart && pie.chart.type &&
+                      (pie.chart.type.toUpperCase() === 'DOUGHNUT' || pie.chart.type.toUpperCase() === 'DONUT'))
                           ? (pie.chart.width)
                                 ? outerRadius - pie.chart.width
                                 : outerRadius * 0.75
@@ -172,14 +177,23 @@ PieChart.prototype.drawPieChart = function() {
 
   var _this      = this,
       margin     = _this.margin,
-      transition = _this.options.transition;
+      legend     = _this.options.legend,
+      transition = _this.options.transition,
+      legend     = _this.options.legend;
 
   var arc   = _this.createArc();
   var pie   = _this.createPie();
   var color = _this.setColorPattern();
 
-  var xTranslate = _this.canvasWidth/2 + margin.left,
+  var xTranslate = legend && legend.show
+                          ? legend.position === 'left'
+                            ? _this.canvasWidth/2 + margin.left + 100
+                            : legend.position === 'center'
+                                ? _this.canvasWidth/2
+                                : _this.canvasWidth/2 + margin.left - 50
+                          : _this.canvasWidth/2 + margin.left - 50,
       yTranslate = _this.canvasHeight/2 + margin.top;
+
 
   var outerRadius  = (pie && pie.radius && pie.radius < Math.min(_this.canvasHeight, _this.canvasWidth)/2)
                           ? pie.radius
@@ -200,9 +214,15 @@ PieChart.prototype.drawPieChart = function() {
                             return color(d.data[0]);
                           });
 
-  _this.checkTooltip();
+
   if (transition && transition.animate) {
     _this.animateDraw(arc);
+  }
+
+  _this.checkTooltip();
+
+  if (legend && legend.show) {
+    _this.showLegend();
   }
 
 };
@@ -305,8 +325,8 @@ PieChart.prototype.tooltipBody = function(config) {
 
     var _this   = this;
         title   = config.body && config.body.title ? config.body.title : 'Title',
-        xLabel  = config.body && config.body.xLabel ? config.body.xLabel : 'X: ',
-        yLabel  = config.body && config.body.yLabel ? config.body.yLabel : 'Y: ',
+        xLabel  = config.body && config.body.xLabel ? config.body.xLabel : 'X ',
+        yLabel  = config.body && config.body.yLabel ? config.body.yLabel : 'Y ',
         xValue  = config.xValue,
         yValue  = config.yValue,
         content = '';
@@ -322,4 +342,63 @@ PieChart.prototype.tooltipBody = function(config) {
     }
     return content;
 
+};
+
+PieChart.prototype.showLegend = function() {
+
+  var _this  = this,
+      legend = _this.options.legend,
+      pie    = _this.options.pie;
+
+  var legendRectSize = 18,
+      legendSpacing  = 5;
+
+  var color = _this.setColorPattern();
+
+  switch(legend.position) {
+    case 'right':
+      var xTranslate = _this.canvasWidth - 50;
+      break;
+    case 'left':
+      var xTranslate = _this.margin.left + 70;
+      break;
+    case 'center':
+      if (pie && pie.chart &&
+          (pie.chart.type.toUpperCase() === 'DOUGHNUT' || pie.chart.type.toUpperCase() === 'DONUT')) {
+            var xTranslate = _this.canvasWidth/2;
+          } else {
+            var xTranslate = _this.canvasWidth - 50;
+          }
+      break;
+    default:
+      var xTranslate = _this.canvasWidth - 50;
+      break;
+  }
+  var yTranslate = _this.canvasHeight/3;
+
+  var legend = _this.plot.append('g')
+                          .attr('class', 'fc-legend')
+                          .attr('transform', 'translate(' + xTranslate + ',' + yTranslate + ')')
+                          .selectAll('.fc-legend-item')
+                          .data(_this.data)
+                          .enter()
+                          .append('g')
+                          .attr('class', 'fc-legend-element')
+                          .attr('transform', function(d, i) {
+                            var height = legendRectSize + legendSpacing;
+                            var horz = -2 * legendRectSize;
+                            var vert = i * height - legendSpacing;
+                            return 'translate(' + horz + ',' + vert + ')';
+                          });
+
+  legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .style('fill', color)
+        .style('stroke', color);
+
+  legend.append('text')
+        .attr('x', legendRectSize + legendSpacing)
+        .attr('y', legendRectSize - legendSpacing)
+        .text(function(d) { return d[0]; });
 };
