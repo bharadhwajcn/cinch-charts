@@ -301,7 +301,7 @@ var chart = new PieChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_pie_chart.png" alt="Basic Pie Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Basic_pie_chart.png" alt="Basic Pie Chart Example" width="500"/>
 
 **Live example:**
 
@@ -353,7 +353,7 @@ var chart = new PieChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_pie_chart.png" alt="Full option Pie Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Full_option_pie_chart.png" alt="Full option Pie Chart Example" width="500"/>
 
 **Live example:**
 

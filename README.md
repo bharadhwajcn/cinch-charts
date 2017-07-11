@@ -63,7 +63,7 @@ var chart = new BarChart(element, data);
 **Output**
 
 <a href="https://jsfiddle.net/bharadhwaj_cn/kd7zk2bL/">
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Example_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Example_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 </a>
 
 **Live Example**
