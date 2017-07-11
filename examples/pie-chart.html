@@ -26,7 +26,8 @@
                   ['Mar', 30],
                   ['Apr', 10],
                   ['May', 60],
-                  ['Jun', 45]
+                  ['Jun', 45],
+                  ['Jul', 76]
               ];
 
     var chart = new PieChart(element, data, {
@@ -53,10 +54,9 @@
         duration : 2000
       },
       tooltip: {
-        show : true,              // Whether to show the tooltip or not
+        show : true,
         listener : 'click touchstart',
-                                  // listener that the tooltip should respond
-        class : 'custom-tooltip', // Custom CSS class for tooltip
+        class : 'custom-tooltip',
         // body : {                // Inbuilt tooltip body
         //   title : 'Product X',
         //   xLabel : 'X Units',
