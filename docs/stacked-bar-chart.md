@@ -303,7 +303,7 @@ var options = {
         value : 50,
         class : 'goal-line-class',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
             toBase64: true,
             class: 'goal-icon-class',
             height : 15,
@@ -501,7 +501,7 @@ var chart = new StackedBarChart(element, data, stack);
 
 **Output:**  
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_stacked_bar_chart.png" alt="Basic Stacked Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Basic_stacked_bar_chart.png" alt="Basic Stacked Bar Chart Example" width="500"/>
 
 **Live example:**
 
@@ -554,7 +554,7 @@ var chart = new StackedBarChart(element, data, stack, {
         value : 60,
         class : 'goalline',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
             toBase64 : true,
             class: 'goal-icon',
             height : 20,  
@@ -599,7 +599,7 @@ var chart = new StackedBarChart(element, data, stack, {
 
 **Output:**  
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_stacked_bar_chart.png" alt="Full option Stacked Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Full_option_stacked_bar_chart.png" alt="Full option Stacked Bar Chart Example" width="500"/>
 
 **Live example:**
 

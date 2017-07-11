@@ -79,5 +79,6 @@ var chart = new BarChart(element, data);
 3. [Line Chart](./docs/line-chart.md#line-chart)
 4. [Multi Line Chart](./docs/multi-line-chart.md#line-chart)
 5. [Area Chart](./docs/area-chart.md#area-chart)
+6. [Pie Chart](./docs/pie-chart.md#pie-chart)
 
 -------------

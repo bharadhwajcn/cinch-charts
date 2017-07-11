@@ -140,7 +140,7 @@ var options = {
         width: 4,
         icon: {
             show: true,
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/green_circle.png',
             toBase64: false,
             class: 'point-icon',
             width : 10
@@ -173,7 +173,7 @@ var options = {
     threshold: {
       value : 80,
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/orange_circle.png',
             toBase64: false
         }
     }
@@ -332,7 +332,7 @@ var options = {
         value : 50,
         class : 'goal-line-class',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
             toBase64: true,
             class: 'goal-icon-class',
             height : 15,
@@ -533,7 +533,7 @@ var chart = new LineChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_line_chart.png" alt="Basic Line Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Basic_line_chart.png" alt="Basic Line Chart Example" width="500"/>
 
 **Live example:**
 
@@ -551,7 +551,7 @@ var chart = new LineChart(element, data, {
         width: 4,
         icon: {
             show: true,
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/green_circle.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/green_circle.png',
             toBase64: false,
             class: 'point-icon',
             width: 10
@@ -560,7 +560,7 @@ var chart = new LineChart(element, data, {
     threshold: {
         value: 50,
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/orange_circle.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/orange_circle.png',
             toBase64: false,
         }
     },
@@ -593,7 +593,7 @@ var chart = new LineChart(element, data, {
         value: 50,
         class: 'goalline',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
             class: 'goal-icon',
             height: 15,
             width: 13,
@@ -647,7 +647,7 @@ var chart = new LineChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_line_chart.png" alt="Full option Line Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Full_option_line_chart.png" alt="Full option Line Chart Example" width="500"/>
 
 **Live example:**
 

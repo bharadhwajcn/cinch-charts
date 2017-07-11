@@ -281,11 +281,13 @@ options that are available.
 var element = document.querySelector('.chart-container');
 
 var data = [
-              ['Jan', 10],
-              ['Feb', 70],
-              ['Mar', 30],
-              ['Apr', 10],
-              ['May', 60]
+            ['Jan', 10],
+            ['Feb', 70],
+            ['Mar', 30],
+            ['Apr', 10],
+            ['May', 60],
+            ['Jun', 45],
+            ['Jul', 76]
           ];
 ```
 
@@ -299,11 +301,11 @@ var chart = new PieChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Basic_pie_chart.png" alt="Basic Pie Chart Example" width="500"/>
 
 **Live example:**
 
-Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/c1tz9jL4/" target="_blank">here</a>
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/g3xvrmf7/" target="\_blank">here</a>
 
 
 ### <a name="examples-full-option-chart"></a> Full option Chart Example ###
@@ -351,10 +353,10 @@ var chart = new PieChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_bar_chart.png" alt="Full option Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/fubar-charts/example-images/Full_option_pie_chart.png" alt="Full option Pie Chart Example" width="500"/>
 
 **Live example:**
 
-Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/00ruhhur/" target="_blank">here</a>
+Editable working example <a href="https://jsfiddle.net/bharadhwaj_cn/Lxfsrfkm/" target="\_blank">here</a>
 
 ---------------
