@@ -1,6 +1,6 @@
-# FUBAR CHARTS #
+# CINCH CHARTS #
 
-[![Build Status](https://travis-ci.org/bharadhwajcn/fubar-charts.svg?branch=master)](https://travis-ci.org/bharadhwajcn/fubar-charts)
+[![Build Status](https://travis-ci.org/bharadhwajcn/cinch-charts.svg?branch=master)](https://travis-ci.org/bharadhwajcn/cinch-charts)
 
 A simple, light-weight charting library built on top of `d3.js`. The only  
 dependency for this library is d3.js. Make sure you are using d3.js version 4+,  
@@ -17,16 +17,16 @@ files under the folder `build`.
 For cloning the repository, via `HTTPS` use,
 
 ```
-git clone https://github.com/bharadhwajcn/fubar-charts.git
+git clone https://github.com/bharadhwajcn/cinch-charts.git
 ```
 
 or using `SSH` use,
 
 ```
-git clone git@github.com:bharadhwajcn/fubar-charts.git
+git clone git@github.com:bharadhwajcn/cinch-charts.git
 ```
 
-or you can download the zip file for the repository by [clicking here](https://github.com/bharadhwajcn/fubar-charts/archive/master.zip).
+or you can download the zip file for the repository by [clicking here](https://github.com/bharadhwajcn/cinch-charts/archive/master.zip).
 
 
 ### Bower ###
@@ -35,7 +35,7 @@ You can easily install the package from [Bower](https://bower.io). Make sure tha
 `bower` installed.
 
 ```
-bower install fubar-charts
+bower install cinch-charts
 ```
 
 -----------
@@ -63,7 +63,7 @@ var chart = new BarChart(element, data);
 **Output**
 
 <a href="https://jsfiddle.net/bharadhwaj_cn/kd7zk2bL/">
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Example_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Example_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 </a>
 
 **Live Example**
