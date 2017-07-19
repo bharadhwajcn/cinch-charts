@@ -276,7 +276,7 @@ var options = {
         value : 50,
         class : 'goal-line-class',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/goal_arrow.png',
             toBase64: true,
             class: 'goal-icon-class',
             height : 15,
@@ -476,7 +476,7 @@ var chart = new BarChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Basic_bar_chart.png" alt="Basic Bar Chart Example" width="500"/>
 
 **Live example:**
 
@@ -527,7 +527,7 @@ var chart = new BarChart(element, data, {
       value : 60,
       class : 'goalline',
       icon: {
-        url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
+        url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/goal_arrow.png',
         toBase64 : true,
         class: 'goal-icon',
         height : 20,
@@ -586,7 +586,7 @@ var chart = new BarChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Full_option_bar_chart.png" alt="Full option Bar Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Full_option_bar_chart.png" alt="Full option Bar Chart Example" width="500"/>
 
 **Live example:**
 

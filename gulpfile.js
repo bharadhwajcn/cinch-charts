@@ -84,17 +84,17 @@ gulp.task('css-minify', function(cb) {
   pump([
         gulp.src(folder.src + 'css/*.css'),
         postcss(cssnano),
-        rename('fubar-charts.min.css'),
+        rename('cinch-charts.min.css'),
         gulp.dest(folder.build + 'css/min/')
       ], cb);
 });
 
 gulp.task('css', ['css-minify'], function(cb) {
   pump([
-        gulp.src(folder.build + 'css/min/fubar-charts.min.css'),
+        gulp.src(folder.build + 'css/min/cinch-charts.min.css'),
         postcss(cssnano),
         cssBeautify(),
-        rename('fubar-charts.css'),
+        rename('cinch-charts.css'),
         gulp.dest(folder.build + 'css/')
       ], cb);
 });

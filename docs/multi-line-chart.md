@@ -176,9 +176,9 @@ var options = {
         width: [4, 8, 4],
         icon: {
             show: [true, true, true],
-            url: ['https://bharadhwajcn.github.io/fubar-charts/static/images/blue_star.png',
-                  'https://bharadhwajcn.github.io/fubar-charts/static/images/green_circle.png',
-                  'https://bharadhwajcn.github.io/fubar-charts/static/images/orange_circle.png',
+            url: ['https://bharadhwajcn.github.io/cinch-charts/static/images/blue_star.png',
+                  'https://bharadhwajcn.github.io/cinch-charts/static/images/green_circle.png',
+                  'https://bharadhwajcn.github.io/cinch-charts/static/images/orange_circle.png',
                 ],
             toBase64: [false, true, false],
             class: 'point-icon',
@@ -212,7 +212,7 @@ var options = {
     threshold: {
         value : [131, 90, null]
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/orange_circle.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/orange_circle.png',
             toBase64: false
         }
     }
@@ -374,7 +374,7 @@ var options = {
         value : 50,
         class : 'goal-line-class',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/goal_arrow.png',
             toBase64: true,
             class: 'goal-icon-class',
             height : 15,
@@ -645,7 +645,7 @@ var chart = new MultiLineChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Basic_multi_line_chart.png" alt="Basic Multi Line Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Basic_multi_line_chart.png" alt="Basic Multi Line Chart Example" width="500"/>
 
 **Live example:**
 
@@ -663,9 +663,9 @@ var chart = new MultiLineChart(element, data, {
         color: ['#359fd1', '#B8D551', '#FD8635'],
         icon: {
             show: [true, true, true],
-            url: ['https://bharadhwajcn.github.io/fubar-charts/static/images/blue_star.png',
-                  'https://bharadhwajcn.github.io/fubar-charts/static/images/green_circle.png',
-                  'https://bharadhwajcn.github.io/fubar-charts/static/images/orange_circle.png',
+            url: ['https://bharadhwajcn.github.io/cinch-charts/static/images/blue_star.png',
+                  'https://bharadhwajcn.github.io/cinch-charts/static/images/green_circle.png',
+                  'https://bharadhwajcn.github.io/cinch-charts/static/images/orange_circle.png',
             ],
             width: [10, 15, 10]
         }
@@ -673,7 +673,7 @@ var chart = new MultiLineChart(element, data, {
     threshold: {
         value: [131, 90, null],
         icon: {
-            url: ['https://bharadhwajcn.github.io/fubar-charts/static/images/orange_circle.png'],
+            url: ['https://bharadhwajcn.github.io/cinch-charts/static/images/orange_circle.png'],
             width: 10,
         }
     },
@@ -709,7 +709,7 @@ var chart = new MultiLineChart(element, data, {
         value: 130,
         class: 'goalline',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/goal_arrow.png',
             class: 'goal-icon',
             height: 15,
             width: 13,
@@ -777,7 +777,7 @@ var chart = new MultiLineChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Full_option_multi_line_chart.png" alt="Full option Multi Line Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Full_option_multi_line_chart.png" alt="Full option Multi Line Chart Example" width="500"/>
 
 **Live example:**
 

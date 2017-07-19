@@ -139,7 +139,7 @@ var options = {
         icon: {
             show : true,
             toBase64: true,
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/green_circle.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/green_circle.png',
             class: 'point-icon',
             width : 10
         }
@@ -282,7 +282,7 @@ var options = {
         value : 50,
         class : 'goal-line-class',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/goal_arrow.png',
             toBase64: true,
             class: 'goal-icon-class',
             height : 15,
@@ -483,7 +483,7 @@ var chart = new AreaChart(element, data);
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Basic_area_chart.png" alt="Basic Area Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Basic_area_chart.png" alt="Basic Area Chart Example" width="500"/>
 
 **Live example:**
 
@@ -502,7 +502,7 @@ var chart = new AreaChart(element, data, {
         icon: {
             show : true,
             toBase64: true,
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/green_circle.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/green_circle.png',
             class: 'point-icon',
             width : 10
         }
@@ -536,7 +536,7 @@ var chart = new AreaChart(element, data, {
         value: 50,
         class: 'goalline',
         icon: {
-            url: 'https://bharadhwajcn.github.io/fubar-charts/static/images/goal_arrow.png',
+            url: 'https://bharadhwajcn.github.io/cinch-charts/static/images/goal_arrow.png',
             class: 'goal-icon',
             height: 15,
             width: 13,
@@ -589,7 +589,7 @@ var chart = new AreaChart(element, data, {
 
 **Output:**
 
-<img src="https://bharadhwajcn.github.io/fubar-charts/static/images/example-images/Full_option_area_chart.png" alt="Full option area Chart Example" width="500"/>
+<img src="https://bharadhwajcn.github.io/cinch-charts/static/images/example-images/Full_option_area_chart.png" alt="Full option area Chart Example" width="500"/>
 
 **Live example:**
 
